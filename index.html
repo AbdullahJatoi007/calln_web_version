@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calln - Voice Connect</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Socket.io Library -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">Calln</div>
+    <ul class="nav-links">
+        <li class="filter-wrapper">
+            <div class="filter-content" id="selected-country-ui">
+                <img id="current-flag" src="https://flagcdn.com/w20/pk.png" alt="pk">
+                <span class="filter-text" id="current-country-name">Pakistan</span>
+            </div>
+            <select id="country-filter" class="hidden-select">
+                <option value="all" data-name="All Countries" data-flag="un">🌍 All Countries</option>
+                <option value="pk" data-name="Pakistan" data-flag="pk" selected>🇵🇰 Pakistan</option>
+                <option value="us" data-name="USA" data-flag="us">🇺🇸 USA</option>
+                <option value="tr" data-name="Turkey" data-flag="tr">🇹🇷 Turkey</option>
+                <option value="sa" data-name="Saudi Arabia" data-flag="sa">🇸🇦 Saudi Arabia</option>
+                <option value="ae" data-name="UAE" data-flag="ae">🇦🇪 UAE</option>
+                <option value="gb" data-name="UK" data-flag="gb">🇬🇧 UK</option>
+                <option value="in" data-name="India" data-flag="in">🇮🇳 India</option>
+                <option value="ca" data-name="Canada" data-flag="ca">🇨🇦 Canada</option>
+            </select>
+        </li>
+        <li>
+            <div class="online-status">
+                <span class="pulse-dot"></span>
+                <span class="status-text">Online: <strong id="user-count">...</strong></span>
+            </div>
+        </li>
+    </ul>
+</nav>
+
+<main class="hero-section">
+    <div class="call-panel">
+        <div class="app-logo-floating">
+            <div class="wave-container" id="wave-container">
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+            </div>
+        </div>
+        <div class="controls-grid">
+            <div class="control-item">
+                <button class="action-btn call-btn" id="start-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M6.62 10.79a15.15 15.15 0 0 0 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                </button>
+                <span>Start Call</span>
+            </div>
+            <div class="control-item">
+                <button class="action-btn" id="mute-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+                </button>
+                <span id="mute-label">Mute</span>
+            </div>
+            <div class="control-item">
+                <button class="action-btn" id="report-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/></svg></button>
+                <span>Report</span>
+            </div>
+        </div>
+        <div class="settings-row">
+            <span class="label">Auto Call</span>
+            <label class="switch">
+                <input type="checkbox" id="auto-call">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <p class="hint-text" id="status-display">Ready for a new conversation?</p>
+    </div>
+
+    <div class="chat-container">
+        <div class="view-screen" id="chat-display">
+            <div class="overlay-text">Audio Only Mode</div>
+        </div>
+        <div class="message-input">
+            <input type="text" id="msg-input" placeholder="Connect to chat..." disabled>
+            <button class="send-btn" id="send-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+        </div>
+    </div>
+</main>
+
+<!-- JS Files - Order is Important -->
+<script src="connection.js"></script>
+<script src="chat.js"></script>
+</body>
+</html>

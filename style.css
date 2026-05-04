@@ -1,5 +1,61 @@
 /* Basic Reset */
 /* General Reset */
+/* chat.css / style.css mein add karein */
+
+.view-screen {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    gap: 10px;
+    overflow-y: auto;
+    background: #e5ddd5; /* WhatsApp chat background color */
+}
+
+.message {
+    max-width: 70%;
+    margin-bottom: 5px;
+    display: flex;
+}
+
+/* Aapka apna message (Right side) */
+.my-msg {
+    align-self: flex-end;
+}
+
+.my-msg .msg-content {
+    background-color: #dcf8c6; /* WhatsApp Green */
+    border-radius: 8px 0px 8px 8px;
+    padding: 8px 12px;
+    position: relative;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+
+/* Stranger ka message (Left side) */
+.peer-msg {
+    align-self: flex-start;
+}
+
+.peer-msg .msg-content {
+    background-color: #ffffff; /* White */
+    border-radius: 0px 8px 8px 8px;
+    padding: 8px 12px;
+    position: relative;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+
+.msg-content .text {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 14px;
+    color: #303030;
+}
+
+.msg-content .time {
+    display: block;
+    font-size: 10px;
+    color: #888;
+    text-align: right;
+}
 .wave-container {
     display: flex;
     align-items: center;

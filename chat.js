@@ -21,26 +21,53 @@ window.addEventListener('call-disconnected', () => {
 function sendMessage() {
     const msg = chatInput.value.trim();
     if (msg && activeRoomId) {
+        // Hum message object mein sender ki ID bhej rahe hain
         socket.emit('chat_message', { 
             roomId: activeRoomId, 
             message: msg,
             sender: socket.id 
         });
-        appendMessage('You', msg, 'my-msg');
+        
+        // Apne message ko right side par dikhane ke liye 'my-msg'
+        appendMessage(msg, 'my-msg');
         chatInput.value = '';
     }
 }
 
+// Jab server se message aaye
 socket.on('chat_message', (data) => {
-    appendMessage('Stranger', data.message, 'peer-msg');
+    // Agar sender ID meri apni hai toh bypass (kyunki hum already append kar chuke hain)
+    // Warna 'peer-msg' alignment use karein (Left side)
+    if (data.sender !== socket.id) {
+        appendMessage(data.message, 'peer-msg');
+    }
 });
 
-function appendMessage(sender, text, className) {
+function appendMessage(text, className) {
     const msgDiv = document.createElement('div');
+    
+    // Timestamp create karein (WhatsApp feel)
+    const now = new Date();
+    const timeString = now.getHours().toString().padStart(2, '0') + ":" + 
+                       now.getMinutes().toString().padStart(2, '0');
+
     msgDiv.className = `message ${className}`;
-    msgDiv.innerHTML = `<strong>${sender}:</strong> ${text}`;
+    
+    // WhatsApp structure: Text upar aur chota Time niche
+    msgDiv.innerHTML = `
+        <div class="msg-content">
+            <span class="text">${text}</span>
+            <span class="time">${timeString}</span>
+        </div>
+    `;
+    
     chatScreen.appendChild(msgDiv);
-    chatScreen.scrollTop = chatScreen.scrollHeight; // Auto-scroll
+    
+    // Smooth scroll to bottom
+    chatScreen.scrollTo({
+        top: chatScreen.scrollHeight,
+        behavior: 'smooth'
+    });
 }
 
 sendBtn.addEventListener('click', sendMessage);

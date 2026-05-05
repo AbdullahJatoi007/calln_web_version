@@ -3,7 +3,7 @@ const sendBtn = document.getElementById('send-btn');
 const chatScreen = document.getElementById('chat-display');
 let activeRoomId = null;
 
-// Listen for connection from connection.js
+// --- 1. Connection Listeners ---
 window.addEventListener('call-connected', (e) => {
     activeRoomId = e.detail.roomId;
     chatInput.disabled = false;
@@ -18,80 +18,62 @@ window.addEventListener('call-disconnected', () => {
     chatInput.placeholder = "Connect to a call to chat";
 });
 
+// --- 2. Messaging Logic ---
 function sendMessage() {
     const msg = chatInput.value.trim();
+    
+    // Check: Empty message na ho aur room active ho
     if (msg && activeRoomId) {
-        // Hum message object mein sender ki ID bhej rahe hain
         socket.emit('chat_message', { 
             roomId: activeRoomId, 
             message: msg,
             sender: socket.id 
         });
         
-        // Apne message ko right side par dikhane ke liye 'my-msg'
-        appendMessage(msg, 'my-msg');
+        appendMessage(msg, 'my-msg'); // User ka apna message right side par
         chatInput.value = '';
     }
 }
 
-// Jab server se message aaye
-socket.on('chat_message', (data) => {
-    // Agar sender ID meri apni hai toh bypass (kyunki hum already append kar chuke hain)
-    // Warna 'peer-msg' alignment use karein (Left side)
+// --- 3. Socket Listener (Single Instance) ---
+// .off() ensures double messages don't happen if the script reloads
+socket.off('chat_message').on('chat_message', (data) => {
     if (data.sender !== socket.id) {
-        appendMessage(data.message, 'peer-msg');
+        appendMessage(data.message, 'peer-msg'); // Stranger ka message left side par
     }
 });
 
-// chat.js
+// --- 4. UI Rendering & Scroll Fix ---
 function appendMessage(text, className) {
-    const msgDiv = document.createElement('div');
+    const msgWrapper = document.createElement('div');
     
-    // Time format (e.g., 10:30 PM)
     const now = new Date();
     const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    // "message-wrapper" class alignment ko control karegi (left ya right)
-    msgDiv.className = `message-wrapper ${className}`;
-    
-    msgDiv.innerHTML = `
+    msgWrapper.className = `message-wrapper ${className}`;
+    msgWrapper.innerHTML = `
         <div class="message-bubble">
-            <div class="message-text">${text}</div>
+            <div class="message-text"></div>
             <div class="message-time">${timeString}</div>
         </div>
     `;
     
-    chatScreen.appendChild(msgDiv);
+    // Security Fix: textContent use kar rahe hain taake koi script inject na kar sake
+    msgWrapper.querySelector('.message-text').textContent = text;
     
-    // Auto-scroll logic
-    chatScreen.scrollTo({
-        top: chatScreen.scrollHeight,
-        behavior: 'smooth'
-    });
+    chatScreen.appendChild(msgWrapper);
+    
+    // Mobile aur Desktop scroll fix
+    setTimeout(() => {
+        msgWrapper.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }, 50);
 }
 
-// Jab aap message bhejte hain
-function sendMessage() {
-    const msg = chatInput.value.trim();
-    if (msg && activeRoomId) {
-        socket.emit('chat_message', { 
-            roomId: activeRoomId, 
-            message: msg,
-            sender: socket.id 
-        });
-        appendMessage(msg, 'my-msg'); // Aapka msg right par jayega
-        chatInput.value = '';
-    }
-}
-
-// Jab doosra user bhejta hai
-socket.on('chat_message', (data) => {
-    if (data.sender !== socket.id) {
-        appendMessage(data.message, 'peer-msg'); // Stranger ka msg left par jayega
-    }
-});
-
+// --- 5. Event Listeners ---
 sendBtn.addEventListener('click', sendMessage);
+
 chatInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') sendMessage();
+    if (e.key === 'Enter') {
+        sendMessage();
+    }
 });

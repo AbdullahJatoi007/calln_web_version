@@ -1,300 +1,22 @@
-/* Basic Reset */
-/* General Reset */
-/* chat.css / style.css mein add karein */
-/* Chat Container */
-#chat-display {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    background-color: #e5ddd5; /* WhatsApp background */
-    overflow-y: auto;
-    height: 400px; /* Ya jo bhi aapki height hai */
-}
-
-/* Wrapper jo puri line cover karega */
-.message-wrapper {
-    display: flex;
-    width: 100%;
-    margin-bottom: 8px;
-}
-
-/* Aapka message: Right side par alignment */
-.my-msg {
-    justify-content: flex-end;
-}
-
-/* Stranger ka message: Left side par alignment */
-.peer-msg {
-    justify-content: flex-start;
-}
-
-/* Message Bubble */
-.message-bubble {
-    max-width: 70%;
-    padding: 8px 12px;
-    border-radius: 12px;
-    position: relative;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-}
-
-/* Aapka bubble style */
-.my-msg .message-bubble {
-    background-color: #dcf8c6; /* Light Green */
-    border-top-right-radius: 2px;
-    color: #303030;
-}
-
-/* Stranger ka bubble style */
-.peer-msg .message-bubble {
-    background-color: #ffffff; /* White */
-    border-top-left-radius: 2px;
-    color: #303030;
-}
-
-.message-text {
-    font-size: 14px;
-    line-height: 1.4;
-}
-
-.message-time {
-    font-size: 10px;
-    color: #888;
-    text-align: right;
-    margin-top: 4px;
-}
-
-.view-screen {
-    display: flex;
-    flex-direction: column;
-    padding: 15px;
-    gap: 10px;
-    overflow-y: auto;
-    background: #e5ddd5; /* WhatsApp chat background color */
-}
-
-.message {
-    max-width: 70%;
-    margin-bottom: 5px;
-    display: flex;
-}
-
-/* Aapka apna message (Right side) */
-.my-msg {
-    align-self: flex-end;
-}
-
-.my-msg .msg-content {
-    background-color: #dcf8c6; /* WhatsApp Green */
-    border-radius: 8px 0px 8px 8px;
-    padding: 8px 12px;
-    position: relative;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
-}
-
-/* Stranger ka message (Left side) */
-.peer-msg {
-    align-self: flex-start;
-}
-
-.peer-msg .msg-content {
-    background-color: #ffffff; /* White */
-    border-radius: 0px 8px 8px 8px;
-    padding: 8px 12px;
-    position: relative;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
-}
-
-.msg-content .text {
-    display: block;
-    margin-bottom: 4px;
-    font-size: 14px;
-    color: #303030;
-}
-
-.msg-content .time {
-    display: block;
-    font-size: 10px;
-    color: #888;
-    text-align: right;
-}
-.wave-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    height: 60px;
-}
-
-.wave-bar {
-    width: 4px;
-    height: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    animation: wave-move 1.2s ease-in-out infinite;
-}
-
-/* Har bar ke liye alag delay taake wave effect banay */
-.wave-bar:nth-child(1) { animation-delay: 0.0s; }
-.wave-bar:nth-child(2) { animation-delay: 0.2s; }
-.wave-bar:nth-child(3) { animation-delay: 0.4s; }
-.wave-bar:nth-child(4) { animation-delay: 0.2s; }
-.wave-bar:nth-child(5) { animation-delay: 0.0s; }
-
-@keyframes wave-move {
-    0%, 100% { height: 20px; opacity: 0.5; }
-    50% { height: 50px; opacity: 1; background-color: #2196f3; }
-}
-
-/* Logo circle ko thora glass effect dete hain */
-.app-logo-floating {
-    width: 130px;
-    height: 130px;
-    background: rgba(255, 255, 255, 0.03); /* Glassmorphism touch */
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 30px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-}
-* {
-    margin: 0; padding: 0; box-sizing: border-box;
-    font-family: 'Inter', 'Segoe UI', sans-serif;
-}
-
-body { background-color: #0f0f0f; color: #eee; }
-
-/* Navbar side-by-side on Mobile */
-.navbar {
-    display: flex; justify-content: space-between; align-items: center;
-    background-color: #161616; padding: 0.8rem 1.5rem;
-    border-bottom: 1px solid #222;
-}
-
-.logo { font-size: 1.5rem; font-weight: 800; color: #fff; flex: 1; }
-
-.nav-links {
-    display: flex; align-items: center; gap: 15px; flex: 2; justify-content: center;
-}
-
-.filter-wrapper { position: relative; text-align: center; }
-.filter-content { display: flex; flex-direction: column; align-items: center; color: #888; }
-.filter-text { font-size: 0.55rem; text-transform: uppercase; margin-top: 2px; }
-.hidden-select { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
-
-.online-status {
-    display: flex; align-items: center; background: #222;
-    padding: 5px 12px; border-radius: 30px; font-size: 0.75rem; color: #888;
-}
-
-.pulse-dot {
-    width: 6px; height: 6px; background-color: #4caf50; border-radius: 50%;
-    margin-right: 8px; position: relative;
-}
-.pulse-dot::after {
-    content: ''; position: absolute; width: 100%; height: 100%;
-    background-color: #4caf50; border-radius: 50%; animation: pulse 2s infinite;
-}
-@keyframes pulse { 0% {transform: scale(1); opacity: 1;} 100% {transform: scale(2.5); opacity: 0;} }
-
-.nav-right-spacer { flex: 1; }
-
-/* Hero Section */
-.hero-section {
-    display: flex; align-items: center; justify-content: center;
-    gap: 50px; min-height: 85vh; padding: 2rem;
-}
-
-/* Call Panel */
-.call-panel { flex: 1; max-width: 400px; text-align: center; }
-
-.app-logo-floating {
-    width: 120px; height: 120px;
-    background: linear-gradient(45deg, #3f51b5, #2196f3);
-    border-radius: 35% 65% 70% 30% / 30% 30% 70% 70%;
-    margin: 0 auto 30px;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 15px 35px rgba(33, 150, 243, 0.2);
-    animation: morph 6s ease-in-out infinite;
-}
-@keyframes morph {
-    0% { border-radius: 35% 65% 70% 30% / 30% 30% 70% 70%; }
-    50% { border-radius: 50%; }
-    100% { border-radius: 35% 65% 70% 30% / 30% 30% 70% 70%; }
-}
-.logo-letter { font-size: 3.5rem; font-weight: bold; color: white; }
-
-.controls-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
-.control-item { display: flex; flex-direction: column; align-items: center; font-size: 0.8rem; color: #666; gap: 8px; }
-
-.action-btn {
-    width: 60px; height: 60px; border-radius: 50%; border: none;
-    background: #1a1a1a; color: white; cursor: pointer; transition: 0.3s;
-}
-.call-btn { background: #2e7d32; box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3); }
-.action-btn:hover { transform: translateY(-5px); background: #333; }
-.call-btn:hover { background: #388e3c; }
-
-/* Toggle Switch */
-.settings-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 20px; }
-.label { font-size: 0.9rem; color: #888; }
-.switch { position: relative; display: inline-block; width: 44px; height: 22px; }
-.switch input { opacity: 0; width: 0; height: 0; }
-.slider {
-    position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #333; transition: .4s; border-radius: 34px;
-}
-.slider:before {
-    position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px;
-    background-color: white; transition: .4s; border-radius: 50%;
-}
-input:checked + .slider { background-color: #2196f3; }
-input:checked + .slider:before { transform: translateX(22px); }
-
-.hint-text { font-size: 0.85rem; color: #444; }
-
-/* Chat Container */
-.chat-container {
-    flex: 1; max-width: 550px; height: 450px;
-    background: #161616; border-radius: 24px; display: flex; flex-direction: column;
-    overflow: hidden; border: 1px solid #222;
-}
-
-.view-screen {
-    flex: 1; background: #000; display: flex; align-items: center; justify-content: center;
-}
-.overlay-text { color: #333; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
-
-.message-input {
-    padding: 15px 20px; display: flex; align-items: center; background: #1a1a1a; gap: 15px;
-}
-.message-input input {
-    flex: 1; background: transparent; border: none; color: white; outline: none; font-size: 0.9rem;
-}
-.btns { display: flex; gap: 15px; }
-.sub-btn { background: none; border: none; color: #555; cursor: pointer; }
-.send-btn { background: #2196f3; border: none; color: white; width: 35px; height: 35px; border-radius: 10px; cursor: pointer; }
-
-/* Responsive */
-@media (max-width: 850px) {
-    .hero-section { flex-direction: column; gap: 40px; padding: 1rem; }
-    .chat-container { width: 100%; height: 350px; }
-    .nav-right-spacer { display: none; }
-}
+/* =========================================
+   1. GLOBAL RESET & BASE STYLES
+   ========================================= */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
 }
 
 body {
-    background-color: #121212;
+    background-color: #0f0f0f;
+    color: #eee;
+    line-height: 1.6;
 }
 
-/* Navbar Container */
+/* =========================================
+   2. NAVBAR STYLES
+   ========================================= */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -306,9 +28,9 @@ body {
     position: sticky;
     top: 0;
     z-index: 1000;
+    border-bottom: 1px solid #222;
 }
 
-/* Logo Section */
 .logo {
     font-size: 1.3rem;
     font-weight: 700;
@@ -316,26 +38,18 @@ body {
     flex: 1;
 }
 
-/* Navigation Links Container */
 .nav-links {
     display: flex;
     list-style: none;
     align-items: center;
     justify-content: center;
-    flex: 2; /* Takes center space */
-    gap: 15px; /* Adds space between Filter and Online Status */
-}
-
-/* Filter Wrapper */
-.filter-wrapper {
-    position: relative;
-    text-align: center;
-    cursor: pointer;
+    flex: 2;
+    gap: 15px;
 }
 
 .filter-content {
     display: flex;
-    flex-direction: row !important; /* Row mein karne ke liye */
+    flex-direction: row;
     align-items: center;
     gap: 8px;
     background: #222;
@@ -345,53 +59,14 @@ body {
     transition: 0.3s;
 }
 
-.filter-content:hover {
-    background: #333;
-}
-
-#current-flag {
-    width: 20px;
-    height: auto;
-    border-radius: 2px;
-    object-fit: cover;
-}
+.filter-content:hover { background: #333; }
 
 .filter-text {
-    font-size: 0.8rem !important;
-    text-transform: none !important;
+    font-size: 0.8rem;
     color: #fff;
     font-weight: 500;
 }
 
-/* Hidden select ko wrapper ke upar poora phailane ke liye */
-.hidden-select {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-}
-
-.filter-text {
-    font-size: 0.6rem;
-    text-transform: uppercase;
-    margin-top: 2px;
-}
-
-.hidden-select {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-    z-index: 5;
-}
-
-/* Online Counter Styling */
 .online-status {
     display: flex;
     align-items: center;
@@ -400,18 +75,8 @@ body {
     border-radius: 20px;
     font-size: 0.75rem;
     border: 1px solid #333;
-    white-space: nowrap; /* Text break nahi hoga */
 }
 
-.status-text {
-    color: #b0b0b0;
-}
-
-.status-text strong {
-    color: #4caf50;
-}
-
-/* Pulsing Dot Animation */
 .pulse-dot {
     width: 6px;
     height: 6px;
@@ -424,8 +89,7 @@ body {
 .pulse-dot::after {
     content: '';
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     background-color: #4caf50;
     border-radius: 50%;
     animation: pulse 2s infinite;
@@ -436,37 +100,179 @@ body {
     100% { transform: scale(2.5); opacity: 0; }
 }
 
-.nav-right-spacer {
-    flex: 1; /* Visual balance ke liye */
+/* =========================================
+   3. HERO & CALL PANEL
+   ========================================= */
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    min-height: 85vh;
+    padding: 2rem;
 }
 
-/* --- Responsive Adjustments for Mobile --- */
-@media (max-width: 600px) {
-    .navbar {
-        padding: 0.8rem 1rem;
-    }
+.app-logo-floating {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(45deg, #3f51b5, #2196f3);
+    border-radius: 35% 65% 70% 30% / 30% 30% 70% 70%;
+    margin: 0 auto 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 15px 35px rgba(33, 150, 243, 0.2);
+    animation: morph 6s ease-in-out infinite;
+    backdrop-filter: blur(10px);
+}
 
-    .logo {
-        flex: 0; /* Mobile par logo ko sirf utni space de jitni chahiye */
-        margin-right: 10px;
-    }
+@keyframes morph {
+    0%, 100% { border-radius: 35% 65% 70% 30% / 30% 30% 70% 70%; }
+    50% { border-radius: 50%; }
+}
 
-    .nav-links {
-        flex: 1;
-        justify-content: flex-end; /* Mobile par contents right/center align honge */
-        gap: 12px;
-    }
+.controls-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 40px;
+}
 
-    .online-status {
-        padding: 4px 8px;
-        font-size: 0.7rem;
-    }
+.action-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    background: #1a1a1a;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
 
-    .filter-text {
-        font-size: 0.55rem;
-    }
+.call-btn { background: #2e7d32; }
+.action-btn:hover { transform: translateY(-5px); background: #333; }
 
-    .nav-right-spacer {
-        display: none; /* Mobile par spacer ki zaroorat nahi */
-    }
+/* =========================================
+   4. CHAT SYSTEM STYLES (FIXED)
+   ========================================= */
+.chat-container {
+    flex: 1;
+    max-width: 550px;
+    height: 450px;
+    background: #161616;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid #222;
+}
+
+#chat-display {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    background-color: #0c0c0c;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 10px;
+}
+
+.message-wrapper {
+    display: flex;
+    width: 100%;
+    margin-bottom: 4px;
+    flex-shrink: 0;
+}
+
+/* Alignment Logic */
+.my-msg { justify-content: flex-end; }
+.peer-msg { justify-content: flex-start; }
+
+.message-bubble {
+    max-width: 75%;
+    padding: 10px 14px;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    word-wrap: break-word;
+}
+
+/* User Bubble (Right) */
+.my-msg .message-bubble {
+    background-color: #2196f3;
+    color: white;
+    border-radius: 18px 18px 2px 18px;
+}
+
+/* Stranger Bubble (Left) */
+.peer-msg .message-bubble {
+    background-color: #2a2a2a;
+    color: #eee;
+    border-radius: 18px 18px 18px 2px;
+    border: 1px solid #333;
+}
+
+.message-text { font-size: 0.95rem; }
+.message-time {
+    font-size: 0.65rem;
+    opacity: 0.6;
+    text-align: right;
+    margin-top: 4px;
+}
+
+/* Input Area */
+.message-input {
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    background: #1a1a1a;
+    gap: 12px;
+    border-top: 1px solid #222;
+}
+
+.message-input input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: white;
+    outline: none;
+    font-size: 0.95rem;
+}
+
+.send-btn {
+    background: #2196f3;
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.send-btn:hover { transform: scale(1.05); background: #1976d2; }
+
+/* =========================================
+   5. ANIMATIONS & RESPONSIVE
+   ========================================= */
+.wave-container {
+    display: flex; align-items: center; justify-content: center;
+    gap: 4px; height: 40px;
+}
+
+.wave-bar {
+    width: 3px; height: 15px; background-color: #2196f3;
+    border-radius: 10px; animation: wave-move 1.2s ease-in-out infinite;
+}
+
+@keyframes wave-move {
+    0%, 100% { height: 10px; opacity: 0.5; }
+    50% { height: 25px; opacity: 1; }
+}
+
+@media (max-width: 850px) {
+    .hero-section { flex-direction: column; gap: 30px; padding: 1rem; }
+    .chat-container { width: 100%; height: 400px; }
+    .nav-right-spacer { display: none; }
+    .nav-links { flex: 1; justify-content: flex-end; }
 }

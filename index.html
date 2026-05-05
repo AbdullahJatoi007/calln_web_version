@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="style.css">
     <!-- Socket.io Library -->
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    
 </head>
 <body>
 
 <nav class="navbar">
     <div class="logo">Calln</div>
+
     <ul class="nav-links">
         <li class="filter-wrapper">
             <div class="filter-content" id="selected-country-ui">
@@ -19,24 +21,28 @@
                 <span class="filter-text" id="current-country-name">Pakistan</span>
             </div>
             <select id="country-filter" class="hidden-select">
-                <option value="all" data-name="All Countries" data-flag="un">🌍 All Countries</option>
-                <option value="pk" data-name="Pakistan" data-flag="pk" selected>🇵🇰 Pakistan</option>
-                <option value="us" data-name="USA" data-flag="us">🇺🇸 USA</option>
-                <option value="tr" data-name="Turkey" data-flag="tr">🇹🇷 Turkey</option>
-                <option value="sa" data-name="Saudi Arabia" data-flag="sa">🇸🇦 Saudi Arabia</option>
-                <option value="ae" data-name="UAE" data-flag="ae">🇦🇪 UAE</option>
-                <option value="gb" data-name="UK" data-flag="gb">🇬🇧 UK</option>
-                <option value="in" data-name="India" data-flag="in">🇮🇳 India</option>
-                <option value="ca" data-name="Canada" data-flag="ca">🇨🇦 Canada</option>
+                <option value="all">🌍 All Countries</option>
+                <option value="pk" selected>🇵🇰 Pakistan</option>
+                <option value="us">🇺🇸 USA</option>
+                <option value="tr">🇹🇷 Turkey</option>
+                <option value="sa">🇸🇦 Saudi Arabia</option>
+                <option value="ae">🇦🇪 UAE</option>
+                <option value="gb">🇬🇧 UK</option>
+                <option value="in">🇮🇳 India</option>
+                <option value="ca">🇨🇦 Canada</option>
             </select>
         </li>
+
         <li>
             <div class="online-status">
                 <span class="pulse-dot"></span>
-                <span class="status-text">Online: <strong id="user-count">...</strong></span>
+                <span>Online: <strong id="user-count">...</strong></span>
             </div>
         </li>
     </ul>
+
+    <!-- IMPORTANT (keeps center perfectly balanced) -->
+    <div class="nav-right"></div>
 </nav>
 
 <main class="hero-section">
@@ -90,7 +96,9 @@
 </main>
 
 <!-- JS Files - Order is Important -->
-<script src="connection.js"></script>
-<script src="chat.js"></script>
+<script src="js/config.js"></script>
+<script src="js/connection.js"></script>
+<script src="js/chat.js"></script>
+<script src="js/script.js"></script>
 </body>
 </html>

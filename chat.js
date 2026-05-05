@@ -43,32 +43,53 @@ socket.on('chat_message', (data) => {
     }
 });
 
+// chat.js
 function appendMessage(text, className) {
     const msgDiv = document.createElement('div');
     
-    // Timestamp create karein (WhatsApp feel)
+    // Time format (e.g., 10:30 PM)
     const now = new Date();
-    const timeString = now.getHours().toString().padStart(2, '0') + ":" + 
-                       now.getMinutes().toString().padStart(2, '0');
+    const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    msgDiv.className = `message ${className}`;
+    // "message-wrapper" class alignment ko control karegi (left ya right)
+    msgDiv.className = `message-wrapper ${className}`;
     
-    // WhatsApp structure: Text upar aur chota Time niche
     msgDiv.innerHTML = `
-        <div class="msg-content">
-            <span class="text">${text}</span>
-            <span class="time">${timeString}</span>
+        <div class="message-bubble">
+            <div class="message-text">${text}</div>
+            <div class="message-time">${timeString}</div>
         </div>
     `;
     
     chatScreen.appendChild(msgDiv);
     
-    // Smooth scroll to bottom
+    // Auto-scroll logic
     chatScreen.scrollTo({
         top: chatScreen.scrollHeight,
         behavior: 'smooth'
     });
 }
+
+// Jab aap message bhejte hain
+function sendMessage() {
+    const msg = chatInput.value.trim();
+    if (msg && activeRoomId) {
+        socket.emit('chat_message', { 
+            roomId: activeRoomId, 
+            message: msg,
+            sender: socket.id 
+        });
+        appendMessage(msg, 'my-msg'); // Aapka msg right par jayega
+        chatInput.value = '';
+    }
+}
+
+// Jab doosra user bhejta hai
+socket.on('chat_message', (data) => {
+    if (data.sender !== socket.id) {
+        appendMessage(data.message, 'peer-msg'); // Stranger ka msg left par jayega
+    }
+});
 
 sendBtn.addEventListener('click', sendMessage);
 chatInput.addEventListener('keypress', (e) => {

@@ -1,57 +1,192 @@
+/* =============================================
+   RESPONSIVE — All Breakpoints
+   Single source of truth. No @media rules
+   should exist in other CSS files.
+   ============================================= */
+
+/* ═══════════════════════════════════════
+   TABLET  ≤ 850px
+   Two-column → stacked, page scrollable
+   ═══════════════════════════════════════ */
 @media (max-width: 850px) {
-    .hero-section {
-        flex-direction: column;
-        /* Change from center to flex-start to allow the page to grow downwards */
-        justify-content: flex-start; 
-        gap: 25px;
-        padding: 1.5rem 1rem;
-        /* Allow height to be determined by content */
-        height: auto !important; 
-        min-height: 100vh;
-        overflow-y: visible; 
-    }
+  html, body {
+    overflow-y: auto !important;
+    height: auto !important;
+  }
 
-    .call-panel {
-        width: 100%;
-        max-width: 100%;
-        margin-bottom: 20px;
-    }
+  /* Navbar: un-center the nav-links */
+  .nav-links {
+    position: static;
+    transform: none;
+  }
+  .nav-right { display: none; }
 
-    .chat-container {
-        width: 100%;
-        /* Setting a fixed pixel height on mobile prevents the page from breaking */
-        height: 450px; 
-        max-height: 70dvh; 
-    }
+  /* Hero stacks vertically */
+  .hero-section {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: auto;
+    padding: 1.5rem 1.2rem 2.5rem;
+    gap: 24px;
+  }
+
+  .call-panel {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .chat-container {
+    width: 100%;
+    max-width: 500px;
+    height: 430px;
+  }
 }
 
+/* ═══════════════════════════════════════
+   MOBILE  ≤ 600px
+   Narrow viewport, wrapped navbar
+   ═══════════════════════════════════════ */
+@media (max-width: 600px) {
+  /* Navbar wraps: logo + spacer on row 1, links on row 2 */
+  .navbar {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 0.55rem 1rem 0.45rem;
+    gap: 5px;
+  }
+  .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    gap: 8px;
+    padding-bottom: 3px;
+  }
+  .logo { font-size: 1.15rem; }
+
+  /* Hide country label, keep flag icon only */
+  .filter-text { display: none; }
+
+  .online-status { font-size: 0.72rem; padding: 5px 10px; }
+  .filter-content { padding: 5px 10px; }
+
+  /* Hero */
+  .hero-section {
+    padding: 1rem 0.85rem 2rem;
+    gap: 18px;
+  }
+
+  .call-panel { max-width: 100%; }
+
+  .app-logo-floating { width: 92px; height: 92px; }
+  .action-btn { width: 52px; height: 52px; }
+  .call-btn { padding: 0 16px; height: 52px; }
+  .controls-grid { gap: 12px; margin-bottom: 20px; max-width: 270px; }
+  .control-item { font-size: 0.68rem; }
+
+  .chat-container {
+    max-width: 100%;
+    height: 390px;
+    border-radius: var(--r-lg);
+  }
+}
+
+/* ═══════════════════════════════════════
+   MOBILE SMALL  ≤ 480px
+   Standard modern smartphones
+   ═══════════════════════════════════════ */
 @media (max-width: 480px) {
-    /* Ensure the root elements allow scrolling */
-    html, body {
-        height: auto !important;
-        overflow-x: hidden !important;
-        overflow-y: auto !important;
-    }
+  .hero-section {
+    padding: 0.85rem 0.65rem 2rem;
+    gap: 16px;
+  }
 
-    .hero-section {
-        padding: 1rem 0.5rem;
-        display: block; /* Stacks everything naturally in the document flow */
-    }
+  .app-logo-floating {
+    width: 82px;
+    height: 82px;
+    margin-bottom: 10px;
+  }
 
-    .chat-container {
-        /* Reduce height slightly to ensure user can see 'Start Call' and 'Chat' without being cramped */
-        height: 400px; 
-        margin: 0 auto 20px;
-        width: 96%; /* Margin on sides allows finger to scroll the PAGE not just the chat */
-    }
+  .action-btn { width: 50px; height: 50px; }
+  .call-btn   { padding: 0 14px; height: 50px; }
+  .controls-grid { gap: 10px; max-width: 255px; }
 
-    .action-btn {
-        width: 50px; /* Slightly bigger for touch targets */
-        height: 50px;
-    }
+  .chat-container {
+    height: 360px;
+    border-radius: var(--r-md);
+  }
 
-    /* Make the call btn more compact for mobile grids */
-    .call-btn {
-        padding: 0 15px;
-    }
+  /* Prevent iOS zoom on input focus */
+  .message-input input { font-size: 16px; }
+}
+
+/* ═══════════════════════════════════════
+   TINY PHONES  ≤ 360px
+   Older / budget handsets
+   ═══════════════════════════════════════ */
+@media (max-width: 360px) {
+  .navbar { padding: 0.5rem 0.75rem 0.4rem; }
+  .logo   { font-size: 1rem; }
+  .filter-content  { padding: 4px 9px; }
+  .online-status   { padding: 4px 8px; font-size: 0.67rem; }
+
+  .hero-section { padding: 0.75rem 0.5rem 1.5rem; gap: 14px; }
+
+  .app-logo-floating { width: 72px; height: 72px; }
+  .action-btn { width: 46px; height: 46px; }
+  .call-btn   { padding: 0 12px; height: 46px; }
+  .controls-grid { gap: 8px; max-width: 230px; }
+  .control-item  { font-size: 0.62rem; gap: 6px; }
+
+  .chat-container { height: 330px; }
+  .message-bubble { font-size: 0.85rem; padding: 7px 11px; }
+  .chat-header    { padding: 10px 13px; }
+}
+
+/* ═══════════════════════════════════════
+   LANDSCAPE PHONES  (height ≤ 500px)
+   Side-by-side again but compact
+   ═══════════════════════════════════════ */
+@media (max-height: 500px) and (orientation: landscape) {
+  html, body { overflow-y: auto !important; }
+
+  .navbar { height: 50px; padding: 0 1rem; }
+  .nav-links { position: static; transform: none; }
+  .nav-right { display: none; }
+
+  .hero-section {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: auto;
+    padding: 0.75rem 1rem 1rem;
+    gap: 18px;
+  }
+
+  .call-panel {
+    max-width: 280px;
+    flex-shrink: 0;
+  }
+  .app-logo-floating { width: 62px; height: 62px; margin-bottom: 10px; }
+  .action-btn   { width: 42px; height: 42px; }
+  .call-btn     { height: 42px; padding: 0 12px; }
+  .controls-grid { gap: 8px; margin-bottom: 12px; max-width: 220px; }
+  .control-item  { font-size: 0.62rem; }
+
+  .chat-container {
+    flex: 1;
+    height: calc(100dvh - 70px);
+    max-width: none;
+  }
+
+  .message-input input { font-size: 16px; }
+}
+
+/* ═══════════════════════════════════════
+   SAFE AREA (iPhone notch / Dynamic Island)
+   ═══════════════════════════════════════ */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .message-input {
+    padding-bottom: calc(11px + env(safe-area-inset-bottom));
+  }
 }

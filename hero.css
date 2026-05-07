@@ -1,257 +1,283 @@
-/* =========================================
-   HERO SECTION
-   ========================================= */
+/* =============================================
+   HERO SECTION & CALL PANEL
+   ============================================= */
 .hero-section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 40px;
-    min-height: calc(100vh - 70px);
-    padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  min-height: calc(100dvh - 60px);
+  padding: 2rem 1.5rem;
 }
 
+/* ---- CALL PANEL ---- */
 .call-panel {
-    flex: 1;
-    max-width: 400px;
-    text-align: center;
+  flex: 1;
+  max-width: 370px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* ---- APP LOGO ---- */
 .app-logo-floating {
-    width: 120px;
-    height: 120px;
-    background: linear-gradient(45deg, #3f51b5, #2196f3);
-    border-radius: 50%;
-    margin: 0 auto 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    animation: none;
-    overflow: visible;
-    flex-shrink: 0;
+  width: 108px;
+  height: 108px;
+  background: linear-gradient(145deg, #1c3f88 0%, var(--accent) 100%);
+  border-radius: 50%;
+  margin: 0 auto 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: visible;
+  flex-shrink: 0;
+  box-shadow:
+    0 0 0 1px rgba(61,127,255,0.2),
+    0 0 40px var(--accent-glow),
+    var(--shadow-lg);
+  transition: box-shadow 0.6s ease, background 0.6s ease;
+}
+.app-logo-floating.connected {
+  background: linear-gradient(145deg, #0b4d27 0%, var(--green) 100%);
+  box-shadow:
+    0 0 0 1px rgba(16,185,129,0.25),
+    0 0 40px var(--green-glow),
+    var(--shadow-lg);
+}
+.app-logo-floating.searching {
+  animation: logoSearch 1.8s ease-in-out infinite;
+}
+@keyframes logoSearch {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(61,127,255,0.2), 0 0 30px var(--accent-glow), var(--shadow-lg); }
+  50%       { box-shadow: 0 0 0 1px rgba(61,127,255,0.4), 0 0 65px var(--accent-glow), 0 0 90px var(--accent-soft), var(--shadow-lg); }
 }
 
 /* ---- RADIO RINGS ---- */
 .radio-ring {
-    position: absolute;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.8);
-    width: 100%;
-    height: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0;
-    animation: radioWave 2.4s ease-out infinite;
-    pointer-events: none;
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid rgba(61, 127, 255, 0.45);
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 0;
+  animation: radioWave 3.2s ease-out infinite;
+  pointer-events: none;
 }
-
 .radio-ring:nth-child(1) { animation-delay: 0s; }
-.radio-ring:nth-child(2) { animation-delay: 0.6s; }
-.radio-ring:nth-child(3) { animation-delay: 1.2s; }
-.radio-ring:nth-child(4) { animation-delay: 1.8s; }
+.radio-ring:nth-child(2) { animation-delay: 0.8s; }
+.radio-ring:nth-child(3) { animation-delay: 1.6s; }
+.radio-ring:nth-child(4) { animation-delay: 2.4s; }
+
+.app-logo-floating.connected .radio-ring {
+  border-color: rgba(16, 185, 129, 0.45);
+}
 
 @keyframes radioWave {
-    0% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0.85;
-        border-width: 2.5px;
-    }
-    100% {
-        transform: translate(-50%, -50%) scale(2.2);
-        opacity: 0;
-        border-width: 0.5px;
-    }
+  0%   { transform: translate(-50%, -50%) scale(1);   opacity: 0.75; border-width: 2px; }
+  100% { transform: translate(-50%, -50%) scale(2.6); opacity: 0;    border-width: 0.5px; }
 }
 
-/* ---- CONTROLS ---- */
+/* ---- WAVE BARS (shown during active call) ---- */
+.wave-container {
+  display: flex;
+  gap: 3px;
+  height: 0;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: height 0.4s ease, opacity 0.4s ease, margin-bottom 0.4s ease;
+  pointer-events: none;
+}
+.wave-container.active {
+  height: 36px;
+  opacity: 1;
+  margin-bottom: 20px;
+}
+.wave-bar {
+  width: 3px;
+  background: var(--accent);
+  border-radius: 10px;
+  height: 4px;
+  animation: waveMove 1.3s ease-in-out infinite;
+  animation-play-state: paused;
+}
+.wave-container.active .wave-bar { animation-play-state: running; }
+.wave-bar:nth-child(1) { animation-delay: 0s;     }
+.wave-bar:nth-child(2) { animation-delay: 0.13s;  }
+.wave-bar:nth-child(3) { animation-delay: 0.26s;  }
+.wave-bar:nth-child(4) { animation-delay: 0.39s;  }
+.wave-bar:nth-child(5) { animation-delay: 0.52s;  }
+.wave-bar:nth-child(6) { animation-delay: 0.39s;  }
+.wave-bar:nth-child(7) { animation-delay: 0.26s;  }
+.wave-bar:nth-child(8) { animation-delay: 0.13s;  }
+.wave-bar:nth-child(9) { animation-delay: 0s;     }
+@keyframes waveMove {
+  0%, 100% { height: 4px;  opacity: 0.35; }
+  50%       { height: 30px; opacity: 1;   background: #74b3ff; }
+}
+
+/* ---- CONTROLS GRID ---- */
 .controls-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-    margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 22px;
+  width: 100%;
+  max-width: 290px;
 }
 
 .control-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 0.8rem;
-    color: #888;
-    gap: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-3);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
+/* ---- BUTTONS ---- */
 .action-btn {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: none;
-    background: #1a1a1a;
-    color: white;
-    cursor: pointer;
-    transition: 0.25s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    touch-action: manipulation;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.18s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  flex-shrink: 0;
 }
-.action-btn:hover  { transform: translateY(-3px); }
-.action-btn:active { transform: scale(0.93); }
+.action-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-md);
+  color: var(--text-1);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+.action-btn:active {
+  transform: scale(0.91);
+  transition-duration: 0.08s;
+}
 
+/* Call button */
 .call-btn {
-    background: #2e7d32;
-    padding: 0 22px;
-    border-radius: 30px;
+  background: linear-gradient(145deg, #0c6124, var(--green)) !important;
+  border-color: transparent !important;
+  color: white !important;
+  box-shadow: 0 4px 18px var(--green-glow);
+  border-radius: 30px !important;
+  width: auto !important;
+  padding: 0 20px;
+  height: 56px;
 }
-.call-btn:hover { background: #388e3c; }
+.call-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 28px var(--green-glow) !important;
+}
+.call-btn.ending {
+  background: linear-gradient(145deg, #701028, var(--red)) !important;
+  box-shadow: 0 4px 18px rgba(244, 63, 94, 0.3) !important;
+}
+.call-btn.ending:hover {
+  box-shadow: 0 6px 28px rgba(244, 63, 94, 0.45) !important;
+}
+
+/* Mute button */
+#mute-btn { color: var(--text-2); }
+#mute-btn.muted {
+  background: var(--red-soft) !important;
+  border-color: rgba(244, 63, 94, 0.35) !important;
+  color: var(--red) !important;
+}
+#mute-btn.muted + span { color: var(--red); }
+
+/* Report button */
+#report-btn:hover {
+  background: var(--red-soft) !important;
+  border-color: rgba(244, 63, 94, 0.3) !important;
+  color: var(--red) !important;
+}
 
 /* ---- SETTINGS ROW ---- */
 .settings-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  margin-bottom: 14px;
+}
+.label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-2);
 }
 
+/* ---- STATUS / HINT TEXT ---- */
 .hint-text {
-    font-size: 0.85rem;
-    color: #666;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-3);
+  min-height: 22px;
+  transition: color 0.3s;
+  letter-spacing: 0.01em;
 }
 
 /* ---- TOGGLE SWITCH ---- */
 .switch {
-    width: 44px;
-    height: 22px;
-    position: relative;
+  width: 42px;
+  height: 22px;
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
 }
-.switch input { opacity: 0; width: 0; height: 0; }
-
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
 .slider {
-    position: absolute;
-    inset: 0;
-    background: #333;
-    border-radius: 34px;
-    cursor: pointer;
+  position: absolute;
+  inset: 0;
+  background: var(--bg-hover);
+  border: 1px solid var(--border-md);
+  border-radius: 34px;
+  cursor: pointer;
+  transition: background 0.28s, border-color 0.28s;
 }
-.slider:before {
-    content: "";
-    position: absolute;
-    height: 16px;
-    width: 16px;
-    left: 3px;
-    bottom: 3px;
-    background: white;
-    border-radius: 50%;
-    transition: .4s;
+.slider::before {
+  content: '';
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--text-3);
+  border-radius: 50%;
+  transition: transform 0.28s, background 0.28s;
 }
-input:checked + .slider { background: #2196f3; }
-input:checked + .slider:before { transform: translateX(22px); }
-
-/* ---- WAVE BARS ---- */
-.wave-container {
-    display: flex;
-    gap: 4px;
-    height: 60px;
-    align-items: flex-end;
-    justify-content: center;
+input:checked + .slider {
+  background: var(--accent-soft);
+  border-color: var(--accent);
 }
-.wave-bar {
-    width: 4px;
-    height: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    animation: wave-move 1.2s infinite;
-    animation-play-state: paused;
-}
-@keyframes wave-move {
-    0%, 100% { height: 20px; opacity: 0.5; }
-    50%       { height: 50px; opacity: 1; background-color: #2196f3; }
-}
-
-/* =========================================
-   HERO RESPONSIVE
-   ========================================= */
-
-/* Tablet */
-@media (max-width: 850px) {
-    .hero-section {
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 25px;
-        padding: 1.5rem 1rem;
-        min-height: calc(100vh - 70px);
-        height: auto;
-        overflow-y: visible;
-    }
-    .call-panel {
-        width: 100%;
-        max-width: 420px;
-        margin-bottom: 10px;
-    }
-    .app-logo-floating {
-        width: 100px;
-        height: 100px;
-        margin-bottom: 20px;
-    }
-}
-
-/* Mobile large */
-@media (max-width: 600px) {
-    .hero-section {
-        padding: 1rem 0.75rem;
-        gap: 20px;
-    }
-    .call-panel { max-width: 100%; }
-    .controls-grid { gap: 12px; margin-bottom: 20px; }
-    .action-btn { width: 52px; height: 52px; }
-    .control-item { font-size: 0.72rem; }
-    .app-logo-floating { width: 88px; height: 88px; margin-bottom: 16px; }
-    .call-btn { padding: 0 16px; }
-}
-
-/* Mobile small */
-@media (max-width: 480px) {
-    html, body {
-        height: auto;
-        overflow-x: hidden;
-        overflow-y: auto;
-    }
-    .hero-section {
-        display: block;
-        padding: 1rem 0.5rem;
-    }
-    .call-panel {
-        max-width: 100%;
-        margin-bottom: 20px;
-    }
-    .action-btn { width: 50px; height: 50px; }
-    .call-btn { padding: 0 15px; }
-    .controls-grid { gap: 10px; }
-}
-
-/* Very small phones */
-@media (max-width: 360px) {
-    .action-btn { width: 46px; height: 46px; }
-    .controls-grid { gap: 8px; }
-    .app-logo-floating { width: 76px; height: 76px; }
-    .control-item { font-size: 0.65rem; }
-}
-
-/* Landscape phones */
-@media (max-height: 500px) and (orientation: landscape) {
-    .hero-section {
-        flex-direction: row;
-        align-items: flex-start;
-        padding: 1rem;
-        gap: 20px;
-        min-height: auto;
-    }
-    .call-panel { max-width: 340px; }
-    .app-logo-floating { width: 70px; height: 70px; margin-bottom: 12px; }
-    .controls-grid { gap: 10px; margin-bottom: 16px; }
-    .action-btn { width: 46px; height: 46px; }
+input:checked + .slider::before {
+  transform: translateY(-50%) translateX(20px);
+  background: var(--accent);
 }

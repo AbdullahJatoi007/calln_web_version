@@ -1,12 +1,97 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+/* =============================================
+   BASE — Design Tokens & Reset
+   ============================================= */
+:root {
+  /* Backgrounds */
+  --bg-base:     #07080f;
+  --bg-surface:  #0c0e16;
+  --bg-elevated: #121520;
+  --bg-hover:    #191d2c;
+
+  /* Borders */
+  --border:      rgba(255, 255, 255, 0.065);
+  --border-md:   rgba(255, 255, 255, 0.11);
+
+  /* Accent — Electric Blue */
+  --accent:      #3d7fff;
+  --accent-soft: rgba(61, 127, 255, 0.12);
+  --accent-glow: rgba(61, 127, 255, 0.28);
+
+  /* Status */
+  --green:       #10b981;
+  --green-soft:  rgba(16, 185, 129, 0.12);
+  --green-glow:  rgba(16, 185, 129, 0.28);
+  --red:         #f43f5e;
+  --red-soft:    rgba(244, 63, 94, 0.12);
+
+  /* Text */
+  --text-1:      #dce2f0;
+  --text-2:      #7d88a4;
+  --text-3:      #424d66;
+
+  /* Radii */
+  --r-sm:  8px;
+  --r-md:  14px;
+  --r-lg:  20px;
+  --r-xl:  26px;
+  --r-2xl: 40px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* ---- RESET ---- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
-    background-color: #0f0f0f;
-    color: #eee;
-    overflow-x: hidden;
+  font-family: 'Outfit', 'Segoe UI', system-ui, sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-1);
+  overflow-x: hidden;
+  min-height: 100dvh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Subtle ambient background glow */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 45% at 15% -5%,  rgba(61,127,255,0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 40% at 85% 105%, rgba(61,127,255,0.05) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+body > * { position: relative; z-index: 1; }
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* ---- GLOBAL SCROLLBAR ---- */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.18);
 }

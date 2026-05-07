@@ -6,7 +6,12 @@ const CHAT_MANAGER = {
 
         input.disabled = !status;
         sendBtn.disabled = !status;
-        input.placeholder = status ? "Type a message..." : "Connect to chat...";
+        input.placeholder = status ? "Type a message…" : "Start a call to chat…";
+
+        if (status) {
+            // Small delay so the keyboard doesn't snap on connect
+            setTimeout(() => input.focus(), 400);
+        }
     },
 
     sendMessage() {
@@ -14,7 +19,6 @@ const CHAT_MANAGER = {
         if (!input) return;
 
         const msg = input.value.trim();
-        // Ensure currentRoomId is defined globally
         if (!msg || typeof currentRoomId === 'undefined' || !currentRoomId) return;
 
         socket.emit('chat_message', {
@@ -31,11 +35,12 @@ const CHAT_MANAGER = {
         const container = document.getElementById('chat-display');
         if (!container) return;
 
-        // Remove "Audio Only Mode" text on first message
+        // Remove overlay on first message
         const overlay = container.querySelector('.overlay-text');
         if (overlay) overlay.remove();
 
         const msg = document.createElement('div');
+
         if (isSystem) {
             msg.className = 'system-msg';
             msg.innerText = text;
@@ -43,25 +48,27 @@ const CHAT_MANAGER = {
             msg.className = `message-wrapper ${className}`;
             msg.innerHTML = `
                 <div class="message-bubble">
-                    <div class="message-text">${text}</div>
-                </div>
-            `;
+                    <div class="message-text">${this._escape(text)}</div>
+                </div>`;
         }
 
         container.appendChild(msg);
-        
-        // Multi-stage scroll fix for mobile browsers
         this.scrollToBottom();
+    },
+
+    // Prevent XSS — sanitise message text before injecting
+    _escape(str) {
+        return str
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
     },
 
     scrollToBottom() {
         const container = document.getElementById('chat-display');
         if (!container) return;
-        
-        // Immediate scroll
         container.scrollTop = container.scrollHeight;
-        
-        // Smooth frame-synced scroll for mobile
         requestAnimationFrame(() => {
             container.scrollTop = container.scrollHeight;
         });
@@ -70,29 +77,34 @@ const CHAT_MANAGER = {
     clearChat() {
         const container = document.getElementById('chat-display');
         if (!container) return;
-        container.innerHTML = `<div class="overlay-text">Audio Only Mode</div>`;
+        container.innerHTML = `
+            <div class="overlay-text">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                    <line x1="12" y1="19" x2="12" y2="23"/>
+                    <line x1="8"  y1="23" x2="16" y2="23"/>
+                </svg>
+                Audio only mode
+                <span>Start a call to enable chat</span>
+            </div>`;
     },
 
+    // Called by script.js (kept here so mute UI state is centralised)
     toggleMuteUI(isMuted) {
-        const btn = document.getElementById('mute-btn');
+        const btn   = document.getElementById('mute-btn');
         const label = document.getElementById('mute-label');
         if (!btn || !label) return;
 
-        if (isMuted) {
-            btn.classList.add('muted');
-            label.innerText = "Muted";
-        } else {
-            btn.classList.remove('muted');
-            label.innerText = "Mute";
-        }
+        btn.classList.toggle('muted', isMuted);
+        label.innerText = isMuted ? 'Muted' : 'Mute';
     }
 };
 
-// Initialization and Listeners
+// ── Event Listeners ────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-    const input = document.getElementById('msg-input');
+    const input   = document.getElementById('msg-input');
     const sendBtn = document.getElementById('send-btn');
-    const muteBtn = document.getElementById('mute-btn');
 
     sendBtn?.addEventListener('click', () => CHAT_MANAGER.sendMessage());
 
@@ -103,33 +115,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    
-    // Merge the focus listeners into one clean block
+    // On mobile, scroll chat to bottom after keyboard opens
     input?.addEventListener('focus', () => {
-        setTimeout(() => {
-            // 1. Ensure the input itself is centered/visible above keyboard
-            input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            // 2. Ensure the chat messages are scrolled to the bottom
-            CHAT_MANAGER.scrollToBottom();
-        }, 300);
-    });
-    // Mute Logic
-    muteBtn?.addEventListener('click', () => {
-        const currentlyMuted = muteBtn.classList.contains('muted');
-        const newState = !currentlyMuted;
-        
-        // Update UI locally
-        CHAT_MANAGER.toggleMuteUI(newState);
-        
-        // Emit event to partner
-        if (typeof currentRoomId !== 'undefined' && currentRoomId) {
-            socket.emit('toggle_mute', { isMuted: newState, roomId: currentRoomId });
-        }
+        setTimeout(() => CHAT_MANAGER.scrollToBottom(), 350);
     });
 });
 
-// SOCKET LISTENERS
+// ── Socket Listeners ───────────────────────────────────────
 socket.on('chat_message', (data) => {
     if (data.sender === socket.id) return;
     CHAT_MANAGER.appendMessage(data.message, 'peer-msg');
@@ -137,7 +129,7 @@ socket.on('chat_message', (data) => {
 
 socket.on('peer_muted', (data) => {
     CHAT_MANAGER.appendMessage(
-        data.isMuted ? "Partner muted mic 🔇" : "Partner unmuted mic 🎤",
+        data.isMuted ? '🔇 Partner muted their mic' : '🎤 Partner unmuted their mic',
         '',
         true
     );

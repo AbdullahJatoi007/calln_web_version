@@ -1,18 +1,21 @@
 const CHAT_MANAGER = {
-
     enableInput(status) {
         const input = document.getElementById('msg-input');
-        if (!input) return;
+        const sendBtn = document.getElementById('send-btn');
+        if (!input || !sendBtn) return;
 
         input.disabled = !status;
+        sendBtn.disabled = !status;
         input.placeholder = status ? "Type a message..." : "Connect to chat...";
     },
 
     sendMessage() {
         const input = document.getElementById('msg-input');
-        const msg = input?.value?.trim();
+        if (!input) return;
 
-        if (!msg || !currentRoomId) return;
+        const msg = input.value.trim();
+        // Ensure currentRoomId is defined globally
+        if (!msg || typeof currentRoomId === 'undefined' || !currentRoomId) return;
 
         socket.emit('chat_message', {
             roomId: currentRoomId,
@@ -24,12 +27,15 @@ const CHAT_MANAGER = {
         input.value = '';
     },
 
-    appendMessage(text, className, isSystem = false) {
+    appendMessage(text, className = '', isSystem = false) {
         const container = document.getElementById('chat-display');
         if (!container) return;
 
-        const msg = document.createElement('div');
+        // Remove "Audio Only Mode" text on first message
+        const overlay = container.querySelector('.overlay-text');
+        if (overlay) overlay.remove();
 
+        const msg = document.createElement('div');
         if (isSystem) {
             msg.className = 'system-msg';
             msg.innerText = text;
@@ -43,20 +49,86 @@ const CHAT_MANAGER = {
         }
 
         container.appendChild(msg);
+        
+        // Multi-stage scroll fix for mobile browsers
+        this.scrollToBottom();
+    },
+
+    scrollToBottom() {
+        const container = document.getElementById('chat-display');
+        if (!container) return;
+        
+        // Immediate scroll
         container.scrollTop = container.scrollHeight;
+        
+        // Smooth frame-synced scroll for mobile
+        requestAnimationFrame(() => {
+            container.scrollTop = container.scrollHeight;
+        });
+    },
+
+    clearChat() {
+        const container = document.getElementById('chat-display');
+        if (!container) return;
+        container.innerHTML = `<div class="overlay-text">Audio Only Mode</div>`;
+    },
+
+    toggleMuteUI(isMuted) {
+        const btn = document.getElementById('mute-btn');
+        const label = document.getElementById('mute-label');
+        if (!btn || !label) return;
+
+        if (isMuted) {
+            btn.classList.add('muted');
+            label.innerText = "Muted";
+        } else {
+            btn.classList.remove('muted');
+            label.innerText = "Mute";
+        }
     }
 };
 
+// Initialization and Listeners
+document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('msg-input');
+    const sendBtn = document.getElementById('send-btn');
+    const muteBtn = document.getElementById('mute-btn');
 
-// ================= CHAT SOCKET ONLY =================
+    sendBtn?.addEventListener('click', () => CHAT_MANAGER.sendMessage());
 
-socket.on('chat_message', (data) => {
-    if (data.sender !== socket.id) {
-        CHAT_MANAGER.appendMessage(data.message, 'peer-msg');
-    }
+    input?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            CHAT_MANAGER.sendMessage();
+        }
+    });
+
+    // Handle Mobile Keyboard focus: Wait then scroll
+    input?.addEventListener('focus', () => {
+        setTimeout(() => CHAT_MANAGER.scrollToBottom(), 300);
+    });
+
+    // Mute Logic
+    muteBtn?.addEventListener('click', () => {
+        const currentlyMuted = muteBtn.classList.contains('muted');
+        const newState = !currentlyMuted;
+        
+        // Update UI locally
+        CHAT_MANAGER.toggleMuteUI(newState);
+        
+        // Emit event to partner
+        if (typeof currentRoomId !== 'undefined' && currentRoomId) {
+            socket.emit('toggle_mute', { isMuted: newState, roomId: currentRoomId });
+        }
+    });
 });
 
-// peer mute UI only (NO CALL LOGIC HERE)
+// SOCKET LISTENERS
+socket.on('chat_message', (data) => {
+    if (data.sender === socket.id) return;
+    CHAT_MANAGER.appendMessage(data.message, 'peer-msg');
+});
+
 socket.on('peer_muted', (data) => {
     CHAT_MANAGER.appendMessage(
         data.isMuted ? "Partner muted mic 🔇" : "Partner unmuted mic 🎤",

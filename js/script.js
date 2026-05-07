@@ -1,173 +1,286 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-const elements = {
-    status: document.getElementById('status-display'),
-    startBtn: document.getElementById('start-btn'),
-    muteBtn: document.getElementById('mute-btn'),
-    autoCall: document.getElementById('auto-call'),
-    userCount: document.getElementById('user-count'),
-    chatBox: document.getElementById('chat-display')
-};
+    const elements = {
+        status: document.getElementById('status-display'),
+        startBtn: document.getElementById('start-btn'),
+        muteBtn: document.getElementById('mute-btn'),
+        autoCall: document.getElementById('auto-call'),
+        userCount: document.getElementById('user-count'),
+        chatBox: document.getElementById('chat-display')
+    };
 
-let timerInterval = null;
+    let timerInterval = null;
 
-// ================= CHAT LOCK SCROLL =================
-document.body.style.overflow = "hidden";
+    // ================= CHAT SCROLL FIX =================
 
-if (elements.chatBox) {
-    elements.chatBox.style.overflowY = "auto";
-    elements.chatBox.style.overscrollBehavior = "contain";
-}
+    document.body.style.overflow = "hidden";
 
-// ================= SOCKET EVENTS =================
+    if (elements.chatBox) {
+        elements.chatBox.style.overflowY = "auto";
+        elements.chatBox.style.overscrollBehavior = "contain";
+    }
 
-socket.on('waiting', () => {
-    elements.status.innerText = "Waiting for partner...";
-});
+    // ================= SOCKET EVENTS =================
 
-socket.on('matched', (data) => {
-    currentRoomId = data.roomId;
-    isCalling = true;
+    socket.on('waiting', () => {
+        elements.status.innerText = "Waiting for partner...";
+    });
 
-    UI.setButton(true);
-    UI.startTimer();
-    UI.updateState('connected');
+    socket.on('matched', async (data) => {
 
-    initiatePeerConnection(data.role);
+        currentRoomId = data.roomId;
+        isCalling = true;
 
-    CHAT_MANAGER.enableInput(true);
+        UI.setButton(true);
+        UI.startTimer();
+        UI.updateState('connected');
 
-    CHAT_MANAGER.appendMessage(
-        `Connected with ${data.partnerCountry}`,
-        '',
-        true
-    );
-});
+        // START WEBRTC
+        await initiatePeerConnection(data.role);
 
-socket.on('peer_disconnected', () => UI.stopCall("Partner left"));
-socket.on('call_ended', () => UI.stopCall("Call ended"));
+        // ENABLE CHAT
+        CHAT_MANAGER.enableInput(true);
 
-socket.on('online_count', (data) => {
-    elements.userCount.innerText = data.count;
-});
+        CHAT_MANAGER.appendMessage(
+            `Connected with ${data.partnerCountry}`,
+            '',
+            true
+        );
+    });
 
-// ================= UI =================
+    // ================= WEBRTC SIGNALING =================
 
-const UI = {
+    socket.on('offer', async (data) => {
 
-    setButton(active) {
-        if (!elements.startBtn) return;
+        if (!peerConnection) {
+            await initiatePeerConnection('answerer');
+        }
 
-        elements.startBtn.innerText = active ? "End Call" : "Start Call";
-        elements.startBtn.style.background = active ? "#c62828" : "#2e7d32";
-    },
+        await peerConnection.setRemoteDescription(
+            new RTCSessionDescription(data.offer)
+        );
 
-    startTimer() {
-        let sec = 0;
-        clearInterval(timerInterval);
+        const answer = await peerConnection.createAnswer();
 
-        timerInterval = setInterval(() => {
-            sec++;
-            const m = String(Math.floor(sec / 60)).padStart(2, '0');
-            const s = String(sec % 60).padStart(2, '0');
-            elements.status.innerText = `Live: ${m}:${s}`;
-        }, 1000);
-    },
+        await peerConnection.setLocalDescription(answer);
 
-    stopTimer() {
-        clearInterval(timerInterval);
-    },
+        socket.emit('answer', {
+            roomId: currentRoomId,
+            answer
+        });
+    });
 
-    startCall() {
+    socket.on('answer', async (data) => {
 
-        navigator.mediaDevices.getUserMedia({ audio: true })
-            .then(stream => {
+        if (!peerConnection) return;
 
-                localStream = stream;
+        await peerConnection.setRemoteDescription(
+            new RTCSessionDescription(data.answer)
+        );
+    });
+
+    socket.on('ice_candidate', async (data) => {
+
+        if (!peerConnection || !data.candidate) return;
+
+        try {
+
+            await peerConnection.addIceCandidate(
+                new RTCIceCandidate(data.candidate)
+            );
+
+        } catch (err) {
+
+            console.error("ICE ERROR:", err);
+        }
+    });
+
+    // ================= CALL EVENTS =================
+
+    socket.on('peer_disconnected', () => {
+        UI.stopCall("Partner left");
+    });
+
+    socket.on('call_ended', () => {
+        UI.stopCall("Call ended");
+    });
+
+    socket.on('peer_reconnecting', () => {
+        elements.status.innerText = "Reconnecting...";
+    });
+
+    socket.on('online_count', (data) => {
+        elements.userCount.innerText = data.count;
+    });
+
+    // ================= UI =================
+
+    const UI = {
+
+        setButton(active) {
+
+            if (!elements.startBtn) return;
+
+            elements.startBtn.innerText =
+                active ? "End Call" : "Start Call";
+
+            elements.startBtn.style.background =
+                active ? "#c62828" : "#2e7d32";
+        },
+
+        startTimer() {
+
+            let sec = 0;
+
+            clearInterval(timerInterval);
+
+            timerInterval = setInterval(() => {
+
+                sec++;
+
+                const m = String(Math.floor(sec / 60))
+                    .padStart(2, '0');
+
+                const s = String(sec % 60)
+                    .padStart(2, '0');
+
+                elements.status.innerText = `Live: ${m}:${s}`;
+
+            }, 1000);
+        },
+
+        stopTimer() {
+            clearInterval(timerInterval);
+        },
+
+        async startCall() {
+
+            try {
+
+                localStream = await navigator.mediaDevices.getUserMedia({
+                    audio: true
+                });
+
                 isCalling = true;
 
                 elements.status.innerText = "Searching...";
 
                 this.setButton(true);
+
                 this.updateState('searching');
 
                 socket.emit('find_match', {
-                    userId: 'User_' + Math.floor(Math.random() * 1000),
-                    myCountry: document.getElementById('current-country-name')?.innerText || 'Worldwide',
+
+                    userId:
+                        'User_' + Math.floor(Math.random() * 1000),
+
+                    myCountry:
+                        document.getElementById('current-country-name')
+                        ?.innerText || 'Worldwide',
+
                     targetCountry: 'Worldwide'
                 });
 
-            })
-            .catch(() => alert("Mic permission required"));
-    },
+            } catch (err) {
 
-    stopCall(msg = "Ready") {
+                console.error(err);
 
-        if (currentRoomId) {
-            socket.emit('end_call', { roomId: currentRoomId });
+                alert("Mic permission required");
+            }
+        },
+
+        stopCall(msg = "Ready") {
+
+            if (currentRoomId) {
+
+                socket.emit('end_call', {
+                    roomId: currentRoomId
+                });
+            }
+
+            if (peerConnection) {
+
+                peerConnection.close();
+
+                peerConnection = null;
+            }
+
+            if (localStream) {
+
+                localStream.getTracks().forEach(track => {
+                    track.stop();
+                });
+
+                localStream = null;
+            }
+
+            isCalling = false;
+            currentRoomId = null;
+
+            this.stopTimer();
+
+            this.updateState('idle');
+
+            elements.status.innerText = msg;
+
+            CHAT_MANAGER.enableInput(false);
+
+            CHAT_MANAGER.clearChat();
+
+            this.setButton(false);
+
+            // ================= AUTO RECONNECT =================
+
+            if (elements.autoCall.checked) {
+
+                setTimeout(() => {
+
+                    if (!isCalling) {
+                        this.startCall();
+                    }
+
+                }, 1500);
+            }
+        },
+
+        updateState(state) {
+
+            elements.startBtn.style.background =
+                (state === 'connected' || state === 'searching')
+                    ? "#c62828"
+                    : "#2e7d32";
         }
+    };
 
-        if (peerConnection) {
-            peerConnection.close();
-            peerConnection = null;
+    // ================= BUTTONS =================
+
+    elements.startBtn.addEventListener('click', () => {
+
+        if (!isCalling) {
+
+            UI.startCall();
+
+        } else {
+
+            UI.stopCall("Call ended");
         }
-
-        if (localStream) {
-            localStream.getTracks().forEach(t => t.stop());
-            localStream = null;
-        }
-
-        isCalling = false;
-        currentRoomId = null;
-
-        this.stopTimer();
-        this.updateState('idle');
-
-        elements.status.innerText = msg;
-
-        CHAT_MANAGER.enableInput(false);
-
-        elements.chatBox.innerHTML = `
-            <div class="overlay-text">Audio Only Mode</div>
-        `;
-
-        this.setButton(false);
-    },
-
-    updateState(state) {
-        elements.startBtn.style.background =
-            (state === 'connected' || state === 'searching')
-                ? "#c62828"
-                : "#2e7d32";
-    }
-};
-
-// ================= BUTTONS =================
-
-elements.startBtn.addEventListener('click', () => {
-
-    if (elements.autoCall.checked && !isCalling) {
-        UI.startCall();
-        return;
-    }
-
-    if (!isCalling) {
-        UI.startCall();
-    } else {
-        UI.stopCall("Call ended");
-    }
-});
-
-elements.muteBtn.addEventListener('click', () => {
-    if (!localStream) return;
-
-    isMuted = !isMuted;
-    localStream.getAudioTracks()[0].enabled = !isMuted;
-
-    socket.emit('mute', {
-        roomId: currentRoomId,
-        isMuted
     });
-});
+
+    elements.muteBtn.addEventListener('click', () => {
+
+        if (!localStream) return;
+
+        isMuted = !isMuted;
+
+        localStream.getAudioTracks()[0].enabled = !isMuted;
+
+        socket.emit('mute', {
+            roomId: currentRoomId,
+            isMuted
+        });
+
+        elements.muteBtn.style.background =
+            isMuted ? "#c62828" : "#1a1a1a";
+    });
 
 });

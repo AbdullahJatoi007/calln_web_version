@@ -1,0 +1,116 @@
+/* =========================================
+   NAVBAR (CENTER FIX)
+   ========================================= */
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: #1a1a1a;
+    padding: 0.6rem 1.2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    position: relative; /* Essential for the absolute center group */
+}
+
+/* LEFT LOGO */
+.logo {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+    z-index: 2;
+}
+
+/* RIGHT BALANCE - Keeps the center group from shifting */
+.nav-right {
+    width: 90px;
+    flex-shrink: 0;
+}
+
+/* CENTER GROUP */
+.nav-links {
+    list-style: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* FILTER */
+.filter-wrapper {
+    position: relative;
+    cursor: pointer;
+}
+
+.filter-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #222;
+    padding: 5px 12px;
+    border-radius: 15px;
+}
+
+.filter-content:hover {
+    background: #333;
+}
+
+#current-flag {
+    width: 20px;
+    border-radius: 2px;
+}
+
+.filter-text {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.hidden-select {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* ONLINE STATUS */
+.online-status {
+    display: flex;
+    align-items: center;
+    background: #252525;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    border: 1px solid #333;
+}
+
+.pulse-dot {
+    width: 6px;
+    height: 6px;
+    background: #4caf50;
+    border-radius: 50%;
+    margin-right: 8px;
+    position: relative;
+}
+
+.pulse-dot::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #4caf50;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(2.5); opacity: 0; }
+}

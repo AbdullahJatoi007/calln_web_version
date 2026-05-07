@@ -103,11 +103,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Handle Mobile Keyboard focus: Wait then scroll
+    
+    // Merge the focus listeners into one clean block
     input?.addEventListener('focus', () => {
-        setTimeout(() => CHAT_MANAGER.scrollToBottom(), 300);
+        setTimeout(() => {
+            // 1. Ensure the input itself is centered/visible above keyboard
+            input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // 2. Ensure the chat messages are scrolled to the bottom
+            CHAT_MANAGER.scrollToBottom();
+        }, 300);
     });
-
     // Mute Logic
     muteBtn?.addEventListener('click', () => {
         const currentlyMuted = muteBtn.classList.contains('muted');

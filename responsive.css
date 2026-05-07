@@ -1,36 +1,57 @@
 @media (max-width: 850px) {
     .hero-section {
         flex-direction: column;
+        /* Change from center to flex-start to allow the page to grow downwards */
+        justify-content: flex-start; 
         gap: 25px;
-        padding: 1rem;
+        padding: 1.5rem 1rem;
+        /* Allow height to be determined by content */
+        height: auto !important; 
+        min-height: 100vh;
+        overflow-y: visible; 
     }
+
+    .call-panel {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
     .chat-container {
         width: 100%;
-        height: 55vh;
+        /* Setting a fixed pixel height on mobile prevents the page from breaking */
+        height: 450px; 
+        max-height: 70dvh; 
     }
-    .action-btn {
-        width: 50px;
-        height: 50px;
-    }
-}
-
-@media (max-width: 650px) {
-    .nav-right { display: none; }
-    .nav-links {
-        position: static;
-        transform: none;
-        justify-content: center;
-        width: 100%;
-        flex-wrap: wrap;
-    }
-    .filter-text { display: none; }
 }
 
 @media (max-width: 480px) {
-    .chat-container { height: 50vh; }
-    .action-btn {
-        width: 45px;
-        height: 45px;
+    /* Ensure the root elements allow scrolling */
+    html, body {
+        height: auto !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
     }
-    .message-bubble { max-width: 90%; }
+
+    .hero-section {
+        padding: 1rem 0.5rem;
+        display: block; /* Stacks everything naturally in the document flow */
+    }
+
+    .chat-container {
+        /* Reduce height slightly to ensure user can see 'Start Call' and 'Chat' without being cramped */
+        height: 400px; 
+        margin: 0 auto 20px;
+        width: 96%; /* Margin on sides allows finger to scroll the PAGE not just the chat */
+    }
+
+    .action-btn {
+        width: 50px; /* Slightly bigger for touch targets */
+        height: 50px;
+    }
+
+    /* Make the call btn more compact for mobile grids */
+    .call-btn {
+        padding: 0 15px;
+    }
 }

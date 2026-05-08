@@ -1,0 +1,185 @@
+/* =============================================
+   TOAST NOTIFICATIONS
+   ============================================= */
+
+/* ── Container ────────────────────────────── */
+.toast-container {
+  position: fixed;
+  top: 72px;           /* just below the sticky navbar */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9998;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 400px;
+  padding: 0 16px;
+  pointer-events: none; /* container is click-through */
+}
+
+/* ── Individual toast card ────────────────── */
+.toast {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-md);
+  border-radius: var(--r-md);
+  padding: 13px 14px 13px 16px;
+  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(0,0,0,0.2);
+  pointer-events: all;
+
+  /* Enter animation */
+  opacity: 0;
+  transform: translateY(-10px) scale(0.97);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+.toast.toast-show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.toast.toast-hide {
+  opacity: 0;
+  transform: translateY(-8px) scale(0.96);
+  pointer-events: none;
+}
+
+/* Coloured left accent stripe */
+.toast-info    { border-left: 3px solid var(--accent); }
+.toast-success { border-left: 3px solid var(--green);  }
+.toast-warning { border-left: 3px solid #f59e0b;       }
+.toast-error   { border-left: 3px solid var(--red);    }
+
+/* ── Left icon area ───────────────────────── */
+.toast-icon-wrap {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+.toast-emoji  { font-size: 1.05rem; line-height: 1; }
+
+/* Animated spinner (used for reconnecting states) */
+.toast-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: toastSpin 0.75s linear infinite;
+  flex-shrink: 0;
+}
+.toast-error   .toast-spinner { border-top-color: var(--red);    }
+.toast-warning .toast-spinner { border-top-color: #f59e0b;       }
+.toast-success .toast-spinner { border-top-color: var(--green);  }
+
+@keyframes toastSpin { to { transform: rotate(360deg); } }
+
+/* ── Text body ────────────────────────────── */
+.toast-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.toast-title {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-1);
+  line-height: 1.35;
+  margin: 0;
+}
+
+.toast-sub {
+  font-size: 0.74rem;
+  color: var(--text-3);
+  margin: 3px 0 0;
+  line-height: 1.4;
+}
+
+/* ── Action buttons ───────────────────────── */
+.toast-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.toast-btn {
+  padding: 5px 13px;
+  border-radius: 50px;
+  border: 1px solid var(--border-md);
+  background: var(--bg-hover);
+  color: var(--text-2);
+  font-size: 0.74rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+.toast-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-1);
+}
+
+/* Primary — blue */
+.toast-btn-primary {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.toast-btn-primary:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Danger — red */
+.toast-btn-danger {
+  background: var(--red-soft);
+  border-color: rgba(244, 63, 94, 0.35);
+  color: var(--red);
+}
+.toast-btn-danger:hover {
+  background: var(--red);
+  color: #fff;
+}
+
+/* ── Close (×) button ─────────────────────── */
+.toast-close {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--text-3);
+  font-size: 0.9rem;
+  line-height: 1;
+  padding: 1px 3px;
+  cursor: pointer;
+  margin-top: -1px;
+  transition: color 0.18s;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+.toast-close:hover { color: var(--text-1); }
+
+/* ── Mobile: show from bottom instead ─────── */
+@media (max-width: 600px) {
+  .toast-container {
+    top: auto;
+    bottom: 20px;
+    max-width: calc(100% - 24px);
+    padding: 0 12px;
+  }
+  .toast {
+    transform: translateY(10px) scale(0.97);
+  }
+  .toast.toast-show { transform: translateY(0) scale(1); }
+  .toast.toast-hide { transform: translateY(8px) scale(0.96); }
+}

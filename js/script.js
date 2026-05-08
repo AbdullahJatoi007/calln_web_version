@@ -87,6 +87,9 @@ document.addEventListener("DOMContentLoaded", () => {
         // Start WebRTC peer connection
         await initiatePeerConnection(data.role);
 
+        // Hook network monitor onto the new peer connection
+        if (typeof NETWORK !== 'undefined') NETWORK.watchPeer();
+
         // Enable the text chat input
         CHAT_MANAGER.enableInput(true);
 
@@ -411,6 +414,19 @@ document.addEventListener("DOMContentLoaded", () => {
                     appLogo.classList.add('searching');
                 }
             }
+        }
+    };
+
+    // ════════════════════════════════════════════════
+    // CALL BRIDGE — lets toast.js reach the UI object
+    // without breaking the closure scope
+    // ════════════════════════════════════════════════
+    window._callBridge = {
+        stopCall:       (msg) => UI.stopCall(msg),
+        startCall:      ()    => UI.startCall(),
+        stopAndFindNew: ()    => {
+            UI.stopCall("Reconnect cancelled — finding someone new…");
+            setTimeout(() => { if (!isCalling) UI.startCall(); }, 800);
         }
     };
 

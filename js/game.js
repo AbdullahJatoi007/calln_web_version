@@ -65,12 +65,13 @@ const GAME_MANAGER = {
     ],
 
     // ── Internal state ──────────────────────────
-    wyrMyChoice:     null,
-    wyrPartnerChoice: null,
-    rpsMyChoice:     null,
-    rpsPartnerChoice: null,
-    currentWyrIndex: 0,
+    wyrMyChoice:          null,
+    wyrPartnerChoice:     null,
+    rpsMyChoice:          null,
+    rpsPartnerChoice:     null,
+    currentWyrIndex:      0,
     currentIcebreakerIndex: -1,
+    _inviteSent:          false,   // prevent spamming the play invite
 
     // ════════════════════════════════════════════
     // CORE — socket relay & incoming routing
@@ -86,21 +87,23 @@ const GAME_MANAGER = {
 
     handleIncoming(gameData) {
         switch (gameData.type) {
-            case 'wyr_pick':     this._onPartnerWyrPick(gameData);   break;
-            case 'wyr_sync':     this._onWyrSync(gameData);          break;
-            case 'rps_pick':     this._onPartnerRpsPick(gameData);   break;
-            case 'emoji_burst':  this.showEmojiBurst(gameData.emoji, true); break;
+            case 'play_invite':  this._onPlayInvite();                        break;
+            case 'wyr_pick':     this._onPartnerWyrPick(gameData);            break;
+            case 'wyr_sync':     this._onWyrSync(gameData);                   break;
+            case 'rps_pick':     this._onPartnerRpsPick(gameData);            break;
+            case 'emoji_burst':  this.showEmojiBurst(gameData.emoji, true);   break;
             case 'icebreaker':   this._showIcebreaker(gameData.index, false); break;
         }
     },
 
     // Called when a call connects
     activate() {
-        this.wyrMyChoice     = null;
+        this.wyrMyChoice      = null;
         this.wyrPartnerChoice = null;
-        this.rpsMyChoice     = null;
+        this.rpsMyChoice      = null;
         this.rpsPartnerChoice = null;
-        this.currentWyrIndex = Math.floor(Math.random() * this.wyrQuestions.length);
+        this._inviteSent      = false;
+        this.currentWyrIndex  = Math.floor(Math.random() * this.wyrQuestions.length);
 
         this.renderWyr();
         this.renderRps();
@@ -115,12 +118,49 @@ const GAME_MANAGER = {
         document.getElementById('game-locked')?.classList.add('hidden');
     },
 
+    // ── Send a play invite to partner (once per call) ──
+    sendPlayInvite() {
+        if (this._inviteSent) return;           // don't spam
+        if (!currentRoomId) return;             // must be in a call
+        this._inviteSent = true;
+        this.sendEvent({ type: 'play_invite' });
+    },
+
+    // ── Partner wants to play — show an invite toast ──
+    _onPlayInvite() {
+        if (typeof TOAST === 'undefined') return;
+
+        TOAST.show('Your partner wants to play! 🎮', {
+            id:       'toast-play-invite',
+            type:     'info',
+            icon:     '🎮',
+            sub:      'Switch to the Play tab to join',
+            duration: 0,    // persistent until user responds
+            actions:  [
+                {
+                    label:   'Not now',
+                    dismiss: true,
+                    onClick: () => {}   // just close
+                },
+                {
+                    label:   'Let\'s play →',
+                    primary: true,
+                    dismiss: true,
+                    onClick: () => {
+                        if (typeof switchTab === 'function') switchTab('play');
+                    }
+                }
+            ]
+        });
+    },
+
     // Called when call ends
     deactivate() {
-        this.wyrMyChoice      = null;
-        this.wyrPartnerChoice = null;
-        this.rpsMyChoice      = null;
-        this.rpsPartnerChoice = null;
+        this.wyrMyChoice       = null;
+        this.wyrPartnerChoice  = null;
+        this.rpsMyChoice       = null;
+        this.rpsPartnerChoice  = null;
+        this._inviteSent       = false;   // reset so next call can send invite again
 
         this.renderWyr();
         this.renderRps();
@@ -362,6 +402,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Tab clicks
     document.getElementById('tab-chat')?.addEventListener('click', () => switchTab('chat'));
     document.getElementById('tab-play')?.addEventListener('click', () => {
+        // If in a call, send a play invite to partner (first click only)
+        if (typeof currentRoomId !== 'undefined' && currentRoomId) {
+            GAME_MANAGER.sendPlayInvite();
+        }
+        // Dismiss the incoming invite toast if user accepted by clicking the tab directly
+        if (typeof TOAST !== 'undefined') TOAST.hide('toast-play-invite');
+
         switchTab('play');
         // Lazy-init game UI when tab is first opened
         GAME_MANAGER.renderWyr();

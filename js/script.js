@@ -100,6 +100,10 @@ document.addEventListener("DOMContentLoaded", () => {
             true
         );
 
+        if (typeof trackEvent === 'function') {
+            trackEvent('call_matched', { partner_country: data.partnerCountry });
+        }
+
         // Unlock the Play panel and initialise games
         if (typeof GAME_MANAGER !== 'undefined') {
             GAME_MANAGER.activate();
@@ -263,6 +267,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 isCalling = true;
                 elements.status.innerText = "Looking for someone…";
 
+                if (typeof trackEvent === 'function') {
+                    trackEvent('call_started', { country: this.getSelectedCountry().name });
+                }
+
                 this.setButton(true);
                 this.updateState('searching');
 
@@ -313,6 +321,8 @@ document.addEventListener("DOMContentLoaded", () => {
             isCalling     = false;
             currentRoomId = null;
             isMuted       = false;
+
+            if (typeof trackEvent === 'function') trackEvent('call_ended');
 
             // Reset mute button visual (class-only, no inline styles)
             CHAT_MANAGER.toggleMuteUI(false);
@@ -487,6 +497,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (confirmed) {
             socket.emit('report_user', { roomId: currentRoomId });
+            if (typeof trackEvent === 'function') trackEvent('user_report_submitted');
 
             // Turn off auto-call — don't immediately reconnect after a report
             if (elements.autoCall) {

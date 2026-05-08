@@ -22,7 +22,6 @@ const GAME_MANAGER = {
         ['Be invisible whenever you want 👻', 'Be able to fly whenever you want 🚀'],
         ['Live 200 years in the past 🕰️', 'Live 200 years in the future 🤖'],
         ['Never use social media again 📵', 'Never watch any TV or films again 📺'],
-        ['Only eat sweet food for life 🍭', 'Only eat savoury food for life 🧂'],
         ['Have to sing everything you say 🎤', 'Have to dance everywhere you go 💃'],
         ['Read minds but you can\'t turn it off 🧠', 'See the future but only bad events 😱'],
         ['Be allergic to your phone 📵', 'Be allergic to the internet 🌐'],
@@ -33,45 +32,69 @@ const GAME_MANAGER = {
         ['Win the lottery but lose all your friends 💰', 'Keep all your friends but stay broke ❤️'],
         ['Always feel slightly too cold 🥶', 'Always feel slightly too hot 🥵'],
         ['Have the power of super speed ⚡', 'Have the power of super strength 💪'],
+        ['Only eat sweet food for life 🍭', 'Only eat savoury food for life 🧂'],
     ],
 
     // ── Ice Breaker questions ───────────────────
     iceBreakers: [
-        "What's the most useless talent you have? 🎭",
-        "If you could only eat one food forever, what would it be? 🍽️",
-        "What's the weirdest dream you can remember? 🌙",
-        "If animals could talk, which would be the rudest? 🐻",
-        "What's a skill you wish you had but never learned? 🎯",
-        "What's the funniest thing that's ever happened to you? 😂",
-        "If you could time travel, where would you go first? ⏰",
-        "What's your most controversial hot take? 🌶️",
-        "What's the strangest food combination you actually enjoy? 🤔",
-        "If you had a theme song that played when you walked in, what would it be? 🎵",
-        "What's a job you know you'd be absolutely terrible at? 😅",
-        "What's the most embarrassing thing in your search history? 🔍",
-        "If you could have dinner with anyone alive or dead, who would you pick? 🍴",
-        "What's the most irrational fear you have? 😨",
-        "If you could instantly become an expert in one thing, what would it be? 🎓",
-        "What's a rule your family had growing up that you thought was weird? 🏠",
-        "What's the last thing that made you genuinely laugh out loud? 😂",
-        "If your life was a movie, what genre would it be? 🎬",
-        "What's something you believed as a child that turned out to be totally wrong? 🤦",
-        "If you could only listen to one song for the rest of your life, what would it be? 🎵",
-        "What's the most overrated thing in the world? 🙄",
-        "What random skill do you wish was more impressive to others? 😏",
-        "What's the worst advice someone ever gave you? 🤦‍♀️",
-        "If you could remove one thing from the world, what would it be? 🗑️",
-        "What's the nicest thing a stranger has ever done for you? 🥹",
+        'What\'s the most useless talent you have? 🎭',
+        'If you could only eat one food forever, what would it be? 🍽️',
+        'What\'s the weirdest dream you can remember? 🌙',
+        'If animals could talk, which would be the rudest? 🐻',
+        'What\'s a skill you wish you had but never learned? 🎯',
+        'What\'s the funniest thing that\'s ever happened to you? 😂',
+        'If you could time travel, where would you go first? ⏰',
+        'What\'s your most controversial hot take? 🌶️',
+        'What\'s the strangest food combination you actually enjoy? 🤔',
+        'If you had a theme song that played when you walked in, what would it be? 🎵',
+        'What\'s a job you know you\'d be absolutely terrible at? 😅',
+        'What\'s the most embarrassing thing in your search history? 🔍',
+        'If you could have dinner with anyone alive or dead, who would you pick? 🍴',
+        'What\'s the most irrational fear you have? 😨',
+        'If you could instantly become an expert in one thing, what would it be? 🎓',
+        'What\'s a rule your family had growing up that you thought was weird? 🏠',
+        'What\'s the last thing that made you genuinely laugh out loud? 😂',
+        'If your life was a movie, what genre would it be? 🎬',
+        'What\'s something you believed as a child that turned out to be totally wrong? 🤦',
+        'If you could only listen to one song for the rest of your life, what would it be? 🎵',
+        'What\'s the most overrated thing in the world? 🙄',
+        'What random skill do you wish was more impressive to others? 😏',
+        'What\'s the worst advice someone ever gave you? 🤦',
+        'If you could remove one thing from the world, what would it be? 🗑️',
+        'What\'s the nicest thing a stranger has ever done for you? 🥹',
     ],
 
-    // ── Internal state ──────────────────────────
-    wyrMyChoice:          null,
-    wyrPartnerChoice:     null,
-    rpsMyChoice:          null,
-    rpsPartnerChoice:     null,
-    currentWyrIndex:      0,
+    // ── Game info for invite toasts ─────────────
+    // Each game has a specific invite with its own icon, name, and subtitle.
+    _GAME_INFO: {
+        wyr: {
+            icon:    '🤔',
+            name:    'Would You Rather',
+            sub:     'They\'ve already picked their side — what will you choose?',
+            cardId:  'game-card-wyr',
+        },
+        rps: {
+            icon:    '🪨',
+            name:    'Rock Paper Scissors',
+            sub:     'They\'ve locked in their move — play to reveal who wins!',
+            cardId:  'game-card-rps',
+        },
+        icebreaker: {
+            icon:    '💬',
+            name:    'Ice Breaker',
+            sub:     'They shared a conversation starter — open it up!',
+            cardId:  'game-card-icebreaker',
+        },
+    },
+
+    // ── State ───────────────────────────────────
+    wyrMyChoice:            null,
+    wyrPartnerChoice:       null,
+    rpsMyChoice:            null,
+    rpsPartnerChoice:       null,
+    currentWyrIndex:        0,
     currentIcebreakerIndex: -1,
-    _inviteSent:          false,   // prevent spamming the play invite
+    _invitesSent:           new Set(),   // tracks per-game invites; cleared on deactivate
 
     // ════════════════════════════════════════════
     // CORE — socket relay & incoming routing
@@ -81,20 +104,28 @@ const GAME_MANAGER = {
         socket.emit('chat_message', {
             roomId: currentRoomId,
             sender: socket.id,
-            gameData
+            gameData,
         });
     },
 
     handleIncoming(gameData) {
         switch (gameData.type) {
-            case 'play_invite':  this._onPlayInvite();                        break;
-            case 'wyr_pick':     this._onPartnerWyrPick(gameData);            break;
-            case 'wyr_sync':     this._onWyrSync(gameData);                   break;
-            case 'rps_pick':     this._onPartnerRpsPick(gameData);            break;
-            case 'emoji_burst':  this.showEmojiBurst(gameData.emoji, true);   break;
-            case 'icebreaker':   this._showIcebreaker(gameData.index, false); break;
+            // ── Notification events ─────────────
+            case 'play_tab_open': this._onPartnerOpenedPlay();         break;
+            case 'play_invite':   this._onPlayInvite(gameData);        break;
+
+            // ── Game events ─────────────────────
+            case 'wyr_pick':      this._onPartnerWyrPick(gameData);    break;
+            case 'wyr_sync':      this._onWyrSync(gameData);           break;
+            case 'rps_pick':      this._onPartnerRpsPick(gameData);    break;
+            case 'emoji_burst':   this.showEmojiBurst(gameData.emoji, true); break;
+            case 'icebreaker':    this._showIcebreaker(gameData.index, false); break;
         }
     },
+
+    // ════════════════════════════════════════════
+    // LIFECYCLE
+    // ════════════════════════════════════════════
 
     // Called when a call connects
     activate() {
@@ -102,7 +133,7 @@ const GAME_MANAGER = {
         this.wyrPartnerChoice = null;
         this.rpsMyChoice      = null;
         this.rpsPartnerChoice = null;
-        this._inviteSent      = false;
+        this._invitesSent.clear();
         this.currentWyrIndex  = Math.floor(Math.random() * this.wyrQuestions.length);
 
         this.renderWyr();
@@ -118,49 +149,13 @@ const GAME_MANAGER = {
         document.getElementById('game-locked')?.classList.add('hidden');
     },
 
-    // ── Send a play invite to partner (once per call) ──
-    sendPlayInvite() {
-        if (this._inviteSent) return;           // don't spam
-        if (!currentRoomId) return;             // must be in a call
-        this._inviteSent = true;
-        this.sendEvent({ type: 'play_invite' });
-    },
-
-    // ── Partner wants to play — show an invite toast ──
-    _onPlayInvite() {
-        if (typeof TOAST === 'undefined') return;
-
-        TOAST.show('Your partner wants to play! 🎮', {
-            id:       'toast-play-invite',
-            type:     'info',
-            icon:     '🎮',
-            sub:      'Switch to the Play tab to join',
-            duration: 0,    // persistent until user responds
-            actions:  [
-                {
-                    label:   'Not now',
-                    dismiss: true,
-                    onClick: () => {}   // just close
-                },
-                {
-                    label:   'Let\'s play →',
-                    primary: true,
-                    dismiss: true,
-                    onClick: () => {
-                        if (typeof switchTab === 'function') switchTab('play');
-                    }
-                }
-            ]
-        });
-    },
-
     // Called when call ends
     deactivate() {
-        this.wyrMyChoice       = null;
-        this.wyrPartnerChoice  = null;
-        this.rpsMyChoice       = null;
-        this.rpsPartnerChoice  = null;
-        this._inviteSent       = false;   // reset so next call can send invite again
+        this.wyrMyChoice      = null;
+        this.wyrPartnerChoice = null;
+        this.rpsMyChoice      = null;
+        this.rpsPartnerChoice = null;
+        this._invitesSent.clear();
 
         this.renderWyr();
         this.renderRps();
@@ -171,14 +166,95 @@ const GAME_MANAGER = {
     },
 
     // ════════════════════════════════════════════
+    // INVITE SYSTEM
+    // Each game sends its own specific invite the
+    // first time a user interacts with it per call.
+    // ════════════════════════════════════════════
+
+    // ── Invite for a specific game (called inside each game's pick/action) ──
+    _sendGameInvite(game) {
+        if (this._invitesSent.has(game)) return;   // one invite per game per call
+        if (!currentRoomId) return;
+        this._invitesSent.add(game);
+        this.sendEvent({ type: 'play_invite', game });
+        if (typeof trackEvent === 'function') trackEvent('game_invite_sent', { game });
+    },
+
+    // ── Partner opened the Play tab (soft informational notice) ──
+    _onPartnerOpenedPlay() {
+        if (typeof TOAST === 'undefined') return;
+        TOAST.show('Partner is in the Play zone 🎮', {
+            type:     'info',
+            icon:     '🎮',
+            sub:      'Switch to Play to join them!',
+            duration: 5000,   // auto-dismisses — no action required
+            actions:  [{
+                label:   'Join →',
+                primary: true,
+                dismiss: true,
+                onClick: () => switchTab('play'),
+            }],
+        });
+    },
+
+    // ── Partner interacted with a specific game — show rich invite ──
+    _onPlayInvite(data) {
+        if (typeof TOAST === 'undefined') return;
+
+        const info = this._GAME_INFO[data.game] || {
+            icon:   '🎮',
+            name:   'a game',
+            sub:    'Check the Play tab!',
+            cardId: null,
+        };
+
+        TOAST.show(`${info.icon} Partner wants to play ${info.name}!`, {
+            id:       `toast-invite-${data.game || 'game'}`,
+            type:     'info',
+            icon:     info.icon,
+            sub:      info.sub,
+            duration: 0,   // persistent until user responds
+            actions:  [
+                {
+                    label:   'Not now',
+                    dismiss: true,
+                    onClick: () => {},
+                },
+                {
+                    label:   `Play ${info.name.split(' ')[0]} →`,
+                    primary: true,
+                    dismiss: true,
+                    onClick: () => {
+                        // Switch to Play tab then scroll directly to that game's card
+                        switchTab('play');
+                        if (info.cardId) {
+                            setTimeout(() => {
+                                document.getElementById(info.cardId)
+                                    ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }, 250);
+                        }
+                    },
+                },
+            ],
+        });
+    },
+
+    // ════════════════════════════════════════════
     // WOULD YOU RATHER
     // ════════════════════════════════════════════
     pickWyr(choice) {
         if (this.wyrMyChoice) return;
+
+        // Send a specific WYR invite on first pick (partner sees exactly which game)
+        this._sendGameInvite('wyr');
+
         this.wyrMyChoice = choice;
         this.sendEvent({ type: 'wyr_pick', choice, questionIndex: this.currentWyrIndex });
         this.renderWyr();
         if (this.wyrPartnerChoice !== null) this.renderWyr(true);
+
+        // Analytics
+        if (typeof trackEvent === 'function') trackEvent('game_wyr_played');
     },
 
     _onPartnerWyrPick(data) {
@@ -207,22 +283,20 @@ const GAME_MANAGER = {
         const el = document.getElementById('wyr-content');
         if (!el) return;
 
-        const q       = this.wyrQuestions[this.currentWyrIndex];
-        const myPick  = this.wyrMyChoice;
-        const pPick   = this.wyrPartnerChoice;
-        const bothIn  = myPick !== null && pPick !== null;
+        const q      = this.wyrQuestions[this.currentWyrIndex];
+        const myPick = this.wyrMyChoice;
+        const pPick  = this.wyrPartnerChoice;
+        const bothIn = myPick !== null && pPick !== null;
 
-        // Build option classes
         const clsA = ['wyr-btn',
             myPick === 'A' ? 'selected' : '',
-            bothIn && pPick === 'A' ? 'partner-picked' : ''
+            bothIn && pPick === 'A' ? 'partner-picked' : '',
         ].filter(Boolean).join(' ');
         const clsB = ['wyr-btn',
             myPick === 'B' ? 'selected' : '',
-            bothIn && pPick === 'B' ? 'partner-picked' : ''
+            bothIn && pPick === 'B' ? 'partner-picked' : '',
         ].filter(Boolean).join(' ');
 
-        // Status line
         let status = '';
         if (!myPick) {
             status = `<p class="wyr-status">Tap your answer 👆</p>`;
@@ -255,10 +329,17 @@ const GAME_MANAGER = {
     // ════════════════════════════════════════════
     pickRps(choice) {
         if (this.rpsMyChoice) return;
+
+        // Send specific RPS invite on first pick
+        this._sendGameInvite('rps');
+
         this.rpsMyChoice = choice;
         this.sendEvent({ type: 'rps_pick', choice });
         this.renderRps();
         if (this.rpsPartnerChoice !== null) this._revealRps();
+
+        // Analytics
+        if (typeof trackEvent === 'function') trackEvent('game_rps_played');
     },
 
     _onPartnerRpsPick(data) {
@@ -272,18 +353,22 @@ const GAME_MANAGER = {
     _rpsResult() {
         const m = this.rpsMyChoice, p = this.rpsPartnerChoice;
         if (m === p) return 'tie';
-        if ((m==='rock'&&p==='scissors')||(m==='scissors'&&p==='paper')||(m==='paper'&&p==='rock'))
-            return 'win';
+        if (
+            (m === 'rock' && p === 'scissors') ||
+            (m === 'scissors' && p === 'paper') ||
+            (m === 'paper' && p === 'rock')
+        ) return 'win';
         return 'lose';
     },
 
-    _rpsEmoji(c) { return { rock:'🪨', paper:'📄', scissors:'✂️' }[c] || '❓'; },
+    _rpsEmoji(c) { return { rock: '🪨', paper: '📄', scissors: '✂️' }[c] || '❓'; },
 
     renderRps() {
         const el = document.getElementById('rps-content');
         if (!el) return;
 
-        const my = this.rpsMyChoice, p = this.rpsPartnerChoice;
+        const my = this.rpsMyChoice;
+        const p  = this.rpsPartnerChoice;
 
         if (!my) {
             el.innerHTML = `
@@ -301,7 +386,7 @@ const GAME_MANAGER = {
                 </div>`;
         } else {
             const result = this._rpsResult();
-            const msg = { win:'🏆 You win!', lose:'😅 You lose!', tie:'🤝 It\'s a tie!' }[result];
+            const msg = { win: '🏆 You win!', lose: '😅 You lose!', tie: '🤝 It\'s a tie!' }[result];
             el.innerHTML = `
                 <div class="rps-reveal">
                     <div class="rps-reveal-item">
@@ -331,27 +416,22 @@ const GAME_MANAGER = {
     sendEmoji(emoji) {
         this.sendEvent({ type: 'emoji_burst', emoji });
         this.showEmojiBurst(emoji, false);
+        if (typeof trackEvent === 'function') trackEvent('emoji_reaction_sent', { emoji });
     },
 
     showEmojiBurst(emoji, incoming = false) {
         const overlay = document.getElementById('emoji-burst-overlay');
         if (!overlay) return;
 
-        const count = 14;
-        for (let i = 0; i < count; i++) {
+        for (let i = 0; i < 14; i++) {
             const span = document.createElement('span');
-            span.className = 'flying-emoji' + (incoming ? ' incoming' : '');
-            span.innerText  = emoji;
-
-            // Spread horizontally, start from bottom area
-            const startX = 5 + Math.random() * 90;
-            const startY = incoming ? 55 + Math.random() * 20 : 60 + Math.random() * 20;
-            span.style.left     = startX + '%';
-            span.style.top      = startY + '%';
-            span.style.fontSize = (1.2 + Math.random() * 1.4) + 'rem';
+            span.className           = 'flying-emoji' + (incoming ? ' incoming' : '');
+            span.innerText           = emoji;
+            span.style.left          = (5 + Math.random() * 90) + '%';
+            span.style.top           = (incoming ? 55 : 60 + Math.random() * 20) + '%';
+            span.style.fontSize      = (1.2 + Math.random() * 1.4) + 'rem';
             span.style.animationDelay    = (Math.random() * 0.5) + 's';
             span.style.animationDuration = (1.8 + Math.random() * 0.8) + 's';
-
             overlay.appendChild(span);
             setTimeout(() => span.remove(), 3000);
         }
@@ -361,12 +441,17 @@ const GAME_MANAGER = {
     // ICE BREAKER
     // ════════════════════════════════════════════
     newIceBreaker() {
+        // Send ice breaker invite the first time this is used
+        this._sendGameInvite('icebreaker');
+
         let idx;
         do { idx = Math.floor(Math.random() * this.iceBreakers.length); }
         while (idx === this.currentIcebreakerIndex && this.iceBreakers.length > 1);
 
         this.currentIcebreakerIndex = idx;
-        this._showIcebreaker(idx, true); // true = send to partner
+        this._showIcebreaker(idx, true);   // true = relay to partner
+
+        if (typeof trackEvent === 'function') trackEvent('icebreaker_used');
     },
 
     _showIcebreaker(idx, sendToPartner = false) {
@@ -379,10 +464,10 @@ const GAME_MANAGER = {
 
         el.style.opacity = '0';
         setTimeout(() => {
-            el.innerText    = this.iceBreakers[idx] || this.iceBreakers[0];
+            el.innerText     = this.iceBreakers[idx] || this.iceBreakers[0];
             el.style.opacity = '1';
         }, 180);
-    }
+    },
 };
 
 // ════════════════════════════════════════════════
@@ -399,20 +484,34 @@ function switchTab(tab) {
 // INIT
 // ════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
-    // Tab clicks
-    document.getElementById('tab-chat')?.addEventListener('click', () => switchTab('chat'));
+
+    // ── Chat tab ────────────────────────────────
+    document.getElementById('tab-chat')?.addEventListener('click', () => {
+        switchTab('chat');
+    });
+
+    // ── Play tab ────────────────────────────────
     document.getElementById('tab-play')?.addEventListener('click', () => {
-        // If in a call, send a play invite to partner (first click only)
         if (typeof currentRoomId !== 'undefined' && currentRoomId) {
-            GAME_MANAGER.sendPlayInvite();
+            // Send a soft "I'm in the Play zone" notice — NOT a game invite.
+            // Game invites are sent individually when each game is first played.
+            GAME_MANAGER.sendEvent({ type: 'play_tab_open' });
         }
-        // Dismiss the incoming invite toast if user accepted by clicking the tab directly
-        if (typeof TOAST !== 'undefined') TOAST.hide('toast-play-invite');
+
+        // Dismiss any game invite toasts when the user accepts by clicking the tab
+        if (typeof TOAST !== 'undefined') {
+            TOAST.hide('toast-invite-wyr');
+            TOAST.hide('toast-invite-rps');
+            TOAST.hide('toast-invite-icebreaker');
+            TOAST.hide('toast-invite-game');
+        }
 
         switchTab('play');
-        // Lazy-init game UI when tab is first opened
+
+        // Lazy-init game cards when Play tab is opened for the first time
         GAME_MANAGER.renderWyr();
         GAME_MANAGER.renderRps();
+
         if (GAME_MANAGER.currentIcebreakerIndex === -1) {
             GAME_MANAGER._showIcebreaker(
                 Math.floor(Math.random() * GAME_MANAGER.iceBreakers.length), false
@@ -420,7 +519,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Init render (so cards aren't empty if user opens Play tab before connecting)
+    // Initial render so cards aren't blank if user opens Play tab before connecting
     GAME_MANAGER.renderWyr();
     GAME_MANAGER.renderRps();
 });

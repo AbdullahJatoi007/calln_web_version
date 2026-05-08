@@ -84,21 +84,11 @@ document.addEventListener("DOMContentLoaded", () => {
         UI.startTimer();
         UI.updateState('connected');
 
-        // ── Run WebRTC setup AND the Zone 2 ad at the same time ───────
-        // WebRTC typically takes 2–4 s. The 5s fullscreen ad covers
-        // that setup window so the user hears audio immediately when
-        // the ad closes — zero extra delay for the user.
-        const rtcSetup = initiatePeerConnection(data.role).then(() => {
-            if (typeof NETWORK !== 'undefined') NETWORK.watchPeer();
-        });
+        // Start WebRTC peer connection
+        await initiatePeerConnection(data.role);
 
-        // Zone 2: fullscreen call-connect ad (5 s)
-        if (typeof AD_MANAGER !== 'undefined') {
-            await AD_MANAGER.showConnectAd();
-        }
-
-        // Make sure WebRTC is fully done before enabling chat
-        await rtcSetup;
+        // Hook network monitor onto the new peer connection
+        if (typeof NETWORK !== 'undefined') NETWORK.watchPeer();
 
         // Enable the text chat input
         CHAT_MANAGER.enableInput(true);
@@ -355,22 +345,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 GAME_MANAGER.deactivate();
             }
 
-            // ── ZONE 3: Random fullscreen after call ends ─────────────
-            // AD_MANAGER.showRandomAd() respects RANDOM_FREQUENCY cap
-            // (e.g. every 3rd call). Returns a Promise.
-            // The auto-reconnect / idle flow runs AFTER the ad.
-            const afterAd = () => {
-                if (elements.autoCall?.checked) {
-                    this.scheduleAutoReconnect();
-                } else {
-                    elements.status.innerText = msg;
-                }
-            };
-
-            if (typeof AD_MANAGER !== 'undefined') {
-                AD_MANAGER.showRandomAd().then(afterAd);
+            // ── AUTO-CALL LOOP ────────────────────────────
+            if (elements.autoCall?.checked) {
+                this.scheduleAutoReconnect();
             } else {
-                afterAd();
+                elements.status.innerText = msg;
             }
         },
 

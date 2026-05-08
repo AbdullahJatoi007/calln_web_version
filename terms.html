@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Terms of Service — Calln</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="base.css">
+    <style>
+        .priv-header {
+            position: sticky; top: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            height: 60px; padding: 0 1.5rem;
+            background: rgba(7,8,15,.85);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        .priv-logo {
+            font-size: 1.25rem; font-weight: 700; letter-spacing: -.04em;
+            background: linear-gradient(130deg,#fff 30%,var(--accent));
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; text-decoration: none;
+        }
+        .priv-back {
+            font-size: .8rem; font-weight: 500; color: var(--text-3);
+            text-decoration: none; display: flex; align-items: center; gap: 5px;
+            transition: color .2s;
+        }
+        .priv-back:hover { color: var(--text-1); }
+        .priv-main { max-width: 740px; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
+        .priv-hero { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .priv-hero h1 { font-size: 2.1rem; font-weight: 700; letter-spacing: -.04em; line-height: 1.15; margin-bottom: 8px; }
+        .priv-updated { font-size: .75rem; color: var(--text-3); margin-bottom: 16px; }
+        .priv-intro { font-size: .9rem; color: var(--text-2); line-height: 1.75; }
+        .callout { background: var(--accent-soft); border: 1px solid rgba(61,127,255,.25); border-radius: 14px; padding: 16px 20px; margin: 0 0 2.5rem; font-size: .875rem; color: var(--text-1); line-height: 1.65; }
+        .priv-section { margin-bottom: 2.4rem; }
+        .priv-section h2 { font-size: 1.05rem; font-weight: 700; letter-spacing: -.02em; margin-bottom: 12px; display: flex; align-items: center; gap: 9px; }
+        .priv-section h2 .ico { font-size: 1.15rem; }
+        .priv-section p { font-size: .875rem; color: var(--text-2); line-height: 1.8; }
+        .priv-section p + p { margin-top: 10px; }
+        .priv-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px 22px; margin-top: 12px; }
+        .priv-card ul { list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; }
+        .priv-card li { font-size: .875rem; color: var(--text-2); line-height: 1.7; padding-left: 20px; position: relative; }
+        .priv-card li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-weight: 700; font-size: .8rem; top: 1px; }
+        .priv-card li strong { color: var(--text-1); font-weight: 600; }
+        a.priv-link { color: var(--accent); text-decoration: none; }
+        a.priv-link:hover { text-decoration: underline; }
+        .warning-card { background: rgba(244,63,94,0.08); border: 1px solid rgba(244,63,94,0.25); border-radius: 14px; padding: 16px 20px; margin-top: 12px; }
+        .warning-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; }
+        .warning-card li { font-size: .875rem; color: var(--text-2); line-height: 1.7; padding-left: 20px; position: relative; }
+        .warning-card li::before { content: '✕'; position: absolute; left: 0; color: var(--red); font-weight: 700; font-size: .75rem; top: 2px; }
+        .contact-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 14px; }
+        .contact-item { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+        .contact-item .label { font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-3); margin-bottom: 6px; }
+        .contact-item a { font-size: .8rem; color: var(--accent); text-decoration: none; word-break: break-all; }
+        .contact-item a:hover { text-decoration: underline; }
+        @media (max-width: 600px) { .priv-main { padding: 2rem 1rem 4rem; } .priv-hero h1 { font-size: 1.6rem; } .contact-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<header class="priv-header">
+    <a href="index.html" class="priv-logo">Calln</a>
+    <a href="index.html" class="priv-back">← Back to Calln</a>
+</header>
+
+<main class="priv-main">
+
+    <div class="priv-hero">
+        <h1>Terms of Service</h1>
+        <p class="priv-updated">Last updated: January 1, 2025</p>
+        <p class="priv-intro">
+            These Terms of Service ("Terms") govern your use of Calln ("we", "us", "our").
+            By accessing or using Calln, you agree to be bound by these Terms. If you do not agree,
+            you must not use the service.
+        </p>
+    </div>
+
+    <div class="callout">
+        📋 <strong>The short version:</strong> Calln is a free, anonymous voice-calling platform for adults 18+.
+        Be respectful, don't share illegal or explicit content, and don't record others without consent.
+        Violations result in an immediate permanent ban.
+    </div>
+
+    <!-- 1. The Service -->
+    <div class="priv-section">
+        <h2><span class="ico">📡</span> 1. What Calln Is</h2>
+        <p>
+            Calln is a web-based platform that connects two anonymous users for real-time, audio-only voice
+            calls. Calls are peer-to-peer via WebRTC and are not recorded or stored by Calln. The service
+            is provided free of charge and is supported by advertising.
+        </p>
+        <p>
+            We reserve the right to modify, suspend, or discontinue any part of the service at any time
+            without notice or liability.
+        </p>
+    </div>
+
+    <!-- 2. Eligibility -->
+    <div class="priv-section">
+        <h2><span class="ico">🔞</span> 2. Age Requirement</h2>
+        <p>
+            You must be at least <strong>18 years of age</strong> to use Calln. By using the service, you
+            confirm that you meet this requirement. We do not knowingly permit minors to use the platform.
+            If we discover that a user is under 18, we will immediately and permanently ban them.
+        </p>
+        <p>
+            If you are a parent or guardian and believe a minor has accessed Calln, please contact us at
+            <a href="mailto:abuse@calln.app" class="priv-link">abuse@calln.app</a> immediately.
+        </p>
+    </div>
+
+    <!-- 3. Acceptable Use -->
+    <div class="priv-section">
+        <h2><span class="ico">✅</span> 3. Acceptable Use</h2>
+        <p>You may use Calln to:</p>
+        <div class="priv-card">
+            <ul>
+                <li>Have lawful, respectful conversations with other users</li>
+                <li>Use the text chat, games, and reaction features during calls</li>
+                <li>Report users who violate these Terms using the Report button</li>
+                <li>Disconnect from any call at any time using the End button</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 4. Prohibited Conduct -->
+    <div class="priv-section">
+        <h2><span class="ico">🚫</span> 4. Prohibited Conduct</h2>
+        <p>The following are strictly forbidden and will result in an immediate permanent IP ban:</p>
+        <div class="warning-card">
+            <ul>
+                <li>Sharing, requesting, or transmitting sexually explicit or pornographic content</li>
+                <li>Harassment, bullying, threats, or hate speech of any kind</li>
+                <li>Sharing content that sexualises or endangers minors — this will be reported to law enforcement</li>
+                <li>Impersonating other people, organisations, or Calln staff</li>
+                <li>Attempting to record calls without the other user's explicit consent</li>
+                <li>Using Calln to solicit money, goods, or personal information from other users</li>
+                <li>Transmitting malware, spam, or other malicious content</li>
+                <li>Using automated bots, scripts, or tools to interact with the platform</li>
+                <li>Attempting to reverse-engineer, scrape, or disrupt the service</li>
+                <li>Any activity that violates applicable local, national, or international law</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 5. No Recording -->
+    <div class="priv-section">
+        <h2><span class="ico">🎙️</span> 5. Recording Policy</h2>
+        <p>
+            Calln does not record calls. Audio travels directly between users via WebRTC peer-to-peer
+            technology — our servers never receive it.
+        </p>
+        <p>
+            You must not record any call on Calln without the <strong>explicit, informed consent</strong>
+            of the other participant. Covert recording of calls is illegal in many jurisdictions and is a
+            violation of these Terms.
+        </p>
+    </div>
+
+    <!-- 6. Moderation & Enforcement -->
+    <div class="priv-section">
+        <h2><span class="ico">🛡️</span> 6. Moderation &amp; Enforcement</h2>
+        <p>
+            Calln relies on user reporting to identify violations. The Report button in the call interface
+            allows you to flag a user for inappropriate behaviour. Upon a report:
+        </p>
+        <div class="priv-card">
+            <ul>
+                <li>The reported user is immediately disconnected and their IP address is banned for 24 hours</li>
+                <li>Repeated or severe violations result in a permanent ban</li>
+                <li>In cases involving illegal content, we may cooperate with law enforcement authorities</li>
+            </ul>
+        </div>
+        <p style="margin-top:14px;">
+            We reserve the right to terminate access for any user for any reason, at any time, without
+            prior notice or explanation, at our sole discretion.
+        </p>
+    </div>
+
+    <!-- 7. Intellectual Property -->
+    <div class="priv-section">
+        <h2><span class="ico">©️</span> 7. Intellectual Property</h2>
+        <p>
+            The Calln name, logo, design, and codebase are the intellectual property of Calln.
+            You may not copy, reproduce, modify, or distribute any part of the service without
+            our prior written consent.
+        </p>
+        <p>
+            Any content you share during a call (voice, chat messages) remains your own. By using the
+            service, you grant Calln no rights to your content — we do not store it.
+        </p>
+    </div>
+
+    <!-- 8. Disclaimer -->
+    <div class="priv-section">
+        <h2><span class="ico">⚠️</span> 8. Disclaimer of Warranties</h2>
+        <p>
+            Calln is provided <strong>"as is"</strong> and <strong>"as available"</strong> without any
+            warranties of any kind, express or implied, including but not limited to warranties of
+            merchantability, fitness for a particular purpose, or non-infringement.
+        </p>
+        <p>
+            We do not warrant that the service will be uninterrupted, error-free, or free of harmful
+            components. We do not control the content of calls between users and are not responsible for
+            anything said or shared during them.
+        </p>
+    </div>
+
+    <!-- 9. Limitation of Liability -->
+    <div class="priv-section">
+        <h2><span class="ico">⚖️</span> 9. Limitation of Liability</h2>
+        <p>
+            To the maximum extent permitted by applicable law, Calln and its operators shall not be liable
+            for any indirect, incidental, special, consequential, or punitive damages arising from your use
+            of the service, including but not limited to loss of data, loss of profits, or emotional distress,
+            even if we have been advised of the possibility of such damages.
+        </p>
+        <p>
+            Our total liability to you for any claim arising from these Terms or your use of Calln shall
+            not exceed the greater of $1.00 USD or the amount you paid us in the twelve months preceding
+            the claim (which, for a free service, is $0.00).
+        </p>
+    </div>
+
+    <!-- 10. Indemnification -->
+    <div class="priv-section">
+        <h2><span class="ico">🤝</span> 10. Indemnification</h2>
+        <p>
+            You agree to indemnify, defend, and hold harmless Calln and its operators from any claims,
+            damages, losses, costs, or expenses (including legal fees) arising from: (a) your use of the
+            service; (b) your violation of these Terms; or (c) your violation of any third-party rights.
+        </p>
+    </div>
+
+    <!-- 11. Privacy -->
+    <div class="priv-section">
+        <h2><span class="ico">🔒</span> 11. Privacy</h2>
+        <p>
+            Your use of Calln is also governed by our
+            <a href="privacy.html" class="priv-link">Privacy Policy</a>, which is incorporated into
+            these Terms by reference. By using Calln, you consent to the data practices described there.
+        </p>
+    </div>
+
+    <!-- 12. Advertising -->
+    <div class="priv-section">
+        <h2><span class="ico">📢</span> 12. Advertising</h2>
+        <p>
+            Calln displays advertisements served by Google AdSense to fund the service. Ads may appear
+            as banner ads in the footer and as full-screen interstitial ads between calls. By using Calln,
+            you acknowledge and accept the display of these advertisements. For details on how advertising
+            data is handled, see our <a href="privacy.html" class="priv-link">Privacy Policy</a>.
+        </p>
+    </div>
+
+    <!-- 13. Changes -->
+    <div class="priv-section">
+        <h2><span class="ico">📝</span> 13. Changes to These Terms</h2>
+        <p>
+            We may update these Terms at any time. The "Last updated" date above reflects the most recent
+            revision. Continued use of Calln after a change constitutes your acceptance of the updated Terms.
+            We recommend reviewing this page periodically.
+        </p>
+    </div>
+
+    <!-- 14. Governing Law -->
+    <div class="priv-section">
+        <h2><span class="ico">🌍</span> 14. Governing Law</h2>
+        <p>
+            These Terms shall be governed by and construed in accordance with applicable law. Any disputes
+            arising under these Terms shall be resolved through good-faith negotiation in the first instance.
+            If negotiation fails, disputes may be submitted to binding arbitration.
+        </p>
+    </div>
+
+    <!-- 15. Contact -->
+    <div class="priv-section">
+        <h2><span class="ico">📧</span> 15. Contact Us</h2>
+        <p>Questions about these Terms? We're here to help.</p>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <div class="label">General</div>
+                <a href="mailto:support@calln.app">support@calln.app</a>
+            </div>
+            <div class="contact-item">
+                <div class="label">Legal</div>
+                <a href="mailto:legal@calln.app">legal@calln.app</a>
+            </div>
+            <div class="contact-item">
+                <div class="label">Abuse</div>
+                <a href="mailto:abuse@calln.app">abuse@calln.app</a>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+</body>
+</html>

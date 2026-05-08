@@ -3,30 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#07080f">
-    <title>Calln — Voice Connect</title>
 
+    <!-- ══ PRIMARY SEO ══════════════════════════════════════════ -->
+    <title>Calln — Talk to Strangers Worldwide via Voice Call</title>
+    <meta name="description" content="Connect anonymously with real people worldwide through instant voice calls. No account needed. Audio-only, safe, and completely free. Try Calln now.">
+    <meta name="keywords"    content="random voice call, talk to strangers, anonymous call, voice chat online, meet people online, stranger call, calln">
+    <meta name="author"      content="Calln">
+    <meta name="robots"      content="index, follow">
+    <link rel="canonical"    href="https://calln.netlify.app/">
+
+    <!-- ══ OPEN GRAPH (Facebook, WhatsApp, LinkedIn) ════════════ -->
+    <meta property="og:type"         content="website">
+    <meta property="og:title"        content="Calln — Talk to Strangers Worldwide">
+    <meta property="og:description"  content="Anonymous voice calls with real people worldwide. No accounts, no recordings — just genuine conversations. 100% free.">
+    <meta property="og:url"          content="https://calln.netlify.app/">
+    <meta property="og:image"        content="https://calln.netlify.app/og-image.png">
+    <meta property="og:image:width"  content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt"    content="Calln — Voice call with strangers worldwide">
+    <meta property="og:site_name"    content="Calln">
+    <meta property="og:locale"       content="en_US">
+
+    <!-- ══ TWITTER / X CARD ════════════════════════════════════ -->
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:title"       content="Calln — Talk to Strangers Worldwide">
+    <meta name="twitter:description" content="Anonymous voice calls with real people. No account needed, no recordings. Free.">
+    <meta name="twitter:image"       content="https://calln.netlify.app/og-image.png">
+
+    <!-- ══ PWA & MOBILE ════════════════════════════════════════ -->
+    <link rel="manifest"              href="manifest.json">
+    <link rel="icon"                  type="image/svg+xml" href="favicon.svg">
+    <meta name="theme-color"          content="#07080f">
+    <meta name="apple-mobile-web-app-capable"          content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title"            content="Calln">
+    <meta name="mobile-web-app-capable"                content="yes">
+
+    <!-- ══ STRUCTURED DATA (JSON-LD) ═══════════════════════════ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Calln",
+      "url": "https://calln.netlify.app",
+      "description": "Anonymous voice-calling platform connecting people worldwide in real-time.",
+      "applicationCategory": "CommunicationApplication",
+      "operatingSystem": "Web",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": { "@type": "Organization", "name": "Calln" },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.5",
+        "ratingCount": "100"
+      }
+    }
+    </script>
+
+    <!-- ══ FONTS ════════════════════════════════════════════════ -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- ══ CSS ══════════════════════════════════════════════════ -->
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="hero.css">
     <link rel="stylesheet" href="chat.css">
     <link rel="stylesheet" href="game.css">
     <link rel="stylesheet" href="toast.css">
+    <link rel="stylesheet" href="ads.css">
+    <link rel="stylesheet" href="dialog.css">
+    <link rel="stylesheet" href="cookie.css">
     <link rel="stylesheet" href="footer.css">
     <link rel="stylesheet" href="responsive.css">
 
+    <!-- ══ SOCKET.IO ════════════════════════════════════════════ -->
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+    <!--
+        ════════════════════════════════════════════════════════════
+        GOOGLE ADSENSE — un-comment ONLY after site is approved.
+        Replace ca-pub-XXXXXXXXXXXXXXXX with your real publisher ID.
+        ════════════════════════════════════════════════════════════
+    -->
+    <!--
+    <script async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+        crossorigin="anonymous">
+    </script>
+    -->
 </head>
 <body>
 
-<!-- ══ NAVBAR ══════════════════════════════════════════════ -->
+<!-- ══ AGE GATE ═══════════════════════════════════════════════ -->
+<div class="age-gate" id="age-gate">
+    <div class="age-gate-card">
+        <div class="age-gate-logo">Calln</div>
+        <h2>Before you start</h2>
+        <p>Calln connects you anonymously with strangers via voice. Please confirm all of the following.</p>
+
+        <div class="age-gate-checks">
+            <div class="age-check-item" data-for="chk-age">
+                <input type="checkbox" class="age-chk" id="chk-age">
+                <div class="age-check-box">
+                    <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+                        <polyline points="1.5,6 5,9.5 10.5,2.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="age-check-text">
+                    <strong>I am 18 years of age or older</strong>
+                    <span>This service is strictly for adults only</span>
+                </div>
+            </div>
+            <div class="age-check-item" data-for="chk-terms">
+                <input type="checkbox" class="age-chk" id="chk-terms">
+                <div class="age-check-box">
+                    <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+                        <polyline points="1.5,6 5,9.5 10.5,2.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="age-check-text">
+                    <strong>I agree to the <a href="terms.html" target="_blank">Terms</a> &amp; <a href="privacy.html" target="_blank">Privacy Policy</a></strong>
+                    <span>Including community guidelines and data practices</span>
+                </div>
+            </div>
+            <div class="age-check-item" data-for="chk-conduct">
+                <input type="checkbox" class="age-chk" id="chk-conduct">
+                <div class="age-check-box">
+                    <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+                        <polyline points="1.5,6 5,9.5 10.5,2.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="age-check-text">
+                    <strong>I will follow community guidelines</strong>
+                    <span>No explicit, offensive, or illegal content during calls</span>
+                </div>
+            </div>
+        </div>
+
+        <button class="age-gate-btn" id="age-gate-btn" disabled>Enter Calln →</button>
+        <p class="age-gate-note">Violations may result in a permanent ban.</p>
+    </div>
+</div>
+
+
+<!-- ══ NAVBAR ══════════════════════════════════════════════════ -->
 <nav class="navbar">
     <div class="logo">Calln</div>
-
     <ul class="nav-links">
         <li class="filter-wrapper">
             <div class="filter-content" id="selected-country-ui">
@@ -52,31 +175,27 @@
             </div>
         </li>
     </ul>
-
     <div class="nav-right"></div>
 </nav>
 
-<!-- ══ HERO ════════════════════════════════════════════════ -->
+
+<!-- ══ HERO ════════════════════════════════════════════════════ -->
 <main class="hero-section">
 
-    <!-- ─── CALL PANEL ─────────────────────────────────── -->
+    <!-- ─── CALL PANEL ───────────────────────────────────────── -->
     <div class="call-panel">
         <div class="app-logo-floating" id="app-logo">
-            <div class="radio-ring"></div>
-            <div class="radio-ring"></div>
-            <div class="radio-ring"></div>
-            <div class="radio-ring"></div>
+            <div class="radio-ring"></div><div class="radio-ring"></div>
+            <div class="radio-ring"></div><div class="radio-ring"></div>
             <svg width="36" height="36" viewBox="0 0 24 24" fill="white">
                 <path d="M6.62 10.79a15.15 15.15 0 0 0 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
             </svg>
         </div>
 
         <div class="wave-container" id="wave-container">
-            <div class="wave-bar"></div><div class="wave-bar"></div>
-            <div class="wave-bar"></div><div class="wave-bar"></div>
-            <div class="wave-bar"></div><div class="wave-bar"></div>
-            <div class="wave-bar"></div><div class="wave-bar"></div>
-            <div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
         </div>
 
         <div class="controls-grid">
@@ -121,10 +240,8 @@
         <p class="hint-text" id="status-display">Ready for a conversation?</p>
     </div>
 
-    <!-- ─── CHAT + PLAY PANEL ──────────────────────────── -->
+    <!-- ─── CHAT + PLAY PANEL ────────────────────────────────── -->
     <div class="chat-container">
-
-        <!-- Tab Bar -->
         <div class="chat-tabs">
             <button class="chat-tab active" id="tab-chat">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -140,7 +257,6 @@
             </button>
         </div>
 
-        <!-- Chat Panel -->
         <div id="panel-chat" class="chat-panel active">
             <div id="chat-display">
                 <div class="overlay-text">
@@ -164,53 +280,23 @@
             </div>
         </div>
 
-        <!-- Play Panel -->
         <div id="panel-play" class="chat-panel">
-
-            <!-- Lock overlay — hidden when in a call -->
             <div class="game-locked-overlay" id="game-locked">
                 <div class="lock-icon">🔒</div>
                 <p>Start a call to play!</p>
                 <span>Games unlock when you're connected</span>
             </div>
-
-            <!-- Scrollable game cards -->
             <div class="game-content-scroll">
-
-                <!-- Would You Rather -->
                 <div class="game-card" id="game-card-wyr">
-                    <div class="game-card-title">
-                        <span class="game-ico">🤔</span> Would You Rather
-                    </div>
-                    <div id="wyr-content">
-                        <p class="wyr-question">Would you rather…</p>
-                        <div class="wyr-options">
-                            <button class="wyr-btn" disabled>Loading…</button>
-                            <button class="wyr-btn" disabled>Loading…</button>
-                        </div>
-                    </div>
+                    <div class="game-card-title"><span class="game-ico">🤔</span> Would You Rather</div>
+                    <div id="wyr-content"></div>
                 </div>
-
-                <!-- Rock Paper Scissors -->
                 <div class="game-card" id="game-card-rps">
-                    <div class="game-card-title">
-                        <span class="game-ico">🪨</span> Rock Paper Scissors
-                    </div>
-                    <div id="rps-content">
-                        <p class="rps-label">Pick your move!</p>
-                        <div class="rps-options">
-                            <button class="rps-btn" onclick="GAME_MANAGER.pickRps('rock')">🪨</button>
-                            <button class="rps-btn" onclick="GAME_MANAGER.pickRps('paper')">📄</button>
-                            <button class="rps-btn" onclick="GAME_MANAGER.pickRps('scissors')">✂️</button>
-                        </div>
-                    </div>
+                    <div class="game-card-title"><span class="game-ico">🪨</span> Rock Paper Scissors</div>
+                    <div id="rps-content"></div>
                 </div>
-
-                <!-- Emoji Reactions -->
                 <div class="game-card" id="game-card-emoji">
-                    <div class="game-card-title">
-                        <span class="game-ico">🎉</span> Send a Reaction
-                    </div>
+                    <div class="game-card-title"><span class="game-ico">🎉</span> Send a Reaction</div>
                     <div class="emoji-grid">
                         <button class="emoji-btn" onclick="GAME_MANAGER.sendEmoji('🎉')">🎉</button>
                         <button class="emoji-btn" onclick="GAME_MANAGER.sendEmoji('🔥')">🔥</button>
@@ -224,37 +310,41 @@
                         <button class="emoji-btn" onclick="GAME_MANAGER.sendEmoji('✨')">✨</button>
                     </div>
                 </div>
-
-                <!-- Ice Breaker -->
                 <div class="game-card" id="game-card-icebreaker">
-                    <div class="game-card-title">
-                        <span class="game-ico">💬</span> Ice Breaker
-                    </div>
-                    <p class="icebreaker-text" id="icebreaker-text">
-                        Tap below for a random conversation starter!
-                    </p>
-                    <button class="game-action-btn" onclick="GAME_MANAGER.newIceBreaker()">
-                        🎲 New Question
-                    </button>
+                    <div class="game-card-title"><span class="game-ico">💬</span> Ice Breaker</div>
+                    <p class="icebreaker-text" id="icebreaker-text">Tap below for a random conversation starter!</p>
+                    <button class="game-action-btn" onclick="GAME_MANAGER.newIceBreaker()">🎲 New Question</button>
                 </div>
-
-            </div><!-- /game-content-scroll -->
-        </div><!-- /panel-play -->
-
-    </div><!-- /chat-container -->
+            </div>
+        </div>
+    </div>
 
 </main>
 
-<!-- ══ FOOTER ═══════════════════════════════════════════════ -->
-<footer class="site-footer">
-    <div class="footer-inner">
 
+<!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+<footer class="site-footer">
+
+    <!-- AD ZONE 1: Footer leaderboard banner (always visible) -->
+    <div class="ad-footer-banner" id="ad-footer">
+        <span class="ad-badge">Advertisement</span>
+        <div class="ad-footer-unit">
+            <!--
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="0000000001"
+                 data-ad-format="horizontal"
+                 data-full-width-responsive="true">
+            </ins>
+            -->
+        </div>
+    </div>
+
+    <div class="footer-inner">
         <div class="footer-brand">
             <div class="footer-logo">Calln</div>
-            <p class="footer-tagline">
-                Connect with real people worldwide through anonymous voice calls.
-                No accounts, no history — just genuine conversations.
-            </p>
+            <p class="footer-tagline">Connect with real people worldwide through anonymous voice calls. No accounts, no history — just genuine conversations.</p>
             <div class="footer-socials">
                 <a href="#" class="social-btn" aria-label="X / Twitter">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
@@ -293,7 +383,7 @@
         <div class="footer-links">
             <h4>Legal</h4>
             <a href="privacy.html">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
+            <a href="terms.html">Terms of Service</a>
             <a href="#">Cookie Policy</a>
             <a href="#">Community Guidelines</a>
             <a href="#">DMCA</a>
@@ -307,27 +397,74 @@
             <a href="#">Partner with Us</a>
             <a href="#">Status Page</a>
         </div>
-
     </div>
 
     <div class="footer-bottom">
         <span>© 2025 Calln · All rights reserved</span>
-        <div class="footer-badge">
-            Made with <span class="heart">♥</span> for genuine human connections
-        </div>
+        <div class="footer-badge">Made with <span class="heart">♥</span> for genuine human connections</div>
     </div>
+
 </footer>
 
-<!-- Toast notification container -->
-<div class="toast-container" id="toast-container"></div>
 
-<!-- Emoji burst fullscreen overlay -->
+<!-- ══ AD ZONE 2: Fullscreen on call connect (every 3rd) ════════ -->
+<div class="ad-fullscreen" id="ad-fs-connect" style="display:none;">
+    <div class="ad-fs-card">
+        <span class="ad-badge">Advertisement</span>
+        <div class="ad-fs-unit">
+            <!--
+            <ins class="adsbygoogle"
+                 style="display:block;width:300px;height:250px;"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="0000000002">
+            </ins>
+            -->
+        </div>
+        <div class="ad-fs-progress"><div class="ad-fs-progress-bar"></div></div>
+        <p class="ad-fs-footer">Connecting your call in <strong class="ad-fs-seconds">5</strong>s</p>
+    </div>
+</div>
+
+<!-- ══ AD ZONE 3: Random fullscreen (every 3rd call end) ════════ -->
+<div class="ad-fullscreen" id="ad-fs-random" style="display:none;">
+    <div class="ad-fs-card">
+        <span class="ad-badge">Advertisement</span>
+        <div class="ad-fs-unit">
+            <!--
+            <ins class="adsbygoogle"
+                 style="display:block;width:300px;height:250px;"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="0000000003">
+            </ins>
+            -->
+        </div>
+        <div class="ad-fs-progress"><div class="ad-fs-progress-bar"></div></div>
+        <p class="ad-fs-footer">Closing in <strong class="ad-fs-seconds">5</strong>s</p>
+    </div>
+</div>
+
+<!-- ══ COOKIE CONSENT BANNER (GDPR) ════════════════════════════ -->
+<div class="cookie-banner" id="cookie-banner">
+    <p class="cookie-text">
+        🍪 We use analytics cookies to understand how people use Calln and improve the experience.
+        See our <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div class="cookie-actions">
+        <button class="cookie-btn cookie-btn-decline" onclick="COOKIE_CONSENT.decline()">Decline</button>
+        <button class="cookie-btn cookie-btn-accept"  onclick="COOKIE_CONSENT.accept()">Accept</button>
+    </div>
+</div>
+
+<!-- ══ EMOJI BURST OVERLAY ═══════════════════════════════════════ -->
 <div class="emoji-burst-overlay" id="emoji-burst-overlay"></div>
 
+<!-- ══ TOAST CONTAINER ══════════════════════════════════════════ -->
+<div class="toast-container" id="toast-container"></div>
+
 <!--
-    Analytics queue stub — synchronous, before everything else.
-    Captures trackEvent() calls fired before Firebase loads, then
-    analytics.js drains the queue and swaps in the real tracker.
+    Analytics queue stub — synchronous, runs before everything.
+    Captures trackEvent() calls made before Firebase loads.
+    Replaced by the real Firebase tracker when consent is given.
 -->
 <script>
     window.trackEvent = function(name, params) {
@@ -336,12 +473,15 @@
     };
 </script>
 
-<!-- Firebase Analytics (ESM module — async, won't block rendering) -->
-<script type="module" src="js/analytics.js"></script>
+<!-- NOTE: analytics.js is NOT loaded here.
+     It is loaded dynamically by cookie.js ONLY when the user accepts cookies. -->
 
 <!-- JS (order is critical) -->
 <script src="js/config.js"></script>
 <script src="js/connection.js"></script>
+<script src="js/ads.js"></script>
+<script src="js/dialog.js"></script>
+<script src="js/cookie.js"></script>
 <script src="js/toast.js"></script>
 <script src="js/game.js"></script>
 <script src="js/chat.js"></script>

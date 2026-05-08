@@ -1,0 +1,172 @@
+/* =============================================
+   ADS — Calln Ad Zones
+   Zone 1: Footer banner (always visible)
+   Zone 2: Fullscreen on call connect (5s)
+   Zone 3: Fullscreen randomly (every ~3 calls)
+   ============================================= */
+
+/* ── Shared ad label ──────────────────────── */
+.ad-badge {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  background: var(--bg-hover);
+  border: 1px solid var(--border);
+  padding: 2px 8px;
+  border-radius: 4px;
+  user-select: none;
+  line-height: 1.8;
+}
+
+/* ══════════════════════════════════════════
+   ZONE 1 — Footer banner (always on)
+   Sits at the very top of the site footer,
+   above the link columns.
+   ══════════════════════════════════════════ */
+.ad-footer-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 1.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.ad-footer-unit {
+  width: 100%;
+  max-width: 728px;
+  min-height: 90px;
+  background: var(--bg-elevated);
+  border: 1px dashed var(--border);
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Placeholder text while ad loads */
+.ad-footer-unit::before {
+  content: '728 × 90 — Leaderboard Ad';
+  position: absolute;
+  font-size: 0.7rem;
+  color: var(--text-3);
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  .ad-footer-unit { min-height: 50px; }
+  .ad-footer-unit::before { content: '320 × 50 — Mobile Banner'; }
+}
+
+/* ══════════════════════════════════════════
+   ZONE 2 & 3 — Fullscreen interstitials
+   Fixed viewport overlay. Hidden by default;
+   shown by AD_MANAGER via .active class.
+   ══════════════════════════════════════════ */
+.ad-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+
+  /* Hidden by default */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.ad-fullscreen.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ── Inner card ────────────────────────────── */
+.ad-fs-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+
+  transform: scale(0.95);
+  transition: transform 0.3s ease;
+}
+.ad-fullscreen.active .ad-fs-card {
+  transform: scale(1);
+}
+
+/* ── Ad unit container ─────────────────────── */
+.ad-fs-unit {
+  width: 300px;
+  height: 250px;
+  background: var(--bg-elevated);
+  border: 1px dashed var(--border);
+  border-radius: var(--r-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+.ad-fs-unit::before {
+  content: '300 × 250 — Medium Rectangle';
+  position: absolute;
+  font-size: 0.7rem;
+  color: var(--text-3);
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+
+/* ── Timer row ─────────────────────────────── */
+.ad-fs-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--text-3);
+  font-weight: 500;
+}
+.ad-fs-footer strong {
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.9rem;
+  font-weight: 700;
+  min-width: 1ch;
+  display: inline-block;
+  text-align: center;
+}
+
+/* Progress bar under the ad */
+.ad-fs-progress {
+  width: 300px;
+  height: 3px;
+  background: var(--bg-hover);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.ad-fs-progress-bar {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 10px;
+  width: 100%;
+  transform-origin: left;
+  /* JS drives the transition duration to match the countdown */
+}
+
+@media (max-width: 360px) {
+  .ad-fs-unit  { width: 280px; height: 230px; }
+  .ad-fs-progress { width: 280px; }
+}

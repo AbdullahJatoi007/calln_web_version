@@ -1,0 +1,89 @@
+/* =============================================
+   COOKIE CONSENT BANNER
+   GDPR-compliant: shows before analytics loads.
+   Analytics is only initialised if user accepts.
+   ============================================= */
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9000;   /* below age-gate (99999) but above everything else */
+  background: var(--bg-elevated);
+  border-top: 1px solid var(--border-md);
+  padding: 12px 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+
+  /* Slide up when .active is added */
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+.cookie-banner.active {
+  transform: translateY(0);
+}
+
+/* ── Text ─────────────────────────────────── */
+.cookie-text {
+  flex: 1;
+  font-size: 0.8rem;
+  color: var(--text-2);
+  line-height: 1.5;
+  min-width: 200px;
+}
+.cookie-text a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.cookie-text a:hover { text-decoration: underline; }
+
+/* ── Buttons ──────────────────────────────── */
+.cookie-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.cookie-btn {
+  padding: 7px 16px;
+  border-radius: 50px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+.cookie-btn-decline {
+  border: 1px solid var(--border-md);
+  background: transparent;
+  color: var(--text-3);
+}
+.cookie-btn-decline:hover {
+  background: var(--bg-hover);
+  color: var(--text-1);
+}
+.cookie-btn-accept {
+  border: 1px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.cookie-btn-accept:hover {
+  background: var(--accent);
+  color: white;
+}
+
+/* ── Mobile ────────────────────────────────── */
+@media (max-width: 480px) {
+  .cookie-banner {
+    padding: 12px 1rem;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+  .cookie-text { font-size: 0.74rem; }
+  .cookie-actions { width: 100%; justify-content: flex-end; }
+}

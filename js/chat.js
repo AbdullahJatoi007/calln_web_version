@@ -1,32 +1,21 @@
 const CHAT_MANAGER = {
     enableInput(status) {
-        const input = document.getElementById('msg-input');
+        const input   = document.getElementById('msg-input');
         const sendBtn = document.getElementById('send-btn');
         if (!input || !sendBtn) return;
-
-        input.disabled = !status;
+        input.disabled   = !status;
         sendBtn.disabled = !status;
         input.placeholder = status ? "Type a message…" : "Start a call to chat…";
-
-        if (status) {
-            // Small delay so the keyboard doesn't snap on connect
-            setTimeout(() => input.focus(), 400);
-        }
+        if (status) setTimeout(() => input.focus(), 400);
     },
 
     sendMessage() {
         const input = document.getElementById('msg-input');
         if (!input) return;
-
         const msg = input.value.trim();
         if (!msg || typeof currentRoomId === 'undefined' || !currentRoomId) return;
 
-        socket.emit('chat_message', {
-            roomId: currentRoomId,
-            message: msg,
-            sender: socket.id
-        });
-
+        socket.emit('chat_message', { roomId: currentRoomId, message: msg, sender: socket.id });
         this.appendMessage(msg, 'my-msg');
         input.value = '';
     },
@@ -35,28 +24,21 @@ const CHAT_MANAGER = {
         const container = document.getElementById('chat-display');
         if (!container) return;
 
-        // Remove overlay on first message
         const overlay = container.querySelector('.overlay-text');
         if (overlay) overlay.remove();
 
         const msg = document.createElement('div');
-
         if (isSystem) {
             msg.className = 'system-msg';
             msg.innerText = text;
         } else {
             msg.className = `message-wrapper ${className}`;
-            msg.innerHTML = `
-                <div class="message-bubble">
-                    <div class="message-text">${this._escape(text)}</div>
-                </div>`;
+            msg.innerHTML = `<div class="message-bubble"><div class="message-text">${this._escape(text)}</div></div>`;
         }
-
         container.appendChild(msg);
         this.scrollToBottom();
     },
 
-    // Prevent XSS — sanitise message text before injecting
     _escape(str) {
         return str
             .replace(/&/g, '&amp;')
@@ -69,9 +51,7 @@ const CHAT_MANAGER = {
         const container = document.getElementById('chat-display');
         if (!container) return;
         container.scrollTop = container.scrollHeight;
-        requestAnimationFrame(() => {
-            container.scrollTop = container.scrollHeight;
-        });
+        requestAnimationFrame(() => { container.scrollTop = container.scrollHeight; });
     },
 
     clearChat() {
@@ -90,47 +70,47 @@ const CHAT_MANAGER = {
             </div>`;
     },
 
-    // Called by script.js (kept here so mute UI state is centralised)
     toggleMuteUI(isMuted) {
         const btn   = document.getElementById('mute-btn');
         const label = document.getElementById('mute-label');
         if (!btn || !label) return;
-
         btn.classList.toggle('muted', isMuted);
         label.innerText = isMuted ? 'Muted' : 'Mute';
     }
 };
 
-// ── Event Listeners ────────────────────────────────────────
+// ── Event listeners ────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
     const input   = document.getElementById('msg-input');
     const sendBtn = document.getElementById('send-btn');
 
     sendBtn?.addEventListener('click', () => CHAT_MANAGER.sendMessage());
-
     input?.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            CHAT_MANAGER.sendMessage();
-        }
+        if (e.key === 'Enter') { e.preventDefault(); CHAT_MANAGER.sendMessage(); }
     });
-
-    // On mobile, scroll chat to bottom after keyboard opens
     input?.addEventListener('focus', () => {
         setTimeout(() => CHAT_MANAGER.scrollToBottom(), 350);
     });
 });
 
-// ── Socket Listeners ───────────────────────────────────────
+// ── Socket listeners ───────────────────────────────────────
 socket.on('chat_message', (data) => {
     if (data.sender === socket.id) return;
+
+    // Route game events to GAME_MANAGER, regular text to chat display
+    if (data.gameData) {
+        if (typeof GAME_MANAGER !== 'undefined') {
+            GAME_MANAGER.handleIncoming(data.gameData);
+        }
+        return;
+    }
+
     CHAT_MANAGER.appendMessage(data.message, 'peer-msg');
 });
 
 socket.on('peer_muted', (data) => {
     CHAT_MANAGER.appendMessage(
         data.isMuted ? '🔇 Partner muted their mic' : '🎤 Partner unmuted their mic',
-        '',
-        true
+        '', true
     );
 });

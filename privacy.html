@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — Calln</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="base.css">
+    <style>
+        /* ── Header ─────────────────────────── */
+        .priv-header {
+            position: sticky; top: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            height: 60px; padding: 0 1.5rem;
+            background: rgba(7,8,15,.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        .priv-logo {
+            font-size: 1.25rem; font-weight: 700; letter-spacing: -.04em;
+            background: linear-gradient(130deg,#fff 30%,var(--accent));
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; text-decoration: none;
+        }
+        .priv-back {
+            font-size: .8rem; font-weight: 500; color: var(--text-3);
+            text-decoration: none; display: flex; align-items: center; gap: 5px;
+            transition: color .2s;
+        }
+        .priv-back:hover { color: var(--text-1); }
+
+        /* ── Layout ─────────────────────────── */
+        .priv-main {
+            max-width: 740px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 6rem;
+        }
+
+        /* ── Hero ───────────────────────────── */
+        .priv-hero { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .priv-hero h1 {
+            font-size: 2.1rem; font-weight: 700; letter-spacing: -.04em;
+            line-height: 1.15; margin-bottom: 8px;
+        }
+        .priv-updated { font-size: .75rem; color: var(--text-3); margin-bottom: 16px; }
+        .priv-intro { font-size: .9rem; color: var(--text-2); line-height: 1.75; }
+
+        /* ── Callout box ────────────────────── */
+        .callout {
+            background: var(--accent-soft);
+            border: 1px solid rgba(61,127,255,.25);
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin: 0 0 2.5rem;
+            font-size: .875rem;
+            color: var(--text-1);
+            line-height: 1.65;
+        }
+
+        /* ── Sections ───────────────────────── */
+        .priv-section { margin-bottom: 2.4rem; }
+        .priv-section h2 {
+            font-size: 1.05rem; font-weight: 700; letter-spacing: -.02em;
+            margin-bottom: 12px;
+            display: flex; align-items: center; gap: 9px;
+        }
+        .priv-section h2 .ico { font-size: 1.15rem; }
+
+        .priv-section p {
+            font-size: .875rem; color: var(--text-2); line-height: 1.8;
+        }
+        .priv-section p + p { margin-top: 10px; }
+
+        /* ── Card list ──────────────────────── */
+        .priv-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px 22px;
+            margin-top: 12px;
+        }
+        .priv-card ul {
+            list-style: none;
+            display: flex; flex-direction: column; gap: 10px;
+            margin: 0; padding: 0;
+        }
+        .priv-card li {
+            font-size: .875rem; color: var(--text-2); line-height: 1.7;
+            padding-left: 20px; position: relative;
+        }
+        .priv-card li::before {
+            content: '→';
+            position: absolute; left: 0;
+            color: var(--accent); font-weight: 700; font-size: .8rem;
+            top: 1px;
+        }
+        .priv-card li strong { color: var(--text-1); font-weight: 600; }
+        a.priv-link { color: var(--accent); text-decoration: none; }
+        a.priv-link:hover { text-decoration: underline; }
+
+        /* ── Contact box ────────────────────── */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 14px;
+        }
+        .contact-item {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 16px;
+        }
+        .contact-item .label {
+            font-size: .65rem; font-weight: 700; letter-spacing: .08em;
+            text-transform: uppercase; color: var(--text-3);
+            margin-bottom: 6px;
+        }
+        .contact-item a {
+            font-size: .8rem; color: var(--accent);
+            text-decoration: none; word-break: break-all;
+        }
+        .contact-item a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) {
+            .priv-main { padding: 2rem 1rem 4rem; }
+            .priv-hero h1 { font-size: 1.6rem; }
+            .contact-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="priv-header">
+    <a href="index.html" class="priv-logo">Calln</a>
+    <a href="index.html" class="priv-back">← Back to Calln</a>
+</header>
+
+<main class="priv-main">
+
+    <div class="priv-hero">
+        <h1>Privacy Policy</h1>
+        <p class="priv-updated">Last updated: January 1, 2025</p>
+        <p class="priv-intro">
+            At Calln, your privacy is our priority. This policy explains exactly what data we handle,
+            why we handle it, and how we protect you. Spoiler: we collect very little, store even less,
+            and we never sell anything to anyone.
+        </p>
+    </div>
+
+    <div class="callout">
+        🎙️ <strong>The short version:</strong> Your voice calls are never recorded or stored. Audio goes
+        directly between you and your partner via WebRTC peer-to-peer technology — our servers never
+        touch it. We have no accounts, we don't know your name, and we don't track you across the web.
+    </div>
+
+    <!-- 1. What We Collect -->
+    <div class="priv-section">
+        <h2><span class="ico">📦</span> Information We Collect</h2>
+        <p>We keep data collection minimal by design. Here's what we may handle when you use Calln:</p>
+        <div class="priv-card">
+            <ul>
+                <li><strong>IP Address</strong> — Used temporarily to match you with users in your preferred region and for abuse prevention. Not stored beyond the session.</li>
+                <li><strong>Country/Region</strong> — Derived from your IP or from the country filter you choose. Used only for matching you with the right partner.</li>
+                <li><strong>Browser & Connection Info</strong> — Basic technical data (browser type, WebRTC capabilities) needed to establish your call. Never tied to your identity.</li>
+                <li><strong>Chat Messages</strong> — Relayed in real-time between call partners only. Never stored on our servers at any point.</li>
+                <li><strong>Microphone Audio</strong> — Streamed peer-to-peer via WebRTC. Our servers never receive, record, or process your audio.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 2. What We DON'T Collect -->
+    <div class="priv-section">
+        <h2><span class="ico">🚫</span> What We Never Collect</h2>
+        <div class="priv-card">
+            <ul>
+                <li>Your name, email address, phone number, or any account information</li>
+                <li>Recordings or transcripts of your voice calls or chat messages</li>
+                <li>Your precise location (only country-level, and only if you choose it)</li>
+                <li>Any data used for advertising, marketing, or behavioural profiling</li>
+                <li>Payment information of any kind — Calln is and always will be free</li>
+                <li>Device identifiers, fingerprints, or persistent tracking tokens</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 3. How We Use It -->
+    <div class="priv-section">
+        <h2><span class="ico">⚙️</span> How We Use Information</h2>
+        <p>The limited data we handle is used exclusively to:</p>
+        <div class="priv-card">
+            <ul>
+                <li><strong>Match you with a partner</strong> — Your country preference and IP help us connect you with a compatible user quickly and fairly.</li>
+                <li><strong>Enable real-time communication</strong> — Our signalling server relays WebRTC connection data (offers, answers, ICE candidates) to establish the peer connection.</li>
+                <li><strong>Prevent abuse</strong> — Reported users' IP addresses are temporarily blocked to protect the community from bad actors.</li>
+                <li><strong>Maintain service quality</strong> — Anonymous, aggregate traffic statistics help us understand load patterns. No personal data is involved.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 4. Data Retention -->
+    <div class="priv-section">
+        <h2><span class="ico">🗑️</span> Data Retention</h2>
+        <p>We hold data for the minimum time necessary, then delete it:</p>
+        <div class="priv-card">
+            <ul>
+                <li><strong>In-session data</strong> (IP, match state, chat messages) — Deleted immediately when your session or call ends. No exceptions.</li>
+                <li><strong>Ban records</strong> — Reported or banned IP addresses may be held for up to 30 days for abuse prevention, then automatically purged.</li>
+                <li><strong>Server logs</strong> — Standard web server logs retained for up to 7 days for debugging purposes, then deleted.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 5. WebRTC -->
+    <div class="priv-section">
+        <h2><span class="ico">🔗</span> WebRTC & Peer-to-Peer Audio</h2>
+        <p>
+            Calln uses WebRTC to transmit voice audio. Once a call is established, your audio travels
+            <strong>directly between your browser and your partner's browser</strong> — our servers are
+            completely bypassed. We have no technical capability to listen to, intercept, or record your
+            conversations.
+        </p>
+        <p>
+            To establish the WebRTC connection, your browser may share your IP address with your call
+            partner as part of the ICE negotiation process. This is standard WebRTC behaviour. If you are
+            concerned about IP exposure, we recommend using a VPN.
+        </p>
+    </div>
+
+    <!-- 6. Cookies -->
+    <div class="priv-section">
+        <h2><span class="ico">🍪</span> Cookies & Local Storage</h2>
+        <p>
+            Calln does not use advertising, tracking, or analytics cookies. We use only essential
+            technical mechanisms (such as WebSocket session tokens via Socket.IO) required to keep your
+            real-time connection alive. These expire when you close your browser and cannot be used to
+            identify you across sessions.
+        </p>
+    </div>
+
+    <!-- 7. Third Parties -->
+    <div class="priv-section">
+        <h2><span class="ico">🔌</span> Third-Party Services</h2>
+        <div class="priv-card">
+            <ul>
+                <li><strong>Render.com</strong> — Hosts our signalling server. Subject to <a href="https://render.com/privacy" class="priv-link" target="_blank" rel="noopener">Render's Privacy Policy</a>.</li>
+                <li><strong>Google STUN Servers</strong> — Used by WebRTC to discover network paths. Google may log connection attempts per <a href="https://policies.google.com/privacy" class="priv-link" target="_blank" rel="noopener">Google's Privacy Policy</a>.</li>
+                <li><strong>Google Fonts</strong> — Loads the Outfit typeface from Google's CDN. Google may log font requests independently.</li>
+                <li><strong>flagcdn.com</strong> — Serves country flag images for the filter UI. No personal data is transmitted in these requests.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 8. Children -->
+    <div class="priv-section">
+        <h2><span class="ico">👦</span> Children's Privacy</h2>
+        <p>
+            Calln is not intended for users under the age of 18. We do not knowingly collect any
+            information from minors. If you believe a minor is using our service inappropriately,
+            please contact us immediately at <a href="mailto:abuse@calln.app" class="priv-link">abuse@calln.app</a>
+            and we will take prompt action.
+        </p>
+    </div>
+
+    <!-- 9. Your Rights -->
+    <div class="priv-section">
+        <h2><span class="ico">⚖️</span> Your Rights</h2>
+        <p>
+            Because we don't store personal data tied to your identity, there is very little for us to
+            provide or delete. However, you retain the following rights under applicable privacy law:
+        </p>
+        <div class="priv-card">
+            <ul>
+                <li>The right to know what data we hold (as described in this policy)</li>
+                <li>The right to request deletion of any temporarily stored IP records</li>
+                <li>The right to lodge a complaint with your local data protection authority (e.g., ICO in the UK, FTC in the US)</li>
+            </ul>
+        </div>
+        <p style="margin-top:14px;">
+            To exercise any of these rights, email <a href="mailto:privacy@calln.app" class="priv-link">privacy@calln.app</a>.
+            We aim to respond within 30 days.
+        </p>
+    </div>
+
+    <!-- 10. Changes -->
+    <div class="priv-section">
+        <h2><span class="ico">📝</span> Changes to This Policy</h2>
+        <p>
+            If we make material changes to this privacy policy, we will update the "Last updated" date
+            at the top of this page. Continued use of Calln after any changes constitutes acceptance
+            of the updated policy. We will always keep this page freely accessible from our website footer.
+        </p>
+    </div>
+
+    <!-- 11. Contact -->
+    <div class="priv-section">
+        <h2><span class="ico">📧</span> Contact Us</h2>
+        <p>Have a privacy question or concern? We're happy to help.</p>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <div class="label">General</div>
+                <a href="mailto:support@calln.app">support@calln.app</a>
+            </div>
+            <div class="contact-item">
+                <div class="label">Privacy Requests</div>
+                <a href="mailto:privacy@calln.app">privacy@calln.app</a>
+            </div>
+            <div class="contact-item">
+                <div class="label">Abuse Reports</div>
+                <a href="mailto:abuse@calln.app">abuse@calln.app</a>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+</body>
+</html>

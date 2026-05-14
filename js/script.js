@@ -33,6 +33,68 @@ document.addEventListener("DOMContentLoaded", () => {
     let countdownInterval  = null;   // visual "Auto connecting in Xs…" ticker
 
     // ════════════════════════════════════════════════
+    // FALLBACK MATCHMAKING
+    // If the user picked a specific country and nobody
+    // from that country is in the queue after
+    // FALLBACK_DELAY_MS, we silently expand to Worldwide.
+    //
+    // Flow:
+    //   1. server emits 'waiting' → startFallbackTimer()
+    //   2. status shows "Searching India… expanding in 12s"
+    //   3. timer fires → emit find_match with Worldwide
+    //   4. server re-queues and matches anyone available
+    //   5. on match → clearFallbackTimer() so it never fires late
+    // ════════════════════════════════════════════════
+    let fallbackTimer     = null;
+    let fallbackCountdown = null;
+    const FALLBACK_DELAY_MS = 12000; // 12 s before expanding search
+
+    function startFallbackTimer(targetCountryName) {
+
+        // Only needed when a specific country was chosen
+        if (!targetCountryName || targetCountryName === 'Worldwide') return;
+
+        clearFallbackTimer();
+
+        let remaining = Math.round(FALLBACK_DELAY_MS / 1000);
+
+        // Tick the status down so the user knows something is happening
+        fallbackCountdown = setInterval(() => {
+            remaining--;
+            if (remaining > 0) {
+                elements.status.innerText =
+                    `Searching ${targetCountryName}… expanding in ${remaining}s`;
+            } else {
+                clearInterval(fallbackCountdown);
+                fallbackCountdown = null;
+            }
+        }, 1000);
+
+        // After the delay, widen the search to everyone
+        fallbackTimer = setTimeout(() => {
+            fallbackTimer = null;
+
+            // Guard: only act if still in the searching state (not yet matched)
+            if (!isCalling || currentRoomId) return;
+
+            elements.status.innerText =
+                `No one from ${targetCountryName} found — expanding search worldwide…`;
+
+            socket.emit('find_match', {
+                userId:        'User_' + Math.floor(Math.random() * 9999),
+                myCountry:     detectedCountry,
+                targetCountry: 'Worldwide'   // ← open the search to everyone
+            });
+
+        }, FALLBACK_DELAY_MS);
+    }
+
+    function clearFallbackTimer() {
+        if (fallbackTimer)     { clearTimeout(fallbackTimer);       fallbackTimer     = null; }
+        if (fallbackCountdown) { clearInterval(fallbackCountdown);  fallbackCountdown = null; }
+    }
+
+    // ════════════════════════════════════════════════
     // COUNTRY FILTER
     // Updates the flag + label in the navbar pill
     // whenever the user picks a new country/region
@@ -79,14 +141,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Server confirmed we're in the queue
     socket.on('waiting', () => {
-        elements.status.innerText = "Waiting for a match…";
+        const { value, name } = UI.getSelectedCountry();
+
+        if (value === 'all') {
+            // Worldwide — generic message, no fallback needed
+            elements.status.innerText = "Waiting for a match…";
+            clearFallbackTimer();
+        } else {
+            // Specific country — show targeted message and start fallback timer
+            elements.status.innerText = `Searching for someone from ${name}…`;
+            startFallbackTimer(name);
+        }
     });
 
     // Server found a partner — set up the call
     socket.on('matched', async (data) => {
 
-        // Cancel any pending auto-reconnect — we're already connected
+        // Cancel any pending auto-reconnect or fallback — we're connected
         UI.cancelAutoReconnect();
+        clearFallbackTimer();
 
         currentRoomId = data.roomId;
         isCalling     = true;
@@ -280,21 +353,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 elements.status.innerText = "Looking for someone…";
 
                 if (typeof trackEvent === 'function') {
-                    // Track with real detected country, not the filter
                     trackEvent('call_started', { country: detectedCountry });
                 }
 
                 this.setButton(true);
                 this.updateState('searching');
 
-                // ── FIX: myCountry = real IP-detected country
-                //         targetCountry = what the user FILTERED for
-                const { value } = this.getSelectedCountry();
+                const { value, name } = this.getSelectedCountry();
 
                 socket.emit('find_match', {
                     userId:        'User_' + Math.floor(Math.random() * 9999),
-                    myCountry:     detectedCountry,   // real country, never the filter
-                    targetCountry: value === 'all' ? 'Worldwide' : elements.currentCountryName.innerText
+                    myCountry:     detectedCountry,   // real IP-detected country
+                    targetCountry: value === 'all' ? 'Worldwide' : name
                 });
 
             } catch (err) {
@@ -312,8 +382,9 @@ document.addEventListener("DOMContentLoaded", () => {
         // ── Tear down everything and optionally auto-reconnect ──
         stopCall(msg = "Ready for a conversation?") {
 
-            // Always kill any pending reconnect countdown first
+            // Kill all pending timers — reconnect, countdown, and fallback
             this.cancelAutoReconnect();
+            clearFallbackTimer();
 
             // Tell the server we're done
             if (currentRoomId) {

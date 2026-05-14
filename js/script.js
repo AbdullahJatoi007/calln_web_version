@@ -15,6 +15,17 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // ════════════════════════════════════════════════
+    // FIX: Force filter to "Worldwide" on every page load
+    // (HTML has Pakistan hardcoded — this overrides it)
+    // ════════════════════════════════════════════════
+    if (elements.countryFilter) {
+        elements.countryFilter.value          = 'all';
+        elements.currentFlag.src              = 'https://flagcdn.com/w20/un.png';
+        elements.currentFlag.alt              = 'all';
+        elements.currentCountryName.innerText = 'Worldwide';
+    }
+
+    // ════════════════════════════════════════════════
     // SHARED TIMERS
     // ════════════════════════════════════════════════
     let timerInterval      = null;   // live call duration ticker
@@ -243,7 +254,8 @@ document.addEventListener("DOMContentLoaded", () => {
             timerInterval = null;
         },
 
-        // ── Read the currently selected country from the navbar ──
+        // ── Read the currently selected FILTER country from the navbar ──
+        // NOTE: this is the TARGET preference only, not the user's real country.
         getSelectedCountry() {
 
             const filter = elements.countryFilter;
@@ -268,18 +280,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 elements.status.innerText = "Looking for someone…";
 
                 if (typeof trackEvent === 'function') {
-                    trackEvent('call_started', { country: this.getSelectedCountry().name });
+                    // Track with real detected country, not the filter
+                    trackEvent('call_started', { country: detectedCountry });
                 }
 
                 this.setButton(true);
                 this.updateState('searching');
 
-                const { value, name } = this.getSelectedCountry();
+                // ── FIX: myCountry = real IP-detected country
+                //         targetCountry = what the user FILTERED for
+                const { value } = this.getSelectedCountry();
 
                 socket.emit('find_match', {
                     userId:        'User_' + Math.floor(Math.random() * 9999),
-                    myCountry:     name,
-                    targetCountry: value === 'all' ? 'Worldwide' : name
+                    myCountry:     detectedCountry,   // real country, never the filter
+                    targetCountry: value === 'all' ? 'Worldwide' : elements.currentCountryName.innerText
                 });
 
             } catch (err) {

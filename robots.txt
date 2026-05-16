@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /js/
 
-Sitemap: https://calln.netlify.app/sitemap.xml
+Sitemap: https://getcalln.com/sitemap.xml

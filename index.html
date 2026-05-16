@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <!-- ══ PRIMARY SEO ══════════════════════════════════════════ -->
-    <title>Calln — Talk to Strangers Worldwide via Free Voice Call</title>
-    <meta name="description" content="Connect anonymously with real people worldwide through instant voice calls. No account needed. Audio-only, safe, and completely free. Try Calln now.">
-    <meta name="keywords"    content="random voice call, talk to strangers, anonymous call, voice chat online, meet people online, stranger call, free voice chat, random chat, calln, getcalln">
+    <title>Calln — Free Anonymous Voice Calls with Strangers Worldwide</title>
+<meta name="description"
+content="Talk anonymously with real people worldwide through free voice calls. No sign up, no downloads, and no personal information required.">    <meta name="keywords"    content="random voice call, talk to strangers, anonymous call, voice chat online, meet people online, stranger call, free voice chat, random chat, omegle alternative, calln, getcalln">
     <meta name="author"      content="Calln">
     <meta name="robots"      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    <meta name="rating"      content="adult">
     <link rel="canonical"    href="https://getcalln.com/">
 
     <!-- ══ OPEN GRAPH (Facebook, WhatsApp, LinkedIn) ════════════ -->
@@ -27,10 +26,11 @@
 
     <!-- ══ TWITTER / X CARD ════════════════════════════════════ -->
     <meta name="twitter:card"        content="summary_large_image">
-    <meta name="twitter:site"        content="@calln">
+    <meta name="twitter:site"        content="@getcalln">
     <meta name="twitter:title"       content="Calln — Talk to Strangers Worldwide via Free Voice Call">
-    <meta name="twitter:description" content="Anonymous voice calls with real people. No account needed, no recordings. Free.">
+    <meta name="twitter:description" content="Anonymous voice calls with real people. No account needed, no recordings. Free forever.">
     <meta name="twitter:image"       content="https://getcalln.com/og-image.png">
+    <meta name="twitter:image:alt"   content="Calln — Free anonymous voice call with strangers worldwide">
 
     <!-- ══ PWA & MOBILE ════════════════════════════════════════ -->
     <link rel="manifest"              href="manifest.json">
@@ -40,45 +40,52 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title"            content="Calln">
     <meta name="mobile-web-app-capable"                content="yes">
+    <meta name="application-name"                      content="Calln">
 
-    <!-- ══ STRUCTURED DATA (JSON-LD) ═══════════════════════════ -->
+    <!-- ══ STRUCTURED DATA — WebApplication ════════════════════ -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Calln",
       "url": "https://getcalln.com",
-      "description": "Anonymous voice-calling platform connecting people worldwide in real-time. No sign-up required.",
+      "description": "Anonymous voice-calling platform connecting people worldwide in real-time. No sign-up required. 100% free.",
       "applicationCategory": "CommunicationApplication",
       "operatingSystem": "Web, iOS, Android",
-      "browserRequirements": "Requires a modern browser with WebRTC support",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "author": {
-        "@type": "Organization",
-        "name": "Calln",
-        "url": "https://getcalln.com"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.5",
-        "ratingCount": "100"
-      },
+      "browserRequirements": "Requires a modern browser with WebRTC support (Chrome, Firefox, Safari, Edge)",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": { "@type": "Organization", "name": "Calln", "url": "https://getcalln.com" },
+    
       "featureList": [
         "Anonymous voice calls",
         "No account required",
         "Country filter",
         "Text chat during calls",
+        "Image sharing in chat",
         "Auto call feature",
-        "Real-time matching"
+        "Real-time global matching",
+        "WebRTC encrypted audio"
       ]
     }
     </script>
 
-    <!-- FAQ Schema — boosts chances of a rich result in Google -->
+    <!-- ══ STRUCTURED DATA — Organization ══════════════════════ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Calln",
+      "url": "https://getcalln.com",
+      "logo": "https://getcalln.com/favicon.svg",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "support@getcalln.com",
+        "contactType": "customer support"
+      }
+    }
+    </script>
+
+    <!-- ══ STRUCTURED DATA — FAQPage ════════════════════════════ -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -87,34 +94,32 @@
         {
           "@type": "Question",
           "name": "Is Calln free to use?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, Calln is completely free. No account, no subscription, no hidden fees."
-          }
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes, Calln is completely free forever. No account, no subscription, no hidden fees." }
         },
         {
           "@type": "Question",
           "name": "Is Calln anonymous?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. Calln does not require an account or any personal information. Calls are audio-only and not recorded."
-          }
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Calln does not require an account or any personal information. Calls are audio-only and not recorded." }
         },
         {
           "@type": "Question",
           "name": "Can I choose which country to talk to?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. Calln has a country filter that lets you search for people from a specific country. If no one is available from that country, Calln automatically expands the search worldwide."
-          }
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Calln has a country filter. If no one is available from that country, Calln automatically expands the search worldwide so you are never left waiting." }
         },
         {
           "@type": "Question",
           "name": "What devices does Calln work on?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Calln works on any modern browser including Chrome, Firefox, Safari, and Edge on both desktop and mobile devices."
-          }
+          "acceptedAnswer": { "@type": "Answer", "text": "Calln works on any modern browser including Chrome, Firefox, Safari, and Edge on both desktop and mobile devices. No app download required." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Calln safe?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Calln uses WebRTC encrypted audio, requires age verification, and has a report button to flag inappropriate users. Reported users receive a 24-hour IP ban." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I send images during a call?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. During an active call you can tap the camera icon in the chat panel to share images from your gallery or camera." }
         }
       ]
     }
@@ -141,18 +146,9 @@
     <!-- ══ SOCKET.IO ════════════════════════════════════════════ -->
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 
-    <!--
-        ════════════════════════════════════════════════════════════
-        GOOGLE ADSENSE — un-comment ONLY after site is approved.
-        Replace ca-pub-XXXXXXXXXXXXXXXX with your real publisher ID.
-        ════════════════════════════════════════════════════════════
-    -->
-    <!--
-    <script async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
-        crossorigin="anonymous">
-    </script>
-    -->
+    <!-- ══ GOOGLE ADSENSE ═══════════════════════════════════════ -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5077822019728893"
+         crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -214,8 +210,8 @@
     <ul class="nav-links">
         <li class="filter-wrapper">
             <div class="filter-content" id="selected-country-ui">
-                <img id="current-flag" src="https://flagcdn.com/w20/un.png" alt="all">
-                <span class="filter-text" id="current-country-name">Worldwide</span>
+               <img id="current-flag" src="https://flagcdn.com/w20/un.png" alt="all">
+<span class="filter-text" id="current-country-name">Worldwide</span>
             </div>
             <select id="country-filter" class="hidden-select">
                 <option value="all">🌍 All Countries</option>
@@ -261,7 +257,7 @@
 
         <div class="controls-grid">
             <div class="control-item">
-                <button class="action-btn call-btn" id="start-btn" aria-label="Start call">
+                <button class="action-btn call-btn" id="start-btn">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M6.62 10.79a15.15 15.15 0 0 0 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                     </svg>
@@ -269,7 +265,7 @@
                 <span id="call-label">Start</span>
             </div>
             <div class="control-item">
-                <button class="action-btn" id="mute-btn" aria-label="Mute microphone">
+                <button class="action-btn" id="mute-btn">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
                         <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
@@ -280,7 +276,7 @@
                 <span id="mute-label">Mute</span>
             </div>
             <div class="control-item">
-                <button class="action-btn" id="report-btn" aria-label="Report user">
+                <button class="action-btn" id="report-btn">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
                         <line x1="4" y1="22" x2="4" y2="15"/>
@@ -333,7 +329,7 @@
             </div>
             <div class="message-input">
                 <input type="text" id="msg-input" placeholder="Start a call to chat…" disabled autocomplete="off" autocorrect="off" spellcheck="false">
-                <button class="send-btn" id="send-btn" aria-label="Send message">
+                <button class="send-btn" id="send-btn">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
                         <polygon points="22 2 15 22 11 13 2 9 22 2"/>
                     </svg>
@@ -393,7 +389,7 @@
             <!--
             <ins class="adsbygoogle"
                  style="display:block"
-                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-client="ca-pub-5077822019728893"
                  data-ad-slot="0000000001"
                  data-ad-format="horizontal"
                  data-full-width-responsive="true">
@@ -476,7 +472,7 @@
             <!--
             <ins class="adsbygoogle"
                  style="display:block;width:300px;height:250px;"
-                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-client="ca-pub-5077822019728893"
                  data-ad-slot="0000000002">
             </ins>
             -->
@@ -494,7 +490,7 @@
             <!--
             <ins class="adsbygoogle"
                  style="display:block;width:300px;height:250px;"
-                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-client="ca-pub-5077822019728893"
                  data-ad-slot="0000000003">
             </ins>
             -->
@@ -522,11 +518,6 @@
 <!-- ══ TOAST CONTAINER ══════════════════════════════════════════ -->
 <div class="toast-container" id="toast-container"></div>
 
-<!--
-    Analytics queue stub — synchronous, runs before everything.
-    Captures trackEvent() calls made before Firebase loads.
-    Replaced by the real Firebase tracker when consent is given.
--->
 <script>
     window.trackEvent = function(name, params) {
         window._eventQueue = window._eventQueue || [];

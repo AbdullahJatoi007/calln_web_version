@@ -1,63 +1,42 @@
 /* =============================================
-   AGE GATE — 18+ & Terms confirmation dialog
-   Shows on first visit; result persisted in
-   localStorage so it only appears once.
-   Bump STORAGE_KEY version when ToS changes.
+   AGE GATE — 18+ confirmation dialog
    ============================================= */
 const AGE_GATE = {
-
     STORAGE_KEY: 'calln_accepted_v1',
 
     init() {
-        // Already accepted — don't show
         if (localStorage.getItem(this.STORAGE_KEY) === 'true') return;
+        this._mount();
+    },
+
+    _mount() {
+        const tpl = document.getElementById('age-gate-template');
+        if (!tpl) return console.warn('AGE_GATE: <template> not found in index.html');
+        document.body.prepend(tpl.content.cloneNode(true));
         this._show();
     },
 
     _show() {
         const gate = document.getElementById('age-gate');
-        if (!gate) return;
+        const btn  = document.getElementById('age-gate-btn');
+        if (!gate || !btn) return;
 
-        // Lock page scroll while dialog is open
+        // Lock scroll on both body and html
+        document.documentElement.style.overflow = 'hidden';
         document.body.style.overflow = 'hidden';
 
-        // Reveal with CSS transition
+        // Trigger CSS enter transition
         requestAnimationFrame(() =>
             requestAnimationFrame(() => gate.classList.add('active'))
         );
 
-        this._wireCheckboxes();
+        // { once: true } auto-removes listener — no dataset.bound hack needed
+        btn.addEventListener('click', () => this.accept(), { once: true });
     },
 
-    _wireCheckboxes() {
-        const items   = document.querySelectorAll('.age-check-item');
-        const btn     = document.getElementById('age-gate-btn');
-        const checks  = document.querySelectorAll('.age-chk');
-
-        // Toggle checked state + style on each item
-        items.forEach(item => {
-            item.addEventListener('click', () => {
-                const chk = item.querySelector('.age-chk');
-                if (!chk) return;
-
-                chk.checked = !chk.checked;
-                item.classList.toggle('checked', chk.checked);
-
-                // Enable button only when ALL boxes are ticked
-                const allDone = [...checks].every(c => c.checked);
-                if (btn) {
-                    btn.disabled = !allDone;
-                    btn.classList.toggle('ready', allDone);
-                }
-            });
-        });
-
-        // Accept
-        btn?.addEventListener('click', () => {
-            if (!btn.classList.contains('ready')) return;
-            localStorage.setItem(this.STORAGE_KEY, 'true');
-            this._close();
-        });
+    accept() {
+        localStorage.setItem(this.STORAGE_KEY, 'true');
+        this._close();
     },
 
     _close() {
@@ -65,13 +44,19 @@ const AGE_GATE = {
         if (!gate) return;
 
         gate.classList.remove('active');
-        document.body.style.overflow = '';
+
+        // Wait for CSS transition before cleanup
+        setTimeout(() => {
+            document.documentElement.style.overflow = '';
+            document.body.style.overflow = '';
+            gate.remove();
+        }, 350);
     },
 
-    // Called externally to re-show (e.g. after ToS update)
+    // Call from console to re-test: AGE_GATE.reset()
     reset() {
         localStorage.removeItem(this.STORAGE_KEY);
-        this._show();
+        this._mount();
     }
 };
 

@@ -152,56 +152,26 @@ content="Talk anonymously with real people worldwide through free voice calls. N
 </head>
 <body>
 
-<!-- ══ AGE GATE ═══════════════════════════════════════════════ -->
-<div class="age-gate" id="age-gate">
-    <div class="age-gate-card">
-        <div class="age-gate-logo">Calln</div>
-        <h2>Before you start</h2>
-        <p>Calln connects you anonymously with strangers via voice. Please confirm all of the following.</p>
-
-        <div class="age-gate-checks">
-            <div class="age-check-item" data-for="chk-age">
-                <input type="checkbox" class="age-chk" id="chk-age">
-                <div class="age-check-box">
-                    <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-                        <polyline points="1.5,6 5,9.5 10.5,2.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <div class="age-check-text">
-                    <strong>I am 18 years of age or older</strong>
-                    <span>This service is strictly for adults only</span>
-                </div>
+<!-- ══ AGE GATE TEMPLATE ═══════════════════════════════════════ -->
+<template id="age-gate-template">
+    <div class="age-gate" id="age-gate" role="dialog" aria-modal="true" aria-labelledby="age-gate-heading">
+        <div class="age-gate-card">
+            <div class="age-gate-logo" aria-hidden="true">Calln</div>
+            <h2 id="age-gate-heading">Before you start</h2>
+            <p>Calln is an anonymous voice platform for adults. By continuing, you confirm that:</p>
+            <div class="age-gate-info">
+                <p>✔ You are 18 years or older</p>
+                <p>✔ You agree to our <a href="terms.html" target="_blank" rel="noopener">Terms of Service</a></p>
+                <p>✔ You agree to our <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a></p>
+                <p>✔ You will follow community guidelines</p>
             </div>
-            <div class="age-check-item" data-for="chk-terms">
-                <input type="checkbox" class="age-chk" id="chk-terms">
-                <div class="age-check-box">
-                    <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-                        <polyline points="1.5,6 5,9.5 10.5,2.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <div class="age-check-text">
-                    <strong>I agree to the <a href="terms.html" target="_blank">Terms</a> &amp; <a href="privacy.html" target="_blank">Privacy Policy</a></strong>
-                    <span>Including community guidelines and data practices</span>
-                </div>
-            </div>
-            <div class="age-check-item" data-for="chk-conduct">
-                <input type="checkbox" class="age-chk" id="chk-conduct">
-                <div class="age-check-box">
-                    <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-                        <polyline points="1.5,6 5,9.5 10.5,2.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <div class="age-check-text">
-                    <strong>I will follow community guidelines</strong>
-                    <span>No explicit, offensive, or illegal content during calls</span>
-                </div>
-            </div>
+            <button class="age-gate-btn" id="age-gate-btn">
+                I Agree &amp; Enter →
+            </button>
+            <p class="age-gate-note">Misuse may result in a permanent ban.</p>
         </div>
-
-        <button class="age-gate-btn" id="age-gate-btn" disabled>Enter Calln →</button>
-        <p class="age-gate-note">Violations may result in a permanent ban.</p>
     </div>
-</div>
+</template>
 
 
 <!-- ══ NAVBAR ══════════════════════════════════════════════════ -->
@@ -402,7 +372,7 @@ content="Talk anonymously with real people worldwide through free voice calls. N
         <div class="footer-brand">
             <div class="footer-logo">Calln</div>
             <p class="footer-tagline">Connect with real people worldwide through anonymous voice calls. No accounts, no history — just genuine conversations.</p>
-            <div class="footer-socials">
+            <!-- <div class="footer-socials">
                 <a href="#" class="social-btn" aria-label="X / Twitter">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -425,34 +395,28 @@ content="Talk anonymously with real people worldwide through free voice calls. N
                         <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.578 9.578 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.933.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
                     </svg>
                 </a>
-            </div>
+            </div> -->
         </div>
 
         <div class="footer-links">
             <h4>Platform</h4>
-            <a href="#">How it Works</a>
-            <a href="#">Safety Tips</a>
-            <a href="#">FAQ</a>
-            <a href="#">Country Filter</a>
-            <a href="#">Browser Support</a>
+            <a href="safety.html">Safety Tips</a>
+            <a href="faq.html">FAQ</a>
+            <a href="#">Matching System</a>
+           
         </div>
 
         <div class="footer-links">
             <h4>Legal</h4>
             <a href="privacy.html">Privacy Policy</a>
             <a href="terms.html">Terms of Service</a>
-            <a href="#">Cookie Policy</a>
-            <a href="#">Community Guidelines</a>
-            <a href="#">DMCA</a>
+            <a href="privacy.html">Cookie Policy</a>
         </div>
 
         <div class="footer-links">
             <h4>Contact Us</h4>
             <a href="mailto:support@getcalln.com">support@getcalln.com</a>
-            <a href="mailto:abuse@getcalln.com">Report Abuse</a>
-            <a href="#">Report a Bug</a>
-            <a href="#">Partner with Us</a>
-            <a href="#">Status Page</a>
+            <a href="mailto:support@getcalln.com">Abuse Reports</a>
         </div>
     </div>
 

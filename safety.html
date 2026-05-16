@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Tips — Calln</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="base.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Outfit", sans-serif;
+            background: var(--bg, #0b0d14);
+            color: var(--text-1, #fff);
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            background: rgba(10,12,18,0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border, #222);
+        }
+
+        .logo {
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-1, #fff);
+        }
+
+        .back {
+            font-size: 14px;
+            text-decoration: none;
+            color: var(--text-2, #aaa);
+        }
+
+        .back:hover {
+            color: #fff;
+        }
+
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 40px 18px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        p.subtitle {
+            color: var(--text-2, #aaa);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .card {
+            background: var(--bg-surface, #121522);
+            border: 1px solid var(--border, #222);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 16px;
+        }
+
+        .card h2 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .card ul {
+            margin: 0;
+            padding-left: 18px;
+            color: var(--text-2, #bbb);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .highlight {
+            border-left: 3px solid #3d7fff;
+            padding-left: 12px;
+        }
+
+        .warning {
+            border-left: 3px solid #ff4d4d;
+            padding-left: 12px;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 22px;
+            }
+
+            .container {
+                padding: 28px 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+    <a href="index.html" class="logo">Calln</a>
+    <a href="index.html" class="back">← Back</a>
+</header>
+
+<main class="container">
+
+    <h1>Safety Tips</h1>
+    <p class="subtitle">
+        Calln is built for anonymous conversations. Your safety depends on how you use it.
+        Follow these simple rules to stay protected while chatting.
+    </p>
+
+    <div class="card highlight">
+        <h2>🛡️ General Safety</h2>
+        <ul>
+            <li>Never share your real name, phone number, or address</li>
+            <li>Keep conversations anonymous at all times</li>
+            <li>Trust your instinct — leave any call that feels unsafe</li>
+            <li>Use the “End Call” button immediately if needed</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>🚫 What to Avoid</h2>
+        <ul>
+            <li>Do not share personal or financial information</li>
+            <li>Avoid clicking unknown links from strangers</li>
+            <li>Do not agree to meet people in real life</li>
+            <li>Do not send or request inappropriate content</li>
+        </ul>
+    </div>
+
+    <div class="card warning">
+        <h2>⚠️ Reporting Abuse</h2>
+        <ul>
+            <li>Use the Report button during or after a call</li>
+            <li>Block users who behave inappropriately</li>
+            <li>Email abuse reports to support@getcalln.com</li>
+            <li>Serious violations may lead to permanent bans</li>
+        </ul>
+    </div>
+
+    <div class="card highlight">
+        <h2>💡 Pro Tips</h2>
+        <ul>
+            <li>Use country filters if you want more control</li>
+            <li>Stay polite — better conversations last longer</li>
+            <li>Disconnect anytime without explanation</li>
+            <li>Use Calln in a private, safe environment</li>
+        </ul>
+    </div>
+
+</main>
+
+</body>
+</html>

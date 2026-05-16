@@ -5,30 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <!-- ══ PRIMARY SEO ══════════════════════════════════════════ -->
-    <title>Calln — Talk to Strangers Worldwide via Voice Call</title>
+    <title>Calln — Talk to Strangers Worldwide via Free Voice Call</title>
     <meta name="description" content="Connect anonymously with real people worldwide through instant voice calls. No account needed. Audio-only, safe, and completely free. Try Calln now.">
-    <meta name="keywords"    content="random voice call, talk to strangers, anonymous call, voice chat online, meet people online, stranger call, calln">
+    <meta name="keywords"    content="random voice call, talk to strangers, anonymous call, voice chat online, meet people online, stranger call, free voice chat, random chat, calln, getcalln">
     <meta name="author"      content="Calln">
-    <meta name="robots"      content="index, follow">
-    <link rel="canonical"    href="https://calln.netlify.app/">
+    <meta name="robots"      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="rating"      content="adult">
+    <link rel="canonical"    href="https://getcalln.com/">
 
     <!-- ══ OPEN GRAPH (Facebook, WhatsApp, LinkedIn) ════════════ -->
     <meta property="og:type"         content="website">
-    <meta property="og:title"        content="Calln — Talk to Strangers Worldwide">
+    <meta property="og:title"        content="Calln — Talk to Strangers Worldwide via Free Voice Call">
     <meta property="og:description"  content="Anonymous voice calls with real people worldwide. No accounts, no recordings — just genuine conversations. 100% free.">
-    <meta property="og:url"          content="https://calln.netlify.app/">
-    <meta property="og:image"        content="https://calln.netlify.app/og-image.png">
+    <meta property="og:url"          content="https://getcalln.com/">
+    <meta property="og:image"        content="https://getcalln.com/og-image.png">
     <meta property="og:image:width"  content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt"    content="Calln — Voice call with strangers worldwide">
+    <meta property="og:image:alt"    content="Calln — Free anonymous voice call with strangers worldwide">
     <meta property="og:site_name"    content="Calln">
     <meta property="og:locale"       content="en_US">
 
     <!-- ══ TWITTER / X CARD ════════════════════════════════════ -->
     <meta name="twitter:card"        content="summary_large_image">
-    <meta name="twitter:title"       content="Calln — Talk to Strangers Worldwide">
+    <meta name="twitter:site"        content="@calln">
+    <meta name="twitter:title"       content="Calln — Talk to Strangers Worldwide via Free Voice Call">
     <meta name="twitter:description" content="Anonymous voice calls with real people. No account needed, no recordings. Free.">
-    <meta name="twitter:image"       content="https://calln.netlify.app/og-image.png">
+    <meta name="twitter:image"       content="https://getcalln.com/og-image.png">
 
     <!-- ══ PWA & MOBILE ════════════════════════════════════════ -->
     <link rel="manifest"              href="manifest.json">
@@ -45,17 +47,76 @@
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Calln",
-      "url": "https://calln.netlify.app",
-      "description": "Anonymous voice-calling platform connecting people worldwide in real-time.",
+      "url": "https://getcalln.com",
+      "description": "Anonymous voice-calling platform connecting people worldwide in real-time. No sign-up required.",
       "applicationCategory": "CommunicationApplication",
-      "operatingSystem": "Web",
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-      "author": { "@type": "Organization", "name": "Calln" },
+      "operatingSystem": "Web, iOS, Android",
+      "browserRequirements": "Requires a modern browser with WebRTC support",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Calln",
+        "url": "https://getcalln.com"
+      },
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "4.5",
         "ratingCount": "100"
-      }
+      },
+      "featureList": [
+        "Anonymous voice calls",
+        "No account required",
+        "Country filter",
+        "Text chat during calls",
+        "Auto call feature",
+        "Real-time matching"
+      ]
+    }
+    </script>
+
+    <!-- FAQ Schema — boosts chances of a rich result in Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is Calln free to use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, Calln is completely free. No account, no subscription, no hidden fees."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Calln anonymous?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Calln does not require an account or any personal information. Calls are audio-only and not recorded."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I choose which country to talk to?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Calln has a country filter that lets you search for people from a specific country. If no one is available from that country, Calln automatically expands the search worldwide."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What devices does Calln work on?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Calln works on any modern browser including Chrome, Firefox, Safari, and Edge on both desktop and mobile devices."
+          }
+        }
+      ]
     }
     </script>
 
@@ -153,8 +214,8 @@
     <ul class="nav-links">
         <li class="filter-wrapper">
             <div class="filter-content" id="selected-country-ui">
-               <img id="current-flag" src="https://flagcdn.com/w20/un.png" alt="all">
-<span class="filter-text" id="current-country-name">Worldwide</span>
+                <img id="current-flag" src="https://flagcdn.com/w20/un.png" alt="all">
+                <span class="filter-text" id="current-country-name">Worldwide</span>
             </div>
             <select id="country-filter" class="hidden-select">
                 <option value="all">🌍 All Countries</option>
@@ -200,7 +261,7 @@
 
         <div class="controls-grid">
             <div class="control-item">
-                <button class="action-btn call-btn" id="start-btn">
+                <button class="action-btn call-btn" id="start-btn" aria-label="Start call">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M6.62 10.79a15.15 15.15 0 0 0 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                     </svg>
@@ -208,7 +269,7 @@
                 <span id="call-label">Start</span>
             </div>
             <div class="control-item">
-                <button class="action-btn" id="mute-btn">
+                <button class="action-btn" id="mute-btn" aria-label="Mute microphone">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
                         <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
@@ -219,7 +280,7 @@
                 <span id="mute-label">Mute</span>
             </div>
             <div class="control-item">
-                <button class="action-btn" id="report-btn">
+                <button class="action-btn" id="report-btn" aria-label="Report user">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
                         <line x1="4" y1="22" x2="4" y2="15"/>
@@ -272,7 +333,7 @@
             </div>
             <div class="message-input">
                 <input type="text" id="msg-input" placeholder="Start a call to chat…" disabled autocomplete="off" autocorrect="off" spellcheck="false">
-                <button class="send-btn" id="send-btn">
+                <button class="send-btn" id="send-btn" aria-label="Send message">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
                         <polygon points="22 2 15 22 11 13 2 9 22 2"/>
                     </svg>
@@ -391,8 +452,8 @@
 
         <div class="footer-links">
             <h4>Contact Us</h4>
-            <a href="mailto:support@calln.app">support@calln.app</a>
-            <a href="mailto:abuse@calln.app">Report Abuse</a>
+            <a href="mailto:support@getcalln.com">support@getcalln.com</a>
+            <a href="mailto:abuse@getcalln.com">Report Abuse</a>
             <a href="#">Report a Bug</a>
             <a href="#">Partner with Us</a>
             <a href="#">Status Page</a>
@@ -400,7 +461,7 @@
     </div>
 
     <div class="footer-bottom">
-        <span>© 2025 Calln · All rights reserved</span>
+        <span>© 2025 Calln · All rights reserved · <a href="https://getcalln.com" style="color:inherit;text-decoration:none;">getcalln.com</a></span>
         <div class="footer-badge">Made with <span class="heart">♥</span> for genuine human connections</div>
     </div>
 

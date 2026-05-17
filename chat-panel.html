@@ -1,0 +1,78 @@
+ <!-- ─── CHAT + PLAY PANEL ────────────────────────────────── -->
+    <div class="chat-container">
+        <div class="chat-tabs">
+            <button class="chat-tab active" id="tab-chat">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+                Chat
+            </button>
+            <button class="chat-tab" id="tab-play">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polygon points="5 3 19 12 5 21 5 3"/>
+                </svg>
+                Play
+            </button>
+        </div>
+
+        <div id="panel-chat" class="chat-panel active">
+            <div id="chat-display">
+                <div class="overlay-text">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                        <line x1="12" y1="19" x2="12" y2="23"/>
+                        <line x1="8"  y1="23" x2="16" y2="23"/>
+                    </svg>
+                    Audio only mode
+                    <span>Start a call to enable chat</span>
+                </div>
+            </div>
+            <div class="message-input">
+                <input type="text" id="msg-input" placeholder="Start a call to chat…" disabled autocomplete="off" autocorrect="off" spellcheck="false">
+                <button class="send-btn" id="send-btn">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="panel-play" class="chat-panel">
+            <div class="game-locked-overlay" id="game-locked">
+                <div class="lock-icon">🔒</div>
+                <p>Start a call to play!</p>
+                <span>Games unlock when you're connected</span>
+            </div>
+            <div class="game-content-scroll">
+                <div class="game-card" id="game-card-wyr">
+                    <div class="game-card-title"><span class="game-ico">🤔</span> Would You Rather</div>
+                    <div id="wyr-content"></div>
+                </div>
+                <div class="game-card" id="game-card-rps">
+                    <div class="game-card-title"><span class="game-ico">🪨</span> Rock Paper Scissors</div>
+                    <div id="rps-content"></div>
+                </div>
+                <div class="game-card" id="game-card-emoji">
+                    <div class="game-card-title"><span class="game-ico">🎉</span> Send a Reaction</div>
+                    <div class="emoji-grid">
+                        <button class="emoji-btn" onclick="GAME_MANAGER.sendEmoji('🎉')">🎉</button>
+                        <button class="emoji-btn" onclick="GAME_MANAGER.sendEmoji('🔥')">🔥</button>
+                        <button class="emoji-btn" onclick="GAME_MANAGER.sendEmoji('😂')">😂</button>
+                        <button class="emoji-btn" onclick="GAME_MANAGER.sendEmoji('❤️')">❤️</button>
+                        <button class="emoji-btn" onclick="GAME_MANAGER.sendEmoji('👏')">👏</button>
+                        <button class="emoji-btn" onclick="GAME_MANAGER.sendEmoji('😱')">😱</button>
+                        <button class="emoji-btn" onclick="GAME_MANAGER.sendEmoji('🤣')">🤣</button>
+                        <button class="emoji-btn" onclick="GAME_MANAGER.sendEmoji('💯')">💯</button>
+                        <button class="emoji-btn" onclick="GAME_MANAGER.sendEmoji('🥶')">🥶</button>
+                        <button class="emoji-btn" onclick="GAME_MANAGER.sendEmoji('✨')">✨</button>
+                    </div>
+                </div>
+                <div class="game-card" id="game-card-icebreaker">
+                    <div class="game-card-title"><span class="game-ico">💬</span> Ice Breaker</div>
+                    <p class="icebreaker-text" id="icebreaker-text">Tap below for a random conversation starter!</p>
+                    <button class="game-action-btn" onclick="GAME_MANAGER.newIceBreaker()">🎲 New Question</button>
+                </div>
+            </div>
+        </div>
+    </div>

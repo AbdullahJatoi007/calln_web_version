@@ -47,47 +47,50 @@
    MOBILE  ≤ 600px
    Narrow viewport, wrapped navbar
    ═══════════════════════════════════════ */
+/* ═══════════════════════════════════════
+   MOBILE ≤ 600px (FIXED ALIGNMENT)
+   ═══════════════════════════════════════ */
 @media (max-width: 600px) {
-  /* Navbar wraps: logo + spacer on row 1, links on row 2 */
   .navbar {
-    flex-wrap: wrap;
-    height: auto;
-    padding: 0.55rem 1rem 0.45rem;
-    gap: 5px;
+    flex-wrap: nowrap;     /* prevents the second row */
+    height: 60px;          /* keeps it same height as laptop */
+    padding: 0 1rem;       /* standard mobile padding */
+    gap: 10px;             /* space between logo and badges */
+    justify-content: space-between;
   }
+
   .nav-links {
-    order: 3;
-    width: 100%;
-    justify-content: center;
-    gap: 8px;
-    padding-bottom: 3px;
-  }
-  .logo { font-size: 1.15rem; }
-
-  /* Hide country label, keep flag icon only */
-  .filter-text { display: none; }
-
-  .online-status { font-size: 0.72rem; padding: 5px 10px; }
-  .filter-content { padding: 5px 10px; }
-
-  /* Hero */
-  .hero-section {
-    padding: 1rem 0.85rem 2rem;
-    gap: 18px;
+    order: 2;              /* ensures it stays after logo */
+    position: static;      /* removes absolute centering */
+    transform: none;       /* removes the offset */
+    display: flex;
+    width: auto;           /* prevents it from taking full width */
+    justify-content: flex-end;
+    gap: 6px;              /* tightens space between filter & online status */
   }
 
-  .call-panel { max-width: 100%; }
+  .logo { 
+    font-size: 1.55rem; 
+    flex-shrink: 0;        /* ensures logo doesn't get squashed */
+  }
 
-  .app-logo-floating { width: 92px; height: 92px; }
-  .action-btn { width: 52px; height: 52px; }
-  .call-btn { padding: 0 16px; height: 52px; }
-  .controls-grid { gap: 12px; margin-bottom: 20px; max-width: 270px; }
-  .control-item { font-size: 0.68rem; }
+  /* Keep flag icon only, hide text to save space */
+  .filter-text { 
+    display: block;          /* 👈 Overrides the desktop display or any hidden state */
+    font-size: 0.85rem;      /* 👈 Slightly smaller than laptop (1rem) to fit mobile screens */
+  }
 
-  .chat-container {
-    max-width: 100%;
-    height: 390px;
-    border-radius: var(--r-lg);
+  .online-status { 
+    font-size: 0.85rem; 
+    padding: 5px 10px; 
+    height: 32px;          /* explicit height for vertical alignment */
+  }
+  
+  .filter-content { 
+    font-size: 0.85rem;
+    padding: 5px 10px; 
+    gap: 5px;
+    height: 32px;          /* same height as online status */
   }
 }
 

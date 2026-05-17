@@ -18,7 +18,7 @@
 
 /* ---- LOGO ---- */
 .logo {
-  font-size: 1.3rem;
+  font-size: 1.8rem;
   font-weight: 700;
   letter-spacing: -0.04em;
   background: linear-gradient(130deg, #ffffff 25%, var(--accent));
@@ -62,6 +62,11 @@
   background: var(--bg-hover);
   border-color: var(--border-md);
 }
+.filter-chevron {
+  flex-shrink: 0;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
 #current-flag {
   width: 18px;
   height: auto;
@@ -69,9 +74,9 @@
   flex-shrink: 0;
 }
 .filter-text {
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 500;
-  color: var(--text-2);
+  color: #fff;
 }
 .hidden-select {
   position: absolute;
@@ -91,9 +96,9 @@
   border: 1px solid var(--border);
   padding: 5px 13px;
   border-radius: 50px;
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: var(--text-2);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
   white-space: nowrap;
   user-select: none;
 }
@@ -103,8 +108,8 @@
 }
 
 .pulse-dot {
-  width: 7px;
-  height: 7px;
+  width: 10px;
+  height: 10px;
   background: var(--green);
   border-radius: 50%;
   flex-shrink: 0;
@@ -120,3 +125,4 @@
   width: 84px;
   flex-shrink: 0;
 }
+

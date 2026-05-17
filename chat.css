@@ -16,7 +16,55 @@
   box-shadow: var(--shadow-lg);
   flex-shrink: 0;
 }
+/* ---- CHAT & PLAY TABS ---- */
+.chat-tabs {
+  display: flex;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border);
+}
 
+.chat-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Slightly increased gap for larger text */
+  padding: 14px 12px; /* Marginally increased top/bottom padding for balance */
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  
+  /* Increased text size and weight */
+  font-size: 1.15rem; 
+  font-weight: 700;
+  
+  cursor: pointer;
+  transition: background 0.2s;
+  
+  /* Forces the text and the SVG icon color to be white */
+  color: #ffffff !important;
+}
+
+/* Forces the SVG icons inside the tabs to be white and scale with text */
+.chat-tab svg {
+  stroke: #ffffff !important;
+  display: inline-block;
+  vertical-align: middle;
+  width: 14px;  /* Slightly larger to match the new text size */
+  height: 14px;
+}
+
+/* Optional: Add a subtle hover or background effect so users know which tab is active */
+.chat-tab:hover {
+  background: var(--bg-hover);
+}
+
+.chat-tab.active {
+  background: var(--bg-surface);
+  
+  /* Changes the underline selector bar to white */
+  border-bottom: 3px solid #ffffff !important; 
+}
 /* ---- HEADER ---- */
 .chat-header {
   display: flex;
@@ -26,7 +74,6 @@
   border-bottom: 1px solid var(--border);
   font-size: 0.7rem;
   font-weight: 700;
-  color: var(--text-3);
   letter-spacing: 0.09em;
   text-transform: uppercase;
   background: var(--bg-elevated);
@@ -67,7 +114,10 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  color: var(--text-3);
+  
+  /* Changed from var(--text-3) to white */
+  color: #ffffff !important; 
+  
   font-size: 0.88rem;
   font-weight: 500;
   letter-spacing: 0.02em;
@@ -77,11 +127,19 @@
   min-height: 100%;
   width: 100%;
 }
-.overlay-text svg { opacity: 0.35; }
+
+/* Forces the microphone icon outline to be white */
+.overlay-text svg { 
+  stroke: #ffffff !important;
+  opacity: 0.8; /* Increased opacity slightly so it stands out beautifully against dark backgrounds */
+}
+
+/* Forces the smaller text underneath to also be white */
 .overlay-text span {
   font-size: 0.72rem;
   font-weight: 400;
-  opacity: 0.55;
+  color: #ffffff !important;
+  opacity: 0.7; /* Adds slight transparency for a clean hierarchy effect */
   letter-spacing: 0.03em;
 }
 
@@ -160,10 +218,18 @@
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
-.message-input input::placeholder { color: var(--text-3); }
+
+/* Changes the hint/placeholder text color to white */
+.message-input input::placeholder { 
+  color: #ffffff !important; 
+  opacity: 0.7; /* Gives it a slight opacity so it looks like a clean placeholder hint */
+}
+
+/* Keeps the text white and clean even when the input element is disabled */
 .message-input input:disabled {
-  opacity: 0.3;
+  opacity: 0.6; /* Bumped up from 0.3 so the white text remains easily readable */
   cursor: not-allowed;
+  color: #ffffff !important;
 }
 
 .send-btn {

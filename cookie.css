@@ -30,7 +30,7 @@
 .cookie-text {
   flex: 1;
   font-size: 0.8rem;
-  color: var(--text-2);
+  color: #ffffff !important; /* CHANGED: Cookie banner description text is now white */
   line-height: 1.5;
   min-width: 200px;
 }
@@ -62,11 +62,13 @@
 .cookie-btn-decline {
   border: 1px solid var(--border-md);
   background: transparent;
-  color: var(--text-3);
+  color: #ffffff !important; /* CHANGED: Decline button text color is now white */
+  opacity: 0.85;             /* Gives it a slightly softer hierarchy next to the primary accent action */
 }
 .cookie-btn-decline:hover {
   background: var(--bg-hover);
-  color: var(--text-1);
+  color: #ffffff !important; /* CHANGED: Keeps text white on hover background change */
+  opacity: 1;
 }
 .cookie-btn-accept {
   border: 1px solid var(--accent);

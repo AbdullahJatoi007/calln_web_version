@@ -16,9 +16,9 @@
 
   /* Safe padding — respects notches & nav bars */
   padding: max(18px, env(safe-area-inset-top))
-           max(18px, env(safe-area-inset-right))
-           max(18px, env(safe-area-inset-bottom))
-           max(18px, env(safe-area-inset-left));
+          max(18px, env(safe-area-inset-right))
+          max(18px, env(safe-area-inset-bottom))
+          max(18px, env(safe-area-inset-left));
 
   /* Prevent background scroll-bleed on iOS */
   overscroll-behavior: contain;
@@ -79,7 +79,7 @@
 .age-gate-card h2 {
   font-size: 1.15rem;
   font-weight: 700;
-  color: var(--text-1);
+  color: #ffffff !important; /* CHANGED: H2 title is now solid white */
   margin: 0 0 10px;
   letter-spacing: -0.02em;
   flex-shrink: 0;
@@ -88,7 +88,8 @@
 /* ── Intro text ─────────────────────────────── */
 .age-gate-card > p {
   font-size: 0.85rem;
-  color: var(--text-3);
+  color: #ffffff !important; /* CHANGED: Intro description is now white */
+  opacity: 0.9;              /* Optional clear view soft texture adjustment */
   line-height: 1.6;
   margin: 0 0 16px;
   max-width: 340px;
@@ -109,13 +110,14 @@
 .age-gate-info p {
   margin: 8px 0;
   font-size: 0.82rem;
-  color: var(--text-2);
+  color: #ffffff !important; /* CHANGED: Bullet lists/paragraphs inside info box are white */
   line-height: 1.5;
 }
 
 .age-gate-info p:first-child { margin-top: 0; }
 .age-gate-info p:last-child  { margin-bottom: 0; }
 
+/* Link inside information block remains visually clear with accent code intact */
 .age-gate-info a {
   color: var(--accent);
   text-decoration: none;
@@ -154,7 +156,8 @@
 /* ── Warning note ───────────────────────────── */
 .age-gate-note {
   font-size: 0.7rem;
-  color: var(--text-3);
+  color: #ffffff !important; /* CHANGED: Footer disclaimer text is white */
+  opacity: 0.65;             /* Soft opacity layer so it sits secondary to the primary content buttons */
   margin: 12px 0 0;
   flex-shrink: 0;
 }
@@ -209,4 +212,8 @@
     padding-top: 12px;
     padding-bottom: 12px;
   }
-  .age-gate-card
+  .age-gate-card {
+    /* Fixed the closing brace that cut off layout block */
+    max-height: none; 
+  }
+}

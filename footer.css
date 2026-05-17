@@ -35,7 +35,7 @@
 .footer-tagline {
   font-size: 0.81rem;
   line-height: 1.65;
-  color: var(--text-3);
+  color: #ffffff !important; /* CHANGED: Tagline text is now white */
   margin-bottom: 22px;
   max-width: 225px;
 }
@@ -56,7 +56,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-2);
+  color: #ffffff !important; /* CHANGED: Social icons inside buttons are now white */
   text-decoration: none;
   transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
   flex-shrink: 0;
@@ -65,7 +65,7 @@
 .social-btn:hover {
   background: var(--bg-hover);
   border-color: var(--border-md);
-  color: var(--text-1);
+  color: #ffffff !important;
   transform: translateY(-3px);
   box-shadow: var(--shadow-sm);
 }
@@ -80,7 +80,7 @@
 .footer-links h4 {
   font-size: 0.68rem;
   font-weight: 700;
-  color: var(--text-2);
+  color: #ffffff !important; /* CHANGED: Column headers are now white */
   letter-spacing: 0.1em;
   text-transform: uppercase;
   margin-bottom: 16px;
@@ -88,18 +88,19 @@
 
 .footer-links a {
   font-size: 0.83rem;
-  color: var(--text-3);
+  color: #ffffff !important; /* CHANGED: Regular navigation links are now white */
   text-decoration: none;
   font-weight: 400;
   padding: 4px 0;
   display: block;
   transition: color 0.18s;
 }
-.footer-links a:hover { color: var(--text-1); }
+.footer-links a:hover { opacity: 0.8; } /* Optional: Slight fade on link hover for clean UX */
 
 /* Email link special style */
 .footer-links a[href^="mailto"] {
-  color: var(--accent);
+  /* PRESERVED: Left intact so your mail link keeps its custom emphasis color */
+  color: var(--accent) !important; 
   opacity: 0.8;
 }
 .footer-links a[href^="mailto"]:hover { opacity: 1; }
@@ -114,7 +115,7 @@
   justify-content: space-between;
   gap: 12px;
   font-size: 0.72rem;
-  color: var(--text-3);
+  color: #ffffff !important; /* CHANGED: Copyright and metadata text is now white */
 }
 
 .footer-badge {
@@ -122,7 +123,7 @@
   align-items: center;
   gap: 5px;
   font-size: 0.72rem;
-  color: var(--text-3);
+  color: #ffffff !important; /* CHANGED: Badge text is now white */
 }
 .footer-badge .heart {
   color: var(--red);

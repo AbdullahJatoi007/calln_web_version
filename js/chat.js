@@ -32,8 +32,8 @@ const CHAT_MANAGER = {
         if (!msg || !currentRoomId) return;
 
         socket.emit('chat_message', {
-            roomId: currentRoomId,
-            sender: socket.id,
+            roomId:  currentRoomId,
+            sender:  socket.id,
             message: msg
         });
 
@@ -54,23 +54,44 @@ const CHAT_MANAGER = {
         if (!file || !currentRoomId) return;
 
         try {
-            const compressedBase64 = await this.compressImage(file, 1280, 0.7);
+            // Show a sending indicator in chat while compressing
+            this.appendMessage('📷 Sending image…', 'my-msg system-sending');
 
+            const compressedBase64 = await this.compressImage(file);
+
+            // Remove the sending indicator
+            const sending = document.querySelector('.system-sending');
+            if (sending) sending.remove();
+
+            // Render immediately on sender's side
             this.appendImage(compressedBase64, 'my-msg');
 
+            // Emit via socket — server relays to partner, never stored
             socket.emit('chat_message', {
                 roomId: currentRoomId,
                 sender: socket.id,
-                image: compressedBase64
+                image:  compressedBase64
             });
 
         } catch (err) {
-            console.error('Image compression failed:', err);
+            console.error('Image send failed:', err);
+            const sending = document.querySelector('.system-sending');
+            if (sending) sending.remove();
+            this.appendMessage('⚠️ Failed to send image.', '', true);
         }
     },
 
     // ── IMAGE COMPRESSION ──
-    compressImage(file, maxWidth = 1280, quality = 0.7) {
+    // Targets 100KB final base64 size — works for both laptop
+    // screenshots and high-res mobile camera photos.
+    //
+    // Why the loop matters for mobile:
+    //   A phone photo at quality 0.7 with 1080px max-width can
+    //   still produce 200-400KB base64. Without stepping quality
+    //   down to hit the target, the server rejects it silently
+    //   and the partner never sees the image.
+    //
+    compressImage(file) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
 
@@ -79,34 +100,61 @@ const CHAT_MANAGER = {
 
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
+                    const ctx    = canvas.getContext('2d');
 
                     let width  = img.width;
                     let height = img.height;
 
-                    if (width > maxWidth) {
-                        height = Math.floor((height * maxWidth) / width);
-                        width = maxWidth;
+                    // Cap longest side at 1080px — enough for a chat bubble,
+                    // much less data than full mobile resolution (4000px+)
+                    const MAX_DIM = 1080;
+                    if (width > height && width > MAX_DIM) {
+                        height = Math.floor((height * MAX_DIM) / width);
+                        width  = MAX_DIM;
+                    } else if (height > width && height > MAX_DIM) {
+                        width  = Math.floor((width * MAX_DIM) / height);
+                        height = MAX_DIM;
+                    } else if (width > MAX_DIM) {
+                        height = Math.floor((height * MAX_DIM) / width);
+                        width  = MAX_DIM;
                     }
 
-                    canvas.width = width;
+                    canvas.width  = width;
                     canvas.height = height;
-
                     ctx.drawImage(img, 0, 0, width, height);
 
-                    resolve(canvas.toDataURL('image/jpeg', quality));
+                    // Target 100KB base64 — safely under server's 150KB limit.
+                    // base64 inflates raw bytes by ~37%, so 100KB base64 ≈ 73KB image.
+                    const TARGET_B64_BYTES = 100 * 1024;
+
+                    let quality = 0.85;
+                    let base64  = canvas.toDataURL('image/jpeg', quality);
+
+                    // Step quality down until we're under target or hit floor.
+                    // Each step is -0.05 so we don't overshoot quality too fast.
+                    while (base64.length > TARGET_B64_BYTES && quality > 0.1) {
+                        quality -= 0.05;
+                        base64   = canvas.toDataURL('image/jpeg', quality);
+                    }
+
+                    console.log(
+                        `[IMG] compressed to ~${Math.round(base64.length / 1024)}KB ` +
+                        `at quality=${quality.toFixed(2)} | original=${file.name}`
+                    );
+
+                    resolve(base64);
                 };
 
-                img.onerror = reject;
+                img.onerror = () => reject(new Error('Image load failed'));
                 img.src = event.target.result;
             };
 
-            reader.onerror = reject;
+            reader.onerror = () => reject(new Error('File read failed'));
             reader.readAsDataURL(file);
         });
     },
 
-    // ── RENDER IMAGE ──
+    // ── RENDER IMAGE BUBBLE ──
     appendImage(src, className = '') {
         const container = document.getElementById('chat-display');
         if (!container) return;
@@ -120,15 +168,17 @@ const CHAT_MANAGER = {
         const bubble = document.createElement('div');
         bubble.className = 'message-bubble image-bubble';
 
-        const img = document.createElement('img');
-        img.src = src;
-        img.alt = "image";
-        img.style.maxWidth = "200px";
-        img.style.maxHeight = "200px";
-        img.style.borderRadius = "10px";
-        img.style.display = "block";
-        img.style.cursor = "pointer";
-        img.style.objectFit = "cover";
+        const img     = document.createElement('img');
+        img.src       = src;
+        img.alt       = 'photo';
+        img.style.cssText = `
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 10px;
+            display: block;
+            cursor: pointer;
+            object-fit: cover;
+        `;
 
         img.addEventListener('click', () => {
             this.openImageFullscreen(src);
@@ -141,14 +191,13 @@ const CHAT_MANAGER = {
         this.scrollToBottom();
     },
 
-    // ── FULLSCREEN IMAGE ──
+    // ── FULLSCREEN LIGHTBOX ──
     openImageFullscreen(src) {
         const existing = document.getElementById('img-lightbox');
         if (existing) existing.remove();
 
         const box = document.createElement('div');
         box.id = 'img-lightbox';
-
         box.style.cssText = `
             position: fixed;
             inset: 0;
@@ -208,7 +257,6 @@ const CHAT_MANAGER = {
     scrollToBottom() {
         const container = document.getElementById('chat-display');
         if (!container) return;
-
         container.scrollTop = container.scrollHeight;
         requestAnimationFrame(() => {
             container.scrollTop = container.scrollHeight;
@@ -248,7 +296,9 @@ const CHAT_MANAGER = {
     }
 };
 
-// ── EVENTS ──
+// ══════════════════════════════════════════════════════════════
+// DOM EVENTS
+// ══════════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
     const input     = document.getElementById('msg-input');
     const sendBtn   = document.getElementById('send-btn');
@@ -268,34 +318,53 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    const picker = document.createElement('input');
-    picker.type = 'file';
-    picker.accept = 'image/*';
-    picker.id = 'image-picker';
+    // Hidden file input — created once, reused every time
+    const picker    = document.createElement('input');
+    picker.type     = 'file';
+    picker.accept   = 'image/*';
+    picker.id       = 'image-picker';
     picker.style.display = 'none';
     document.body.appendChild(picker);
 
     picker.addEventListener('change', (e) => {
         const file = e.target.files?.[0];
         if (file) CHAT_MANAGER.handleImageSelected(file);
+        // Reset so the same file can be picked again
         picker.value = '';
     });
 });
 
-// ── SOCKET ──
+// ══════════════════════════════════════════════════════════════
+// SOCKET EVENTS
+// ══════════════════════════════════════════════════════════════
+
+// Incoming chat_message — handles both text and image
 socket.on('chat_message', (data) => {
+    // Ignore echoes of our own messages
     if (data.sender === socket.id) return;
 
+    // IMAGE
     if (data.image) {
         CHAT_MANAGER.appendImage(data.image, 'peer-msg');
         return;
     }
 
+    // TEXT
     if (data.message) {
         CHAT_MANAGER.appendMessage(data.message, 'peer-msg');
     }
 });
 
+// Server rejected our image for being too large — show feedback to sender
+socket.on('image_too_large', (data) => {
+    CHAT_MANAGER.appendMessage(
+        `⚠️ ${data.message || 'Image too large to send.'}`,
+        '',
+        true
+    );
+});
+
+// Partner muted / unmuted
 socket.on('peer_muted', (data) => {
     CHAT_MANAGER.appendMessage(
         data.isMuted

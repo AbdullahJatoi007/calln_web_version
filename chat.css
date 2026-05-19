@@ -188,6 +188,22 @@
   letter-spacing: 0.04em;
 }
 
+/* Change 6: Typing Indicator Dots & Bouncing Keyframe Animations */
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30%            { transform: translateY(-5px); }
+}
+.typing-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.7);    /* ← visible on dark bg */
+    animation: typingBounce 1.2s ease-in-out infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
 /* ---- INPUT AREA ---- */
 .message-input {
   display: flex;

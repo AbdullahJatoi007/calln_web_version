@@ -248,14 +248,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // ════════════════════════════════════════════════
 
     // Partner's socket disconnected
-    socket.on('peer_disconnected', () => {
-        UI.stopCall("Partner disconnected");
-    });
+  socket.on('peer_disconnected', () => {
+    CHAT_MANAGER.hideTypingIndicator();
+    UI.stopCall("Partner disconnected");
+});
 
     // Partner ended the call cleanly
-    socket.on('call_ended', () => {
-        UI.stopCall("Call ended");
-    });
+   socket.on('call_ended', () => {
+    CHAT_MANAGER.hideTypingIndicator();
+    UI.stopCall("Call ended");
+});
 
     // Partner dropped briefly — show reconnecting message
     socket.on('peer_reconnecting', () => {

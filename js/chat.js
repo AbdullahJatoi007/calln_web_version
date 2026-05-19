@@ -31,6 +31,8 @@ const CHAT_MANAGER = {
         const msg = input.value.trim();
         if (!msg || !currentRoomId) return;
 
+        this.stopTyping();   // Change 2: Stop typing indicator immediately on send
+
         socket.emit('chat_message', {
             roomId:  currentRoomId,
             sender:  socket.id,
@@ -52,6 +54,8 @@ const CHAT_MANAGER = {
     // ── IMAGE SEND ──
     async handleImageSelected(file) {
         if (!file || !currentRoomId) return;
+
+        this.stopTyping();   // Change 3: Stop typing indicator immediately on image selection
 
         try {
             // Show a sending indicator in chat while compressing
@@ -82,15 +86,6 @@ const CHAT_MANAGER = {
     },
 
     // ── IMAGE COMPRESSION ──
-    // Targets 100KB final base64 size — works for both laptop
-    // screenshots and high-res mobile camera photos.
-    //
-    // Why the loop matters for mobile:
-    //   A phone photo at quality 0.7 with 1080px max-width can
-    //   still produce 200-400KB base64. Without stepping quality
-    //   down to hit the target, the server rejects it silently
-    //   and the partner never sees the image.
-    //
     compressImage(file) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -105,8 +100,6 @@ const CHAT_MANAGER = {
                     let width  = img.width;
                     let height = img.height;
 
-                    // Cap longest side at 1080px — enough for a chat bubble,
-                    // much less data than full mobile resolution (4000px+)
                     const MAX_DIM = 1080;
                     if (width > height && width > MAX_DIM) {
                         height = Math.floor((height * MAX_DIM) / width);
@@ -123,15 +116,11 @@ const CHAT_MANAGER = {
                     canvas.height = height;
                     ctx.drawImage(img, 0, 0, width, height);
 
-                    // Target 100KB base64 — safely under server's 150KB limit.
-                    // base64 inflates raw bytes by ~37%, so 100KB base64 ≈ 73KB image.
                     const TARGET_B64_BYTES = 100 * 1024;
 
                     let quality = 0.85;
                     let base64  = canvas.toDataURL('image/jpeg', quality);
 
-                    // Step quality down until we're under target or hit floor.
-                    // Each step is -0.05 so we don't overshoot quality too fast.
                     while (base64.length > TARGET_B64_BYTES && quality > 0.1) {
                         quality -= 0.05;
                         base64   = canvas.toDataURL('image/jpeg', quality);
@@ -264,24 +253,87 @@ const CHAT_MANAGER = {
     },
 
     // ── CLEAR CHAT ──
-    clearChat() {
-        const container = document.getElementById('chat-display');
-        if (!container) return;
+  clearChat() {
+    const container = document.getElementById('chat-display');
+    if (!container) return;
 
-        container.innerHTML = `
-            <div class="overlay-text">
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="1.5"
-                     stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                    <line x1="12" y1="19" x2="12" y2="23"/>
-                    <line x1="8" y1="23" x2="16" y2="23"/>
-                </svg>
-                Audio only mode
-                <span>Start a call to enable chat</span>
+    // Reset typing state so showTypingIndicator works cleanly next call
+    this._isMeTyping = false;
+    clearTimeout(this._typingTimer);
+
+    container.innerHTML = `
+        <div class="overlay-text">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.5"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" y1="19" x2="12" y2="23"/>
+                <line x1="8" y1="23" x2="16" y2="23"/>
+            </svg>
+            Audio only mode
+            <span>Start a call to enable chat</span>
+        </div>
+    `;
+},
+
+    // Change 1: Added typing methods below clearChat()
+    // ── TYPING — SEND ──────────────────────────────────────────────
+    // Called on every keystroke. Debounced so we don't spam the server.
+    _typingTimer: null,
+    _isMeTyping: false,
+
+    notifyTyping() {
+        if (!currentRoomId) return;
+        if (!this._isMeTyping) {
+            this._isMeTyping = true;
+            socket.emit('typing', { roomId: currentRoomId, isTyping: true });
+        }
+        clearTimeout(this._typingTimer);
+        this._typingTimer = setTimeout(() => {
+            this._isMeTyping = false;
+            socket.emit('typing', { roomId: currentRoomId, isTyping: false });
+        }, 2000);
+    },
+
+    stopTyping() {
+        if (!this._isMeTyping) return;
+        clearTimeout(this._typingTimer);
+        this._isMeTyping = false;
+        if (currentRoomId) {
+            socket.emit('typing', { roomId: currentRoomId, isTyping: false });
+        }
+    },
+
+    // ── TYPING — RECEIVE ───────────────────────────────────────────
+showTypingIndicator() {
+    const container = document.getElementById('chat-display');
+    if (!container) return;
+
+    const stale = document.getElementById('typing-indicator');
+    if (stale) stale.remove();
+
+    const overlay = container.querySelector('.overlay-text');
+    if (overlay) overlay.remove();
+
+    const wrapper = document.createElement('div');
+    wrapper.id = 'typing-indicator';
+    wrapper.className = 'message-wrapper peer-msg';
+    wrapper.innerHTML = `
+        <div class="message-bubble" style="padding: 10px 14px;">
+            <div style="display:flex; align-items:center; gap:4px; height:16px;">
+                <span class="typing-dot" style="background: rgba(255,255,255,0.7);"></span>
+                <span class="typing-dot" style="background: rgba(255,255,255,0.7);"></span>
+                <span class="typing-dot" style="background: rgba(255,255,255,0.7);"></span>
             </div>
-        `;
+        </div>
+    `;
+    container.appendChild(wrapper);
+    this.scrollToBottom();
+},
+    hideTypingIndicator() {
+        const el = document.getElementById('typing-indicator');
+        if (el) el.remove();
     },
 
     // ── MUTE UI ──
@@ -318,6 +370,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Change 4: Wire up input tracking for keystroke notifications
+    input?.addEventListener('input', () => {
+        CHAT_MANAGER.notifyTyping();
+    });
+
     // Hidden file input — created once, reused every time
     const picker    = document.createElement('input');
     picker.type     = 'file';
@@ -329,7 +386,6 @@ document.addEventListener('DOMContentLoaded', () => {
     picker.addEventListener('change', (e) => {
         const file = e.target.files?.[0];
         if (file) CHAT_MANAGER.handleImageSelected(file);
-        // Reset so the same file can be picked again
         picker.value = '';
     });
 });
@@ -340,16 +396,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Incoming chat_message — handles both text and image
 socket.on('chat_message', (data) => {
-    // Ignore echoes of our own messages
     if (data.sender === socket.id) return;
 
-    // IMAGE
     if (data.image) {
         CHAT_MANAGER.appendImage(data.image, 'peer-msg');
         return;
     }
 
-    // TEXT
     if (data.message) {
         CHAT_MANAGER.appendMessage(data.message, 'peer-msg');
     }
@@ -362,6 +415,15 @@ socket.on('image_too_large', (data) => {
         '',
         true
     );
+});
+
+// Change 5: Handshake the incoming typing updates from the server
+socket.on('partner_typing', (data) => {
+    if (data.isTyping) {
+        CHAT_MANAGER.showTypingIndicator();
+    } else {
+        CHAT_MANAGER.hideTypingIndicator();
+    }
 });
 
 // Partner muted / unmuted

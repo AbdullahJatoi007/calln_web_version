@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="base.css">
     <style>
-        /* ── Header ─────────────────────────── */
         .priv-header {
             position: sticky; top: 0; z-index: 100;
             display: flex; align-items: center; justify-content: space-between;
@@ -31,15 +30,11 @@
             transition: color .2s;
         }
         .priv-back:hover { color: var(--text-1); }
-
-        /* ── Layout ─────────────────────────── */
         .priv-main {
             max-width: 740px;
             margin: 0 auto;
             padding: 3rem 1.5rem 6rem;
         }
-
-        /* ── Hero ───────────────────────────── */
         .priv-hero { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
         .priv-hero h1 {
             font-size: 2.1rem; font-weight: 700; letter-spacing: -.04em;
@@ -47,8 +42,6 @@
         }
         .priv-updated { font-size: .75rem; color: var(--text-3); margin-bottom: 16px; }
         .priv-intro { font-size: .9rem; color: var(--text-2); line-height: 1.75; }
-
-        /* ── Callout box ────────────────────── */
         .callout {
             background: var(--accent-soft);
             border: 1px solid rgba(61,127,255,.25);
@@ -59,8 +52,6 @@
             color: var(--text-1);
             line-height: 1.65;
         }
-
-        /* ── Sections ───────────────────────── */
         .priv-section { margin-bottom: 2.4rem; }
         .priv-section h2 {
             font-size: 1.05rem; font-weight: 700; letter-spacing: -.02em;
@@ -68,13 +59,8 @@
             display: flex; align-items: center; gap: 9px;
         }
         .priv-section h2 .ico { font-size: 1.15rem; }
-
-        .priv-section p {
-            font-size: .875rem; color: var(--text-2); line-height: 1.8;
-        }
+        .priv-section p { font-size: .875rem; color: var(--text-2); line-height: 1.8; }
         .priv-section p + p { margin-top: 10px; }
-
-        /* ── Card list ──────────────────────── */
         .priv-card {
             background: var(--bg-surface);
             border: 1px solid var(--border);
@@ -100,8 +86,6 @@
         .priv-card li strong { color: var(--text-1); font-weight: 600; }
         a.priv-link { color: var(--accent); text-decoration: none; }
         a.priv-link:hover { text-decoration: underline; }
-
-        /* ── Contact box ────────────────────── */
         .contact-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -124,7 +108,18 @@
             text-decoration: none; word-break: break-all;
         }
         .contact-item a:hover { text-decoration: underline; }
-
+        .platform-badge {
+            display: inline-block;
+            font-size: .65rem; font-weight: 700; letter-spacing: .06em;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+        .badge-web { background: rgba(61,127,255,.15); color: var(--accent); border: 1px solid rgba(61,127,255,.3); }
+        .badge-mobile { background: rgba(52,199,89,.12); color: #34c759; border: 1px solid rgba(52,199,89,.3); }
+        .badge-both { background: rgba(255,255,255,.07); color: var(--text-3); border: 1px solid var(--border); }
         @media (max-width: 600px) {
             .priv-main { padding: 2rem 1rem 4rem; }
             .priv-hero h1 { font-size: 1.6rem; }
@@ -143,11 +138,16 @@
 
     <div class="priv-hero">
         <h1>Privacy Policy</h1>
-        <p class="priv-updated">Last updated: January 1, 2025</p>
+        <p class="priv-updated">Last updated: May 2026</p>
         <p class="priv-intro">
             At Calln, your privacy is our priority. This policy explains exactly what data we handle,
             why we handle it, and how we protect you. Spoiler: we collect very little, store even less,
             and we never sell anything to anyone.
+        </p>
+        <p class="priv-intro" style="margin-top:10px;">
+            This Privacy Policy applies to both the <strong>Calln web application</strong> (getcalln.com)
+            and the <strong>Calln mobile app</strong> (Android). Both platforms share identical core
+            functionality and are governed by this single unified policy.
         </p>
     </div>
 
@@ -165,14 +165,14 @@
             <ul>
                 <li><strong>IP Address</strong> — Used temporarily to match you with users in your preferred region and for abuse prevention. Not stored beyond the session.</li>
                 <li><strong>Country/Region</strong> — Derived from your IP or from the country filter you choose. Used only for matching you with the right partner.</li>
-                <li><strong>Browser & Connection Info</strong> — Basic technical data (browser type, WebRTC capabilities) needed to establish your call. Never tied to your identity.</li>
+                <li><strong>Browser &amp; Connection Info</strong> — Basic technical data (browser type, WebRTC capabilities) needed to establish your call. Never tied to your identity.</li>
                 <li><strong>Chat Messages</strong> — Relayed in real-time between call partners only. Never stored on our servers at any point.</li>
                 <li><strong>Microphone Audio</strong> — Streamed peer-to-peer via WebRTC. Our servers never receive, record, or process your audio.</li>
             </ul>
         </div>
     </div>
 
-    <!-- 2. What We DON'T Collect -->
+    <!-- 2. What We Don't Collect -->
     <div class="priv-section">
         <h2><span class="ico">🚫</span> What We Never Collect</h2>
         <div class="priv-card">
@@ -186,50 +186,68 @@
             </ul>
         </div>
     </div>
-    <!-- NEW: Images & Media -->
-<div class="priv-section">
-    <h2><span class="ico">📸</span> Images & Media Sharing</h2>
-    <p>
-        Calln allows users to share images during live calls using the in-app gallery or camera.
-        We take privacy seriously and designed this feature to be fully temporary and private.
-    </p>
 
-    <div class="priv-card">
-        <ul>
-            <li>
-                <strong>No image storage</strong> — Images sent in chat are never stored on our servers,
-                databases, or backups. They are only temporarily relayed in real-time between users.
-            </li>
-
-            <li>
-                <strong>Real-time only transmission</strong> — Images are transmitted instantly using
-                Socket.IO and are discarded from memory immediately after delivery.
-            </li>
-
-            <li>
-                <strong>No gallery saving</strong> — We do not save, archive, or log any photos shared
-                during a call in any form.
-            </li>
-
-            <li>
-                <strong>Deleted when call ends</strong> — Once a call ends or a user disconnects,
-                all related media (images and chat messages) are permanently removed from active memory.
-            </li>
-
-            <li>
-                <strong>No access by Calln</strong> — We cannot view, retrieve, or recover any images
-                shared between users after transmission.
-            </li>
-        </ul>
+    <!-- 3. Images & Media -->
+    <div class="priv-section">
+        <h2><span class="ico">📸</span> Images &amp; Media Sharing</h2>
+        <p>
+            Calln allows users to share images during live calls. We designed this feature to be
+            fully temporary and private — images behave exactly like your voice and disappear
+            automatically when the session ends.
+        </p>
+        <div class="priv-card">
+            <ul>
+                <li><strong>No image storage</strong> — Images sent in chat are never stored on our servers, databases, or backups. They are only temporarily relayed in real-time between users.</li>
+                <li><strong>Real-time only transmission</strong> — Images are transmitted instantly using Socket.IO and are discarded from memory immediately after delivery.</li>
+                <li><strong>No gallery saving</strong> — We do not save, archive, or log any photos shared during a call in any form.</li>
+                <li><strong>Deleted when call ends</strong> — Once a call ends or a user disconnects, all related media (images and chat messages) are permanently removed from active memory.</li>
+                <li><strong>No access by Calln</strong> — We cannot view, retrieve, or recover any images shared between users after transmission.</li>
+            </ul>
+        </div>
     </div>
 
-    <p style="margin-top:12px;">
-        In simple terms: images behave exactly like your voice — they are temporary, peer-to-peer,
-        and disappear automatically when the session ends.
-    </p>
-</div>
+    <!-- 4. Mobile Permissions -->
+    <div class="priv-section">
+        <h2><span class="ico">📱</span> Mobile App Permissions <span class="platform-badge badge-mobile">Android App</span></h2>
+        <p>
+            The Calln mobile app requests the following device permissions. All permissions are
+            requested at the time they are needed — not on app launch.
+        </p>
+        <div class="priv-card">
+            <ul>
+                <li>
+                    <strong>Microphone</strong> — Required to enable voice calls. Audio is streamed
+                    peer-to-peer via WebRTC and is never recorded or stored.
+                </li>
+                <li>
+                    <strong>Foreground Service / Microphone</strong> — When a call is active, a
+                    foreground service keeps your microphone connection alive even when the app is
+                    in the background. A visible notification is displayed whenever this service is
+                    running. This service stops automatically when the call ends.
+                </li>
+                <li>
+                    <strong>Photo Library / Gallery (optional)</strong> — Requested only when you
+                    actively choose to share an image during a call. We use the Android system photo
+                    picker, which means we never request broad access to your photo library. We do
+                    not request, use, or hold the <code>READ_MEDIA_IMAGES</code>,
+                    <code>READ_MEDIA_VIDEO</code>, or <code>READ_EXTERNAL_STORAGE</code> permissions.
+                    Only the single image you explicitly select is accessed. No gallery scanning,
+                    indexing, or background access occurs at any point.
+                </li>
+                <li>
+                    <strong>Internet Access</strong> — Required to connect to the signalling server
+                    and establish calls.
+                </li>
+            </ul>
+        </div>
+        <p style="margin-top:12px;">
+            You may revoke any permission at any time in your device settings. Revoking microphone
+            access will disable voice calls. Revoking photo library access will only disable the
+            image sharing feature and will not affect voice or text chat.
+        </p>
+    </div>
 
-    <!-- 3. How We Use It -->
+    <!-- 5. How We Use It -->
     <div class="priv-section">
         <h2><span class="ico">⚙️</span> How We Use Information</h2>
         <p>The limited data we handle is used exclusively to:</p>
@@ -243,38 +261,37 @@
         </div>
     </div>
 
-    <!-- 4. Data Retention -->
+    <!-- 6. Data Retention -->
     <div class="priv-section">
         <h2><span class="ico">🗑️</span> Data Retention</h2>
         <p>We hold data for the minimum time necessary, then delete it:</p>
         <div class="priv-card">
             <ul>
-                <li><strong>In-session data</strong> (IP, match state, chat messages) — Deleted immediately when your session or call ends. No exceptions.</li>
+                <li><strong>In-session data</strong> (IP, match state, chat messages, images) — Deleted immediately when your session or call ends. No exceptions.</li>
                 <li><strong>Ban records</strong> — Reported or banned IP addresses may be held for up to 30 days for abuse prevention, then automatically purged.</li>
                 <li><strong>Server logs</strong> — Standard web server logs retained for up to 7 days for debugging purposes, then deleted.</li>
             </ul>
         </div>
     </div>
 
-    <!-- 5. WebRTC -->
+    <!-- 7. WebRTC -->
     <div class="priv-section">
-        <h2><span class="ico">🔗</span> WebRTC & Peer-to-Peer Audio</h2>
+        <h2><span class="ico">🔗</span> WebRTC &amp; Peer-to-Peer Audio</h2>
         <p>
             Calln uses WebRTC to transmit voice audio. Once a call is established, your audio travels
-            <strong>directly between your browser and your partner's browser</strong> — our servers are
-            completely bypassed. We have no technical capability to listen to, intercept, or record your
-            conversations.
+            <strong>directly between you and your partner</strong> — our servers are completely bypassed.
+            We have no technical capability to listen to, intercept, or record your conversations.
         </p>
         <p>
-            To establish the WebRTC connection, your browser may share your IP address with your call
-            partner as part of the ICE negotiation process. This is standard WebRTC behaviour. If you are
-            concerned about IP exposure, we recommend using a VPN.
+            To establish the WebRTC connection, your device may share your IP address with your call
+            partner as part of the ICE negotiation process. This is standard WebRTC behaviour. If you
+            are concerned about IP exposure, we recommend using a VPN.
         </p>
     </div>
 
-    <!-- 6. Cookies -->
+    <!-- 8. Cookies -->
     <div class="priv-section">
-        <h2><span class="ico">🍪</span> Cookies & Local Storage</h2>
+        <h2><span class="ico">🍪</span> Cookies &amp; Local Storage <span class="platform-badge badge-web">Website</span></h2>
         <p>
             Calln does not use advertising, tracking, or analytics cookies. We use only essential
             technical mechanisms (such as WebSocket session tokens via Socket.IO) required to keep your
@@ -283,31 +300,34 @@
         </p>
     </div>
 
-    <!-- 7. Third Parties -->
+    <!-- 9. Third Parties -->
     <div class="priv-section">
         <h2><span class="ico">🔌</span> Third-Party Services</h2>
         <div class="priv-card">
             <ul>
-                <li><strong>Render.com</strong> — Hosts our signalling server. Subject to <a href="https://render.com/privacy" class="priv-link" target="_blank" rel="noopener">Render's Privacy Policy</a>.</li>
-                <li><strong>Google STUN Servers</strong> — Used by WebRTC to discover network paths. Google may log connection attempts per <a href="https://policies.google.com/privacy" class="priv-link" target="_blank" rel="noopener">Google's Privacy Policy</a>.</li>
-                <li><strong>Google Fonts</strong> — Loads the Outfit typeface from Google's CDN. Google may log font requests independently.</li>
-                <li><strong>flagcdn.com</strong> — Serves country flag images for the filter UI. No personal data is transmitted in these requests.</li>
+                <li><strong>Render.com</strong> <span class="platform-badge badge-both">Web &amp; App</span> — Hosts our signalling server. Subject to <a href="https://render.com/privacy" class="priv-link" target="_blank" rel="noopener">Render's Privacy Policy</a>.</li>
+                <li><strong>Google STUN Servers</strong> <span class="platform-badge badge-both">Web &amp; App</span> — Used by WebRTC to discover network paths. Google may log connection attempts per <a href="https://policies.google.com/privacy" class="priv-link" target="_blank" rel="noopener">Google's Privacy Policy</a>.</li>
+                <li><strong>Google Firebase Analytics</strong> <span class="platform-badge badge-both">Web &amp; App</span> — Used to collect anonymous, aggregated usage data such as session duration, crash reports, and device type. No personally identifiable information is collected. See <a href="https://policies.google.com/privacy" class="priv-link" target="_blank" rel="noopener">Google's Privacy Policy</a>.</li>
+                <li><strong>Google Fonts</strong> <span class="platform-badge badge-web">Website</span> — Loads the Outfit typeface from Google's CDN. Google may log font requests independently.</li>
+                <li><strong>Google AdSense</strong> <span class="platform-badge badge-web">Website only</span> — Used to display advertisements on the website. See the Advertising section below for details.</li>
+                <li><strong>flagcdn.com</strong> <span class="platform-badge badge-web">Website</span> — Serves country flag images for the filter UI. No personal data is transmitted in these requests.</li>
             </ul>
         </div>
     </div>
 
-    <!-- 8. Children -->
+    <!-- 10. Children -->
     <div class="priv-section">
         <h2><span class="ico">👦</span> Children's Privacy</h2>
         <p>
-            Calln is not intended for users under the age of 18. We do not knowingly collect any
-            information from minors. If you believe a minor is using our service inappropriately,
-            please contact us immediately at <a href="mailto:support@getcalln.com" class="priv-link">support@getcalln.com</a>
+            Calln is not intended for users under the age of 18. The Calln mobile app is rated 18+
+            on the Google Play Store. We do not knowingly collect any information from minors.
+            If you believe a minor is using our service inappropriately, please contact us immediately
+            at <a href="mailto:support@getcalln.com" class="priv-link">support@getcalln.com</a>
             and we will take prompt action.
         </p>
     </div>
 
-    <!-- 9. Your Rights -->
+    <!-- 11. Your Rights -->
     <div class="priv-section">
         <h2><span class="ico">⚖️</span> Your Rights</h2>
         <p>
@@ -327,31 +347,38 @@
         </p>
     </div>
 
-    <!-- NEW: Analytics -->
+    <!-- 12. Analytics -->
     <div class="priv-section">
         <h2><span class="ico">📊</span> Analytics &amp; Tracking</h2>
         <p>
-            With your consent, Calln uses <strong>Google Firebase Analytics</strong> to understand how people
-            use the site. This helps us improve the product. Analytics is only activated if you click
-            "Accept" on the cookie consent banner — it never loads if you click "Decline".
+            Calln uses <strong>Google Firebase Analytics</strong> on both the website and the mobile app
+            to understand how people use the service. This helps us improve the product.
+        </p>
+        <p>
+            On the website, analytics is only activated if you click "Accept" on the cookie consent
+            banner — it never loads if you click "Decline". On the mobile app, analytics runs with
+            aggregated anonymous data only.
         </p>
         <div class="priv-card">
             <ul>
-                <li><strong>What is collected</strong> — Anonymous usage events such as page views, call starts, call matches, and game interactions. No personally identifiable information is collected.</li>
-                <li><strong>What is NOT collected</strong> — Your name, voice, chat content, or any content from your calls.</li>
+                <li><strong>What is collected</strong> — Anonymous usage events such as page views, call starts, call matches, and session duration. No personally identifiable information is collected.</li>
+                <li><strong>What is NOT collected</strong> — Your name, voice, chat content, images, or any content from your calls.</li>
                 <li><strong>Storage</strong> — Firebase Analytics stores aggregated, anonymised data on Google's servers. See <a href="https://policies.google.com/privacy" class="priv-link" target="_blank" rel="noopener">Google's Privacy Policy</a>.</li>
-                <li><strong>Opt-out</strong> — Click "Decline" on the cookie banner, or install the <a href="https://tools.google.com/dlpage/gaoptout" class="priv-link" target="_blank" rel="noopener">Google Analytics Opt-out Add-on</a>. Your choice is remembered in your browser.</li>
+                <li><strong>Opt-out (website)</strong> — Click "Decline" on the cookie banner, or install the <a href="https://tools.google.com/dlpage/gaoptout" class="priv-link" target="_blank" rel="noopener">Google Analytics Opt-out Add-on</a>. Your choice is remembered in your browser.</li>
             </ul>
         </div>
     </div>
 
-    <!-- NEW: Advertising -->
+    <!-- 13. Advertising -->
     <div class="priv-section">
-        <h2><span class="ico">📢</span> Advertising</h2>
+        <h2><span class="ico">📢</span> Advertising <span class="platform-badge badge-web">Website only</span></h2>
         <p>
-            Calln is supported by advertising. We use <strong>Google AdSense</strong> to display
-            advertisements. Ads may appear as a banner in the footer and as full-screen interstitials
-            between calls.
+            The Calln website (getcalln.com) is supported by advertising. <strong>The Calln mobile app
+            does not currently display any advertisements and is completely ad-free.</strong>
+        </p>
+        <p>
+            On the website, we use <strong>Google AdSense</strong> to display advertisements. Ads may
+            appear as a banner in the footer and as full-screen interstitials between calls.
         </p>
         <div class="priv-card">
             <ul>
@@ -359,21 +386,23 @@
                 <li><strong>Data shared with Google</strong> — Your IP address and browser information may be used by Google for ad targeting. We do not share any call content with advertisers.</li>
                 <li><strong>Opt-out of personalised ads</strong> — Visit <a href="https://adssettings.google.com" class="priv-link" target="_blank" rel="noopener">Google Ad Settings</a> or <a href="https://optout.aboutads.info" class="priv-link" target="_blank" rel="noopener">AboutAds.info</a> to manage your ad preferences.</li>
                 <li><strong>No ad revenue from call content</strong> — We never use anything said or shared during calls for advertising purposes.</li>
+                <li><strong>Mobile app</strong> — The Calln mobile app is currently ad-free. If this changes in the future, this policy will be updated before any ads are shown.</li>
             </ul>
         </div>
     </div>
 
-    <!-- 10. Changes -->
+    <!-- 14. Changes -->
     <div class="priv-section">
         <h2><span class="ico">📝</span> Changes to This Policy</h2>
         <p>
             If we make material changes to this privacy policy, we will update the "Last updated" date
-            at the top of this page. Continued use of Calln after any changes constitutes acceptance
-            of the updated policy. We will always keep this page freely accessible from our website footer.
+            at the top of this page. Continued use of Calln — on either the website or the mobile app —
+            after any changes constitutes acceptance of the updated policy. We will always keep this
+            page freely accessible from our website footer.
         </p>
     </div>
 
-    <!-- 11. Contact -->
+    <!-- 15. Contact -->
     <div class="priv-section">
         <h2><span class="ico">📧</span> Contact Us</h2>
         <p>Have a privacy question or concern? We're happy to help.</p>
@@ -382,12 +411,17 @@
                 <div class="label">General</div>
                 <a href="mailto:support@getcalln.com">support@getcalln.com</a>
             </div>
-            
-         
+            <div class="contact-item">
+                <div class="label">Privacy</div>
+                <a href="mailto:support@getcalln.com">support@getcalln.com</a>
+            </div>
+            <div class="contact-item">
+                <div class="label">Abuse</div>
+                <a href="mailto:support@getcalln.com">support@getcalln.com</a>
+            </div>
         </div>
     </div>
 
 </main>
-
 </body>
 </html>

@@ -19,7 +19,12 @@
     position: static;
     transform: none;
   }
-  .nav-right { display: none; }
+  
+  /* FIX: Changed from display: none to flex */
+  .nav-right { 
+    display: flex; 
+    gap: 6px; 
+  }
 
   /* Hero stacks vertically */
   .hero-section {
@@ -43,10 +48,6 @@
   }
 }
 
-/* ═══════════════════════════════════════
-   MOBILE  ≤ 600px
-   Narrow viewport, wrapped navbar
-   ═══════════════════════════════════════ */
 /* ═══════════════════════════════════════
    MOBILE ≤ 600px (FIXED ALIGNMENT)
    ═══════════════════════════════════════ */
@@ -91,6 +92,15 @@
     padding: 5px 10px; 
     gap: 5px;
     height: 32px;          /* same height as online status */
+  }
+}
+
+/* ═══════════════════════════════════════
+   NEW BREAKPOINT: SMALL PHONES  ≤ 520px
+   ═══════════════════════════════════════ */
+@media (max-width: 520px) {
+  .nav-right { 
+    display: none; /* Hide links completely on small screens */
   }
 }
 

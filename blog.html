@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Blog — Calln | Tips, Guides & Insights on Anonymous Voice Chat</title>
+    <meta name="description" content="The Calln blog. Tips for better conversations, online safety guides, privacy insights, and everything you need to know about anonymous voice calling.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="base.css">
+    <style>
+        .page-header {
+            position: sticky; top: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            height: 60px; padding: 0 1.5rem;
+            background: rgba(7,8,15,.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        .page-logo {
+            font-size: 1.25rem; font-weight: 700; letter-spacing: -.04em;
+            background: linear-gradient(130deg,#fff 30%,var(--accent));
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; text-decoration: none;
+        }
+        .page-back {
+            font-size: .8rem; font-weight: 500; color: var(--text-3);
+            text-decoration: none; display: flex; align-items: center; gap: 5px;
+            transition: color .2s;
+        }
+        .page-back:hover { color: var(--text-1); }
+
+        .page-main {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 6rem;
+        }
+
+        .page-hero {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .page-hero h1 {
+            font-size: 2.2rem; font-weight: 700; letter-spacing: -.04em;
+            line-height: 1.15; margin-bottom: 10px;
+        }
+
+        .page-hero p {
+            font-size: .95rem; color: var(--text-2); line-height: 1.8;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .blog-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: 22px;
+            text-decoration: none;
+            display: block;
+            transition: background .2s, border-color .2s, transform .15s;
+        }
+
+        .blog-card:hover {
+            background: var(--bg-elevated);
+            border-color: var(--border-md);
+            transform: translateY(-2px);
+        }
+
+        .b-tag {
+            font-size: .68rem; font-weight: 700;
+            letter-spacing: .08em; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 10px;
+            display: block;
+        }
+
+        .blog-card h2 {
+            font-size: 1rem; font-weight: 700;
+            color: var(--text-1); margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .blog-card p {
+            font-size: .855rem; color: var(--text-2);
+            line-height: 1.7; margin-bottom: 14px;
+        }
+
+        .read-more {
+            font-size: .8rem; font-weight: 600;
+            color: var(--accent);
+        }
+
+        @media (max-width: 600px) {
+            .page-main { padding: 2rem 1rem 4rem; }
+            .page-hero h1 { font-size: 1.7rem; }
+            .blog-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="page-header">
+    <a href="index.html" class="page-logo">Calln</a>
+    <a href="index.html" class="page-back">← Back to Calln</a>
+</header>
+
+<main class="page-main">
+
+    <div class="page-hero">
+        <h1>The Calln Blog</h1>
+        <p>Tips, guides, and insights on anonymous voice chat, online privacy, and genuine human connection.</p>
+    </div>
+
+    <div class="blog-grid">
+
+        <a href="blog/omegle-alternative.html" class="blog-card">
+            <span class="b-tag">Guide</span>
+            <h2>The Best Omegle Alternatives in 2026</h2>
+            <p>Omegle shut down in November 2023. Since then, millions of users have been searching for a safe, reliable platform to have anonymous conversations with strangers. Here is a complete guide to the best alternatives available today.</p>
+            <span class="read-more">Read article →</span>
+        </a>
+
+        <a href="blog/webrtc-privacy.html" class="blog-card">
+            <span class="b-tag">Privacy</span>
+            <h2>How WebRTC Protects Your Voice Calls</h2>
+            <p>When you make a call on Calln, your voice travels directly to your partner's device — our servers never touch it. This is because Calln is built on WebRTC. Here is how the technology works and why it matters for your privacy.</p>
+            <span class="read-more">Read article →</span>
+        </a>
+
+        <a href="blog/safe-stranger-chat.html" class="blog-card">
+            <span class="b-tag">Safety</span>
+            <h2>How to Stay Safe When Talking to Strangers Online</h2>
+            <p>Anonymous voice chat is a great way to meet new people, but like any online platform it comes with risks worth understanding. Here are practical, actionable tips for having enjoyable conversations while protecting your privacy.</p>
+            <span class="read-more">Read article →</span>
+        </a>
+
+        <a href="blog/anonymous-voice-chat.html" class="blog-card">
+            <span class="b-tag">Insight</span>
+            <h2>Why Anonymous Voice Chat Feels Different</h2>
+            <p>There is something uniquely honest about a conversation where neither person can see the other, neither has a profile to perform to, and neither has anything to prove. Here is the psychology behind why voice-only anonymous chat works so well.</p>
+            <span class="read-more">Read article →</span>
+        </a>
+
+    </div>
+
+</main>
+</body>
+</html>

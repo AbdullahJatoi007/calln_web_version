@@ -6,13 +6,13 @@
 
     <!-- ══ PRIMARY SEO ══════════════════════════════════════════ -->
     <title>Calln — Free Anonymous Voice Calls with Strangers Worldwide</title>
-<meta name="description"
-content="Talk anonymously with real people worldwide through free voice calls. No sign up, no downloads, and no personal information required.">    <meta name="keywords"    content="random voice call, talk to strangers, anonymous call, voice chat online, meet people online, stranger call, free voice chat, random chat, omegle alternative, calln, getcalln">
+    <meta name="description" content="Talk anonymously with real people worldwide through free voice calls. No sign up, no downloads, and no personal information required.">
+    <meta name="keywords"    content="random voice call, talk to strangers, anonymous call, voice chat online, meet people online, stranger call, free voice chat, random chat, omegle alternative, calln, getcalln">
     <meta name="author"      content="Calln">
     <meta name="robots"      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <link rel="canonical"    href="https://getcalln.com/">
 
-    <!-- ══ OPEN GRAPH (Facebook, WhatsApp, LinkedIn) ════════════ -->
+    <!-- ══ OPEN GRAPH ════════════════════════════════════════════ -->
     <meta property="og:type"         content="website">
     <meta property="og:title"        content="Calln — Talk to Strangers Worldwide via Free Voice Call">
     <meta property="og:description"  content="Anonymous voice calls with real people worldwide. No accounts, no recordings — just genuine conversations. 100% free.">
@@ -51,11 +51,10 @@ content="Talk anonymously with real people worldwide through free voice calls. N
       "url": "https://getcalln.com",
       "description": "Anonymous voice-calling platform connecting people worldwide in real-time. No sign-up required. 100% free.",
       "applicationCategory": "CommunicationApplication",
-      "operatingSystem": "Web, iOS, Android",
+      "operatingSystem": "Web, Android",
       "browserRequirements": "Requires a modern browser with WebRTC support (Chrome, Firefox, Safari, Edge)",
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
       "author": { "@type": "Organization", "name": "Calln", "url": "https://getcalln.com" },
-    
       "featureList": [
         "Anonymous voice calls",
         "No account required",
@@ -143,6 +142,237 @@ content="Talk anonymously with real people worldwide through free voice calls. N
     <link rel="stylesheet" href="footer.css">
     <link rel="stylesheet" href="responsive.css">
 
+    <style>
+        /* ── NAV TEXT LINKS ─────────────────────────────── */
+        .nav-text-link {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-2);
+            text-decoration: none;
+            padding: 5px 12px;
+            border-radius: 50px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            transition: color 0.2s, background 0.2s, border-color 0.2s;
+            white-space: nowrap;
+        }
+        .nav-text-link:hover {
+            color: var(--text-1);
+            background: var(--bg-hover);
+            border-color: var(--border-md);
+        }
+
+        /* ── CONTENT SECTION ────────────────────────────── */
+        .content-section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 5rem 1.5rem 4rem;
+        }
+
+        .content-section h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+            color: var(--text-1);
+        }
+
+        .content-section p {
+            font-size: 0.95rem;
+            color: var(--text-2);
+            line-height: 1.85;
+            margin-bottom: 1rem;
+        }
+
+        .content-divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 3.5rem 0;
+        }
+
+        /* Feature grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: 20px;
+        }
+
+        .feature-card .f-icon {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-card h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-1);
+            margin-bottom: 6px;
+        }
+
+        .feature-card p {
+            font-size: 0.83rem;
+            color: var(--text-2);
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+
+        /* How it works steps */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: 2rem;
+        }
+
+        .step-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            background: var(--accent-soft);
+            border: 1px solid rgba(61,127,255,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 0 auto 12px;
+        }
+
+        .step-card h3 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-1);
+            margin-bottom: 6px;
+        }
+
+        .step-card p {
+            font-size: 0.82rem;
+            color: var(--text-2);
+            line-height: 1.65;
+            margin-bottom: 0;
+        }
+
+        /* FAQ */
+        .faq-list {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq-item-home {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: 18px 20px;
+        }
+
+        .faq-item-home h3 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-1);
+            margin-bottom: 6px;
+        }
+
+        .faq-item-home p {
+            font-size: 0.85rem;
+            color: var(--text-2);
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+
+        /* Blog preview */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 2rem;
+        }
+
+        .blog-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: 20px;
+            text-decoration: none;
+            display: block;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .blog-card:hover {
+            background: var(--bg-elevated);
+            border-color: var(--border-md);
+        }
+
+        .blog-card .b-tag {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .blog-card h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-1);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .blog-card p {
+            font-size: 0.83rem;
+            color: var(--text-2);
+            line-height: 1.65;
+            margin-bottom: 0;
+        }
+
+        .section-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .section-link:hover { text-decoration: underline; }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            .feature-grid { grid-template-columns: repeat(2, 1fr); }
+            .steps-grid   { grid-template-columns: repeat(2, 1fr); }
+            .blog-grid    { grid-template-columns: 1fr; }
+            .content-section { padding: 3rem 1rem 3rem; }
+            .content-section h2 { font-size: 1.3rem; }
+        }
+
+        @media (max-width: 420px) {
+            .feature-grid { grid-template-columns: 1fr; }
+            .steps-grid   { grid-template-columns: 1fr; }
+            .nav-text-link { display: none; }
+        }
+    </style>
+
     <!-- ══ SOCKET.IO ════════════════════════════════════════════ -->
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 
@@ -179,13 +409,13 @@ content="Talk anonymously with real people worldwide through free voice calls. N
     <div class="logo">Calln</div>
     <ul class="nav-links">
         <li class="filter-wrapper">
-           <div class="filter-content" id="selected-country-ui">
-    <img id="current-flag" src="https://flagcdn.com/w20/un.png" alt="all">
-    <span class="filter-text" id="current-country-name">Worldwide</span>
-    <svg class="filter-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.5; margin-left: 2px;">
-        <path d="M6 9l6 6 6-6"/>
-    </svg>
-</div>
+            <div class="filter-content" id="selected-country-ui">
+                <img id="current-flag" src="https://flagcdn.com/w20/un.png" alt="all">
+                <span class="filter-text" id="current-country-name">Worldwide</span>
+                <svg class="filter-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.5; margin-left: 2px;">
+                    <path d="M6 9l6 6 6-6"/>
+                </svg>
+            </div>
             <select id="country-filter" class="hidden-select">
                 <option value="all">🌍 All Countries</option>
                 <option value="pk">🇵🇰 Pakistan</option>
@@ -205,7 +435,10 @@ content="Talk anonymously with real people worldwide through free voice calls. N
             </div>
         </li>
     </ul>
-    <div class="nav-right"></div>
+   <div class="nav-right">
+    <a href="about.html" class="nav-text-link">About</a>
+    <a href="blog.html" class="nav-text-link">Blog</a>
+</div>
 </nav>
 
 
@@ -300,20 +533,20 @@ content="Talk anonymously with real people worldwide through free voice calls. N
                     <span>Start a call to enable chat</span>
                 </div>
             </div>
-           <div class="message-input">
-    <input type="text" id="msg-input" placeholder="Start a call to chat…" disabled autocomplete="off" autocorrect="off" spellcheck="false">
-    <button class="camera-btn" id="camera-btn">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-            <circle cx="12" cy="13" r="4"/>
-        </svg>
-    </button>
-    <button class="send-btn" id="send-btn">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
-        </svg>
-    </button>
-</div>
+            <div class="message-input">
+                <input type="text" id="msg-input" placeholder="Start a call to chat…" disabled autocomplete="off" autocorrect="off" spellcheck="false">
+                <button class="camera-btn" id="camera-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                        <circle cx="12" cy="13" r="4"/>
+                    </svg>
+                </button>
+                <button class="send-btn" id="send-btn">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                    </svg>
+                </button>
+            </div>
         </div>
 
         <div id="panel-play" class="chat-panel">
@@ -358,10 +591,183 @@ content="Talk anonymously with real people worldwide through free voice calls. N
 </main>
 
 
+<!-- ══ CONTENT SECTION (for AdSense & SEO) ═════════════════════ -->
+<section class="content-section">
+
+    <!-- What is Calln -->
+    <h2>What is Calln?</h2>
+    <p>Calln is a free, anonymous voice calling platform that connects you instantly with real people from around the world. There are no accounts to create, no personal information to share, and no downloads required. You simply open the app or website, press Start, and within seconds you are speaking with someone new.</p>
+    <p>Unlike traditional social platforms where you are judged by your profile picture, follower count, or personal history, Calln strips all of that away. The only thing that matters is your voice and what you have to say. This creates a uniquely honest and refreshing kind of conversation — the kind that is increasingly rare in today's curated social media world.</p>
+    <p>Calln is available on the web at getcalln.com and as a free Android app on the Google Play Store. Both platforms share the same technology and the same user pool, so you are always connected to the largest possible community of people regardless of which platform you use.</p>
+
+    <hr class="content-divider">
+
+    <!-- Features -->
+    <h2>Everything Calln Offers</h2>
+    <p>Calln is built around a small set of carefully designed features that make every conversation better. Nothing is added for the sake of complexity — every feature solves a real problem that anonymous callers face.</p>
+
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="f-icon">🎙️</div>
+            <h3>Anonymous Voice Calls</h3>
+            <p>Speak freely without revealing your identity. No camera, no profile, no history. Just your voice and an open conversation.</p>
+        </div>
+        <div class="feature-card">
+            <div class="f-icon">🌍</div>
+            <h3>Country Filter</h3>
+            <p>Choose to talk with someone from a specific country or go worldwide. If nobody is available from your chosen country, Calln automatically expands the search so you are never left waiting.</p>
+        </div>
+        <div class="feature-card">
+            <div class="f-icon">💬</div>
+            <h3>Live Text Chat</h3>
+            <p>Send text messages alongside your voice call. Useful for sharing words that are hard to spell out loud, or for when you want to communicate quietly.</p>
+        </div>
+        <div class="feature-card">
+            <div class="f-icon">📸</div>
+            <h3>Image Sharing</h3>
+            <p>Share photos from your gallery directly in the chat during a call. Images are transmitted in real time and never stored on our servers — they disappear when the call ends.</p>
+        </div>
+        <div class="feature-card">
+            <div class="f-icon">🔁</div>
+            <h3>Auto Call</h3>
+            <p>Enable Auto Call and Calln will automatically find you a new partner after each call ends. Perfect for when you want a continuous stream of conversations without lifting a finger.</p>
+        </div>
+        <div class="feature-card">
+            <div class="f-icon">🎮</div>
+            <h3>In-Call Games</h3>
+            <p>Play Would You Rather, Rock Paper Scissors, send emoji reactions, or use Ice Breaker questions to spark conversation when you are not sure what to talk about.</p>
+        </div>
+        <div class="feature-card">
+            <div class="f-icon">🔒</div>
+            <h3>WebRTC Encryption</h3>
+            <p>All voice audio travels directly between you and your partner using WebRTC peer-to-peer technology. Our servers never receive, record, or process your audio.</p>
+        </div>
+        <div class="feature-card">
+            <div class="f-icon">🚩</div>
+            <h3>Report System</h3>
+            <p>Every call has a Report button. One tap flags the user and issues an immediate 24-hour IP ban. Severe violations result in a permanent ban.</p>
+        </div>
+        <div class="feature-card">
+            <div class="f-icon">⚡</div>
+            <h3>Instant Matching</h3>
+            <p>Our signalling server matches you with a compatible partner in seconds. No waiting rooms, no queues — just immediate connection.</p>
+        </div>
+    </div>
+
+    <hr class="content-divider">
+
+    <!-- How it works -->
+    <h2>How Calln Works</h2>
+    <p>Getting started on Calln takes less than ten seconds. The entire process is designed to remove every possible barrier between you and a genuine human conversation.</p>
+
+    <div class="steps-grid">
+        <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Open Calln</h3>
+            <p>Visit getcalln.com on any browser or open the Android app. No download, no signup, no waiting.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Choose a Country</h3>
+            <p>Select a country from the filter or leave it set to Worldwide to talk to anyone, anywhere.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Press Start</h3>
+            <p>Tap the green Start button. Calln requests microphone permission and finds you a partner instantly.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-number">4</div>
+            <h3>Start Talking</h3>
+            <p>You are connected. Say hello. Use chat, games, or image sharing to keep the conversation going.</p>
+        </div>
+    </div>
+
+    <hr class="content-divider">
+
+    <!-- Why Calln -->
+    <h2>Why People Choose Calln</h2>
+    <p>There are dozens of platforms for meeting strangers online, but most of them have fundamental problems that Calln was specifically designed to solve.</p>
+    <p>Video chat platforms create enormous visual pressure. People feel judged by their appearance, their surroundings, their lighting. Many users — particularly those who are shy, introverted, or simply private — find video calls deeply uncomfortable. Calln removes the camera entirely. You are just a voice, and that single change makes conversations dramatically more honest and relaxed.</p>
+    <p>Text-only platforms lack the warmth and nuance of real human communication. A voice conveys emotion, humour, sarcasm, and personality in ways that text simply cannot. Calln keeps it voice-first while still offering text chat as a complement, not a replacement.</p>
+    <p>Since the closure of Omegle in late 2023, millions of users have been searching for a safe, reliable alternative. Calln fills that gap with modern technology, better safety features, and a commitment to privacy that older platforms never offered. There are no logs, no recordings, and no data sold to advertisers.</p>
+
+    <hr class="content-divider">
+
+    <!-- Privacy -->
+    <h2>Your Privacy on Calln</h2>
+    <p>Privacy is not an afterthought at Calln — it is the foundation the entire platform is built on. We believe that people have the right to have genuine conversations without being tracked, profiled, or recorded.</p>
+    <p>Calln does not require an account. We do not ask for your name, email address, phone number, or any personal information. Your voice is transmitted directly to your partner using WebRTC peer-to-peer technology, which means our servers never receive or process your audio. The moment your call ends, all associated data — including any chat messages or shared images — is permanently deleted from memory. There is nothing to retrieve, nothing to leak, and nothing to sell.</p>
+    <p>The only data we temporarily hold is your IP address, used to match you with users in your preferred region and to enforce our community safety ban system against reported users. IP addresses are not stored beyond your active session. For full details, read our <a href="privacy.html" style="color: var(--accent);">Privacy Policy</a>.</p>
+
+    <hr class="content-divider">
+
+    <!-- FAQ -->
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-list">
+        <div class="faq-item-home">
+            <h3>Is Calln completely free?</h3>
+            <p>Yes. Calln is free to use on both the website and the Android app. There are no subscriptions, no premium tiers, and no hidden fees. The website is supported by advertising. The mobile app is currently ad-free.</p>
+        </div>
+        <div class="faq-item-home">
+            <h3>Do I need to create an account?</h3>
+            <p>No. Calln does not have accounts. You do not need to register, log in, or share any personal information to start a call. Just open the site or app and press Start.</p>
+        </div>
+        <div class="faq-item-home">
+            <h3>Are my calls recorded?</h3>
+            <p>No. Voice audio travels directly between you and your partner via WebRTC peer-to-peer technology. Our servers never receive, record, or store any audio. It is technically impossible for us to record your calls.</p>
+        </div>
+        <div class="faq-item-home">
+            <h3>Can I choose who I talk to?</h3>
+            <p>You can filter by country to increase the chance of matching with someone from a specific region. Within that filter, matching is random and anonymous. You cannot choose a specific person to call.</p>
+        </div>
+        <div class="faq-item-home">
+            <h3>What happens when I report someone?</h3>
+            <p>Tapping the Report button immediately disconnects the call and issues a 24-hour IP ban to the reported user. Repeated or severe violations result in a permanent ban. In cases involving illegal content, we cooperate with law enforcement.</p>
+        </div>
+        <div class="faq-item-home">
+            <h3>Is Calln available on iPhone?</h3>
+            <p>Calln works on Safari on iPhone through the website at getcalln.com. The dedicated mobile app is currently Android-only. An iOS app may be available in the future.</p>
+        </div>
+    </div>
+
+    <hr class="content-divider">
+
+    <!-- Blog preview -->
+    <h2>From the Calln Blog</h2>
+    <p>Tips, guides, and insights about anonymous voice chat, online safety, and genuine human connection.</p>
+
+    <div class="blog-grid">
+        <a href="blog/omegle-alternative.html" class="blog-card">
+            <div class="b-tag">Guide</div>
+            <h3>The Best Omegle Alternatives in 2026</h3>
+            <p>Omegle shut down in 2023. Here is a complete guide to the best anonymous voice and video chat platforms available today.</p>
+        </a>
+        <a href="blog/webrtc-privacy.html" class="blog-card">
+            <div class="b-tag">Privacy</div>
+            <h3>How WebRTC Protects Your Voice Calls</h3>
+            <p>Understanding the technology behind peer-to-peer audio and why it means nobody — including us — can listen to your conversations.</p>
+        </a>
+        <a href="blog/safe-stranger-chat.html" class="blog-card">
+            <div class="b-tag">Safety</div>
+            <h3>How to Stay Safe When Talking to Strangers Online</h3>
+            <p>Practical tips for having genuine, enjoyable conversations with strangers while protecting your privacy and personal safety.</p>
+        </a>
+        <a href="blog/anonymous-voice-chat.html" class="blog-card">
+            <div class="b-tag">Insight</div>
+            <h3>Why Anonymous Voice Chat Feels Different</h3>
+            <p>Without a camera or a profile, conversations take on a different quality. Here is the psychology behind why voice-only chat works so well.</p>
+        </a>
+    </div>
+
+    <a href="blog.html" class="section-link">Read all articles →</a>
+
+</section>
+
+
 <!-- ══ FOOTER ══════════════════════════════════════════════════ -->
 <footer class="site-footer">
 
-    <!-- AD ZONE 1: Footer leaderboard banner (always visible) -->
     <div class="ad-footer-banner" id="ad-footer">
         <span class="ad-badge">Advertisement</span>
         <div class="ad-footer-unit">
@@ -381,38 +787,14 @@ content="Talk anonymously with real people worldwide through free voice calls. N
         <div class="footer-brand">
             <div class="footer-logo">Calln</div>
             <p class="footer-tagline">Connect with real people worldwide through anonymous voice calls. No accounts, no history — just genuine conversations.</p>
-            <!-- <div class="footer-socials">
-                <a href="#" class="social-btn" aria-label="X / Twitter">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                    </svg>
-                </a>
-                <a href="#" class="social-btn" aria-label="Instagram">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                        <circle cx="12" cy="12" r="4"/>
-                        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-                    </svg>
-                </a>
-                <a href="#" class="social-btn" aria-label="Discord">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-                    </svg>
-                </a>
-                <a href="#" class="social-btn" aria-label="GitHub">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.578 9.578 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.933.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
-                    </svg>
-                </a>
-            </div> -->
         </div>
 
         <div class="footer-links">
             <h4>Platform</h4>
+            <a href="about.html">About Calln</a>
+            <a href="blog.html">Blog</a>
             <a href="safety.html">Safety Tips</a>
             <a href="faq.html">FAQ</a>
-            <a href="#">Matching System</a>
-           
         </div>
 
         <div class="footer-links">
@@ -430,50 +812,33 @@ content="Talk anonymously with real people worldwide through free voice calls. N
     </div>
 
     <div class="footer-bottom">
-        <span>© 2025 Calln · All rights reserved · <a href="https://getcalln.com" style="color:inherit;text-decoration:none;">getcalln.com</a></span>
+        <span>© 2026 Calln · All rights reserved · <a href="https://getcalln.com" style="color:inherit;text-decoration:none;">getcalln.com</a></span>
         <div class="footer-badge">Made with <span class="heart">♥</span> for genuine human connections</div>
     </div>
 
 </footer>
 
 
-<!-- ══ AD ZONE 2: Fullscreen on call connect (every 3rd) ════════ -->
+<!-- ══ AD ZONES ══════════════════════════════════════════════════ -->
 <div class="ad-fullscreen" id="ad-fs-connect" style="display:none;">
     <div class="ad-fs-card">
         <span class="ad-badge">Advertisement</span>
-        <div class="ad-fs-unit">
-            <!--
-            <ins class="adsbygoogle"
-                 style="display:block;width:300px;height:250px;"
-                 data-ad-client="ca-pub-5077822019728893"
-                 data-ad-slot="0000000002">
-            </ins>
-            -->
-        </div>
+        <div class="ad-fs-unit"></div>
         <div class="ad-fs-progress"><div class="ad-fs-progress-bar"></div></div>
         <p class="ad-fs-footer">Connecting your call in <strong class="ad-fs-seconds">5</strong>s</p>
     </div>
 </div>
 
-<!-- ══ AD ZONE 3: Random fullscreen (every 3rd call end) ════════ -->
 <div class="ad-fullscreen" id="ad-fs-random" style="display:none;">
     <div class="ad-fs-card">
         <span class="ad-badge">Advertisement</span>
-        <div class="ad-fs-unit">
-            <!--
-            <ins class="adsbygoogle"
-                 style="display:block;width:300px;height:250px;"
-                 data-ad-client="ca-pub-5077822019728893"
-                 data-ad-slot="0000000003">
-            </ins>
-            -->
-        </div>
+        <div class="ad-fs-unit"></div>
         <div class="ad-fs-progress"><div class="ad-fs-progress-bar"></div></div>
         <p class="ad-fs-footer">Closing in <strong class="ad-fs-seconds">5</strong>s</p>
     </div>
 </div>
 
-<!-- ══ COOKIE CONSENT BANNER (GDPR) ════════════════════════════ -->
+<!-- ══ COOKIE CONSENT ════════════════════════════════════════════ -->
 <div class="cookie-banner" id="cookie-banner">
     <p class="cookie-text">
         🍪 We use analytics cookies to understand how people use Calln and improve the experience.
@@ -485,10 +850,7 @@ content="Talk anonymously with real people worldwide through free voice calls. N
     </div>
 </div>
 
-<!-- ══ EMOJI BURST OVERLAY ═══════════════════════════════════════ -->
 <div class="emoji-burst-overlay" id="emoji-burst-overlay"></div>
-
-<!-- ══ TOAST CONTAINER ══════════════════════════════════════════ -->
 <div class="toast-container" id="toast-container"></div>
 
 <script>
@@ -498,10 +860,6 @@ content="Talk anonymously with real people worldwide through free voice calls. N
     };
 </script>
 
-<!-- NOTE: analytics.js is NOT loaded here.
-     It is loaded dynamically by cookie.js ONLY when the user accepts cookies. -->
-
-<!-- JS (order is critical) -->
 <script src="js/config.js"></script>
 <script src="js/connection.js"></script>
 <script src="js/ads.js"></script>

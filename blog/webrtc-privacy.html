@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>How WebRTC Protects Your Voice Calls — Calln Blog</title>
+    <meta name="description" content="WebRTC is the technology that makes Calln's anonymous voice calls private. Here is how peer-to-peer audio works and why it means nobody can record your conversations.">
+    <link rel="canonical" href="https://getcalln.com/blog/webrtc-privacy.html">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../base.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "How WebRTC Protects Your Voice Calls",
+      "description": "WebRTC is the technology behind Calln's private peer-to-peer calls. Here is how it works.",
+      "author": { "@type": "Organization", "name": "Calln" },
+      "publisher": { "@type": "Organization", "name": "Calln", "url": "https://getcalln.com" },
+      "datePublished": "2026-05-01",
+      "url": "https://getcalln.com/blog/webrtc-privacy.html"
+    }
+    </script>
+    <style>
+        .page-header {
+            position: sticky; top: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            height: 60px; padding: 0 1.5rem;
+            background: rgba(7,8,15,.85);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        .page-logo {
+            font-size: 1.25rem; font-weight: 700; letter-spacing: -.04em;
+            background: linear-gradient(130deg,#fff 30%,var(--accent));
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; text-decoration: none;
+        }
+        .page-back {
+            font-size: .8rem; font-weight: 500; color: var(--text-3);
+            text-decoration: none; display: flex; align-items: center; gap: 5px;
+            transition: color .2s;
+        }
+        .page-back:hover { color: var(--text-1); }
+        .article-main { max-width: 720px; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
+        .article-tag { font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; display: block; }
+        .article-main h1 { font-size: 2rem; font-weight: 700; letter-spacing: -.04em; line-height: 1.2; margin-bottom: 14px; }
+        .article-meta { font-size: .78rem; color: var(--text-3); margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .article-main h2 { font-size: 1.15rem; font-weight: 700; letter-spacing: -.02em; margin: 2rem 0 .75rem; color: var(--text-1); }
+        .article-main p { font-size: .925rem; color: var(--text-2); line-height: 1.9; margin-bottom: 1rem; }
+        .article-main ul { margin: .5rem 0 1rem 1rem; display: flex; flex-direction: column; gap: 8px; }
+        .article-main ul li { font-size: .9rem; color: var(--text-2); line-height: 1.75; }
+        .info-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 18px 20px; margin: 1rem 0; }
+        .info-card h3 { font-size: .9rem; font-weight: 700; color: var(--text-1); margin-bottom: 6px; }
+        .info-card p { font-size: .875rem; color: var(--text-2); line-height: 1.7; margin-bottom: 0; }
+        .callout { background: var(--accent-soft); border: 1px solid rgba(61,127,255,.25); border-radius: var(--r-md); padding: 16px 20px; margin: 1.5rem 0; font-size: .9rem; color: var(--text-1); line-height: 1.65; }
+        .cta-box { background: var(--accent-soft); border: 1px solid rgba(61,127,255,.25); border-radius: var(--r-md); padding: 20px 22px; margin: 2rem 0; text-align: center; }
+        .cta-box p { color: var(--text-1); margin-bottom: 12px; font-weight: 500; }
+        .cta-btn { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; padding: 10px 24px; border-radius: 50px; font-size: .875rem; font-weight: 600; transition: opacity .2s; }
+        .cta-btn:hover { opacity: .85; }
+        .divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+        @media (max-width: 600px) { .article-main { padding: 2rem 1rem 4rem; } .article-main h1 { font-size: 1.6rem; } }
+    </style>
+</head>
+<body>
+
+<header class="page-header">
+    <a href="../index.html" class="page-logo">Calln</a>
+    <a href="../blog.html" class="page-back">← Blog</a>
+</header>
+
+<main class="article-main">
+
+    <span class="article-tag">Privacy</span>
+    <h1>How WebRTC Protects Your Voice Calls</h1>
+    <p class="article-meta">Published by Calln · May 2026 · 6 min read</p>
+
+    <p>When you make a call on Calln, your voice travels directly from your device to your partner's device. Our servers are not in the middle. We cannot listen to your conversations, we cannot record them, and we cannot share them with anyone — not because we choose not to, but because we are technically unable to.</p>
+
+    <p>This is possible because Calln is built on WebRTC — Web Real-Time Communication — an open standard that enables direct peer-to-peer audio and video in browsers and apps without plugins or downloads. Understanding how it works helps you understand exactly what privacy guarantees you actually have when you use Calln.</p>
+
+    <h2>What is WebRTC?</h2>
+
+    <p>WebRTC is an open-source project originally developed by Google and standardised by the World Wide Web Consortium (W3C) and the Internet Engineering Task Force (IETF). It is now built into every major browser — Chrome, Firefox, Safari, and Edge all support it natively. Most modern communication applications use it, including Google Meet, Discord, and many others.</p>
+
+    <p>The core idea behind WebRTC is that two devices should be able to communicate directly with each other over the internet without routing data through a central server. This direct connection is called a peer-to-peer connection.</p>
+
+    <div class="callout">
+        💡 <strong>Key point:</strong> Peer-to-peer means your audio goes directly from your microphone to your partner's speaker — not through any company's servers. Nobody in the middle can intercept it.
+    </div>
+
+    <h2>How a Calln Call is Established</h2>
+
+    <p>Setting up a peer-to-peer connection is more complex than it sounds. Two devices on the internet cannot simply connect directly to each other — they need to negotiate how to find each other across networks, firewalls, and NAT (Network Address Translation) systems. Here is what happens when you press Start on Calln:</p>
+
+    <div class="info-card">
+        <h3>Step 1 — Matching</h3>
+        <p>Calln's signalling server receives your request and matches you with an available partner based on your country preference. This is the only moment our server is meaningfully involved in your call.</p>
+    </div>
+
+    <div class="info-card">
+        <h3>Step 2 — Signalling</h3>
+        <p>Your browser and your partner's browser exchange technical information called an SDP (Session Description Protocol) offer and answer. This describes what audio formats each side supports. This exchange happens through our server but contains no audio — just technical metadata.</p>
+    </div>
+
+    <div class="info-card">
+        <h3>Step 3 — ICE Negotiation</h3>
+        <p>Both browsers use ICE (Interactive Connectivity Establishment) to find the best path to reach each other. Google's STUN servers help discover each device's public IP address. ICE candidates are exchanged through our server — again, no audio is involved.</p>
+    </div>
+
+    <div class="info-card">
+        <h3>Step 4 — Direct Connection</h3>
+        <p>A direct peer-to-peer connection is established. From this point, audio flows directly between your device and your partner's device. Our server steps out completely.</p>
+    </div>
+
+    <h2>How Audio is Encrypted</h2>
+
+    <p>All WebRTC audio is encrypted using DTLS-SRTP — Datagram Transport Layer Security combined with Secure Real-time Transport Protocol. This encryption is mandatory in the WebRTC specification. It cannot be disabled, and no compliant browser will allow an unencrypted WebRTC connection.</p>
+
+    <p>What this means in practice is that even if someone were intercepting the data packets travelling between you and your partner, they would see only encrypted noise. The encryption keys are negotiated directly between your two devices and are never shared with our servers.</p>
+
+    <h2>What About TURN Servers?</h2>
+
+    <p>In most cases, WebRTC establishes a direct peer-to-peer connection. But in some network environments — particularly strict corporate firewalls, university networks, or certain mobile carrier configurations — a direct connection is not possible. In these cases, WebRTC falls back to a TURN server (Traversal Using Relays around NAT), which acts as a relay for the audio data.</p>
+
+    <p>Calln uses TURN servers for these situations. Even when audio is relayed through a TURN server, the DTLS-SRTP encryption still applies. The TURN server relays encrypted packets that it cannot decode. This is fundamentally different from a traditional server-based call where the audio is decrypted, processed, and re-encrypted at each hop.</p>
+
+    <hr class="divider">
+
+    <h2>What Calln Can and Cannot See</h2>
+
+    <ul>
+        <li>We can see that a call happened and approximately how long it lasted — this is in our server logs for debugging purposes and is deleted within 7 days.</li>
+        <li>We can see your IP address, which we use for regional matching and the ban system.</li>
+        <li>We cannot hear your audio — it is encrypted end-to-end and never passes through our servers in a form we can access.</li>
+        <li>We cannot read your text messages — they are relayed through our server but are not stored anywhere and are deleted the moment they are forwarded.</li>
+        <li>We cannot see your shared images — same as text messages, relayed in memory and immediately discarded.</li>
+    </ul>
+
+    <h2>Why This Matters</h2>
+
+    <p>Many communication platforms claim to be private but route all your data through their servers. This means they have the technical capability to record, analyse, and potentially share your conversations — regardless of what their privacy policy says. A privacy policy is a legal document that can change; a peer-to-peer architecture is a technical reality that cannot be overridden by policy.</p>
+
+    <p>With WebRTC, the privacy guarantee is not just a promise — it is an architectural fact. We could not record your calls even if we wanted to, even if we were legally compelled to, because the audio never reaches us in a form we can access.</p>
+
+    <div class="cta-box">
+        <p>Experience private peer-to-peer voice calling for yourself.</p>
+        <a href="../index.html" class="cta-btn">Try Calln — No Account Needed →</a>
+    </div>
+
+</main>
+</body>
+</html>

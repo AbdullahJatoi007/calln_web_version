@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>About Calln — Anonymous Voice Calling for Real Conversations</title>
+    <meta name="description" content="Learn about Calln — the free anonymous voice calling platform built for genuine human connection. No accounts, no recordings, no data sold.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="base.css">
+    <style>
+        .page-header {
+            position: sticky; top: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            height: 60px; padding: 0 1.5rem;
+            background: rgba(7,8,15,.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        .page-logo {
+            font-size: 1.25rem; font-weight: 700; letter-spacing: -.04em;
+            background: linear-gradient(130deg,#fff 30%,var(--accent));
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; text-decoration: none;
+        }
+        .page-back {
+            font-size: .8rem; font-weight: 500; color: var(--text-3);
+            text-decoration: none; display: flex; align-items: center; gap: 5px;
+            transition: color .2s;
+        }
+        .page-back:hover { color: var(--text-1); }
+
+        .page-main {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 6rem;
+        }
+
+        .page-hero {
+            margin-bottom: 3rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .page-hero h1 {
+            font-size: 2.2rem; font-weight: 700; letter-spacing: -.04em;
+            line-height: 1.15; margin-bottom: 1rem;
+        }
+
+        .page-hero p {
+            font-size: 1rem; color: var(--text-2); line-height: 1.85;
+        }
+
+        .callout {
+            background: var(--accent-soft);
+            border: 1px solid rgba(61,127,255,.25);
+            border-radius: var(--r-md);
+            padding: 16px 20px;
+            margin: 0 0 3rem;
+            font-size: .9rem;
+            color: var(--text-1);
+            line-height: 1.65;
+        }
+
+        .about-section { margin-bottom: 2.8rem; }
+
+        .about-section h2 {
+            font-size: 1.15rem; font-weight: 700; letter-spacing: -.02em;
+            margin-bottom: 14px; color: var(--text-1);
+        }
+
+        .about-section p {
+            font-size: .9rem; color: var(--text-2); line-height: 1.85;
+        }
+
+        .about-section p + p { margin-top: 12px; }
+
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 2.5rem 0;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-card .stat-value {
+            font-size: 1.8rem; font-weight: 700; letter-spacing: -.03em;
+            color: var(--accent); margin-bottom: 4px;
+        }
+
+        .stat-card .stat-label {
+            font-size: .78rem; color: var(--text-2); font-weight: 500;
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-top: 1.5rem;
+        }
+
+        .value-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: 18px 20px;
+        }
+
+        .value-card h3 {
+            font-size: .9rem; font-weight: 700; color: var(--text-1);
+            margin-bottom: 6px;
+        }
+
+        .value-card p {
+            font-size: .83rem; color: var(--text-2); line-height: 1.7;
+        }
+
+        .tech-list {
+            list-style: none;
+            margin-top: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .tech-list li {
+            font-size: .875rem; color: var(--text-2); line-height: 1.7;
+            padding-left: 20px; position: relative;
+        }
+
+        .tech-list li::before {
+            content: '→';
+            position: absolute; left: 0;
+            color: var(--accent); font-weight: 700; font-size: .8rem;
+        }
+
+        .tech-list li strong { color: var(--text-1); font-weight: 600; }
+
+        .contact-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-chip {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 8px 18px;
+            font-size: .85rem;
+            color: var(--accent);
+            text-decoration: none;
+            transition: background .2s, border-color .2s;
+        }
+
+        .contact-chip:hover {
+            background: var(--bg-elevated);
+            border-color: var(--border-md);
+        }
+
+        @media (max-width: 600px) {
+            .page-main { padding: 2rem 1rem 4rem; }
+            .page-hero h1 { font-size: 1.7rem; }
+            .stat-grid { grid-template-columns: 1fr 1fr; }
+            .value-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="page-header">
+    <a href="index.html" class="page-logo">Calln</a>
+    <a href="index.html" class="page-back">← Back to Calln</a>
+</header>
+
+<main class="page-main">
+
+    <div class="page-hero">
+        <h1>About Calln</h1>
+        <p>Calln is a free anonymous voice calling platform built on a simple belief: genuine human conversation should not require you to give up your identity, your data, or your privacy. We built Calln to make that possible for anyone, anywhere, in seconds.</p>
+    </div>
+
+    <div class="callout">
+        🎙️ <strong>Our mission:</strong> To create a space where people can have real, honest, unfiltered conversations with other humans — without the noise, performance, and data extraction of modern social platforms.
+    </div>
+
+    <!-- Our Story -->
+    <div class="about-section">
+        <h2>Our Story</h2>
+        <p>Calln was built in response to a growing problem: the internet has become an increasingly performative place. Social media rewards curated identities, polished content, and engagement optimised for algorithms rather than human connection. Video chat platforms add visual pressure that makes conversations feel like auditions rather than conversations.</p>
+        <p>When Omegle — the original anonymous chat platform — shut down in late 2023, millions of people lost the one place online where they could simply talk to another human being without an audience. We built Calln to fill that gap, but with modern technology, better privacy, and a genuine commitment to safety that Omegle never had.</p>
+        <p>Calln launched as a web application and has since expanded to Android, bringing anonymous voice calling to mobile users with the same commitment to privacy and simplicity that the web version is known for.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Stats -->
+    <div class="about-section">
+        <h2>Calln by the Numbers</h2>
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="stat-value">100%</div>
+                <div class="stat-label">Free forever</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">0</div>
+                <div class="stat-label">Accounts required</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">0ms</div>
+                <div class="stat-label">Audio stored on servers</div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Our Values -->
+    <div class="about-section">
+        <h2>What We Stand For</h2>
+        <div class="value-grid">
+            <div class="value-card">
+                <h3>🔒 Privacy First</h3>
+                <p>We collect the minimum data necessary to run the service. No accounts, no profiles, no recordings. Your conversations are yours alone.</p>
+            </div>
+            <div class="value-card">
+                <h3>🆓 Free Forever</h3>
+                <p>Calln will always be free to use. The website is supported by advertising. The mobile app is ad-free. No paywalls, ever.</p>
+            </div>
+            <div class="value-card">
+                <h3>🛡️ Safety Matters</h3>
+                <p>Every call has a Report button. Reported users are banned immediately. We take community safety seriously and act on every report.</p>
+            </div>
+            <div class="value-card">
+                <h3>🌍 Genuinely Global</h3>
+                <p>Calln connects people across borders. Our country filter lets you choose who you talk to, but the default is always the whole world.</p>
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Technology -->
+    <div class="about-section">
+        <h2>How the Technology Works</h2>
+        <p>Calln is built on WebRTC — the same open standard used by Google Meet, Discord, and most modern communication platforms. Here is what that means for you in plain language:</p>
+        <ul class="tech-list">
+            <li><strong>Peer-to-peer audio</strong> — once a call is established, your voice travels directly from your device to your partner's device. Our servers are not in the audio path at all.</li>
+            <li><strong>Encrypted by default</strong> — WebRTC encrypts all audio using DTLS-SRTP. This is mandatory in the WebRTC standard and cannot be disabled.</li>
+            <li><strong>Signalling server</strong> — our server handles matching you with a partner and exchanging the technical handshake needed to start the call. Once the call starts, the server steps out completely.</li>
+            <li><strong>TURN relay</strong> — in cases where a direct peer-to-peer connection is not possible (strict corporate firewalls, certain mobile networks), audio is relayed through a TURN server. Even in this case, audio is encrypted end-to-end.</li>
+            <li><strong>No recordings</strong> — we have no technical mechanism to record calls. The audio never passes through our servers in a form we could capture.</li>
+        </ul>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Contact -->
+    <div class="about-section">
+        <h2>Contact Us</h2>
+        <p>Have a question, a concern, or want to report something? We read every email and respond within 30 days.</p>
+        <div class="contact-row">
+            <a href="mailto:support@getcalln.com" class="contact-chip">General — support@getcalln.com</a>
+            <a href="mailto:support@getcalln.com" class="contact-chip">Abuse Reports — support@getcalln.com</a>
+        </div>
+    </div>
+
+</main>
+</body>
+</html>

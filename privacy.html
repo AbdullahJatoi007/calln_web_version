@@ -138,23 +138,25 @@
 
     <div class="priv-hero">
         <h1>Privacy Policy</h1>
-        <p class="priv-updated">Last updated: May 2026</p>
+        <p class="priv-updated">Last updated: June 2026</p>
         <p class="priv-intro">
             At Calln, your privacy is our priority. This policy explains exactly what data we handle,
-            why we handle it, and how we protect you. Spoiler: we collect very little, store even less,
-            and we never sell anything to anyone.
+            why we handle it, and how we protect you. We collect very little, store even less, and we
+            never sell your personal information or use your call content for advertising.
         </p>
         <p class="priv-intro" style="margin-top:10px;">
             This Privacy Policy applies to both the <strong>Calln web application</strong> (getcalln.com)
             and the <strong>Calln mobile app</strong> (Android). Both platforms share identical core
-            functionality and are governed by this single unified policy.
+            functionality and are governed by this single unified policy. Both are supported by
+            advertising (see the Advertising section).
         </p>
     </div>
 
     <div class="callout">
         🎙️ <strong>The short version:</strong> Your voice calls are never recorded or stored. Audio goes
         directly between you and your partner via WebRTC peer-to-peer technology — our servers never
-        touch it. We have no accounts, we don't know your name, and we don't track you across the web.
+        touch it. We have no accounts and we don't know your name. We do show ads (provided by Google)
+        to keep Calln free, but we never use your call or chat content for advertising.
     </div>
 
     <!-- 1. What We Collect -->
@@ -168,6 +170,7 @@
                 <li><strong>Browser &amp; Connection Info</strong> — Basic technical data (browser type, WebRTC capabilities) needed to establish your call. Never tied to your identity.</li>
                 <li><strong>Chat Messages</strong> — Relayed in real-time between call partners only. Never stored on our servers at any point.</li>
                 <li><strong>Microphone Audio</strong> — Streamed peer-to-peer via WebRTC. Our servers never receive, record, or process your audio.</li>
+                <li><strong>Advertising Data (Mobile App)</strong> — To show ads, Google AdMob may access your device's advertising identifier and approximate (country-level) location, and basic device information. This is processed by Google, not stored by us, and you can reset or limit it in your device settings. See the Advertising section.</li>
             </ul>
         </div>
     </div>
@@ -179,10 +182,10 @@
             <ul>
                 <li>Your name, email address, phone number, or any account information</li>
                 <li>Recordings or transcripts of your voice calls or chat messages</li>
-                <li>Your precise location (only country-level, and only if you choose it)</li>
-                <li>Any data used for advertising, marketing, or behavioural profiling</li>
-                <li>Payment information of any kind — Calln is and always will be free</li>
-                <li>Device identifiers, fingerprints, or persistent tracking tokens</li>
+                <li>Your precise (GPS) location — only country-level, and only if you choose it</li>
+                <li>The content of your calls, chats, or shared images for advertising or profiling — we never use any of it for ads</li>
+                <li>Device fingerprints or hidden tracking tokens created by us. (Google's advertising services use a resettable advertising ID to deliver ads in the mobile app — see the Advertising section.)</li>
+                <li>Payment information of any kind — Calln is free to use</li>
             </ul>
         </div>
     </div>
@@ -235,8 +238,8 @@
                     indexing, or background access occurs at any point.
                 </li>
                 <li>
-                    <strong>Internet Access</strong> — Required to connect to the signalling server
-                    and establish calls.
+                    <strong>Internet Access</strong> — Required to connect to the signalling server,
+                    establish calls, and load ads.
                 </li>
             </ul>
         </div>
@@ -256,6 +259,7 @@
                 <li><strong>Match you with a partner</strong> — Your country preference and IP help us connect you with a compatible user quickly and fairly.</li>
                 <li><strong>Enable real-time communication</strong> — Our signalling server relays WebRTC connection data (offers, answers, ICE candidates) to establish the peer connection.</li>
                 <li><strong>Prevent abuse</strong> — Reported users' IP addresses are temporarily blocked to protect the community from bad actors.</li>
+                <li><strong>Display ads</strong> — Our advertising partner (Google) uses limited data to deliver, cap the frequency of, and measure ads that keep Calln free. See the Advertising section.</li>
                 <li><strong>Maintain service quality</strong> — Anonymous, aggregate traffic statistics help us understand load patterns. No personal data is involved.</li>
             </ul>
         </div>
@@ -270,6 +274,7 @@
                 <li><strong>In-session data</strong> (IP, match state, chat messages, images) — Deleted immediately when your session or call ends. No exceptions.</li>
                 <li><strong>Ban records</strong> — Reported or banned IP addresses may be held for up to 30 days for abuse prevention, then automatically purged.</li>
                 <li><strong>Server logs</strong> — Standard web server logs retained for up to 7 days for debugging purposes, then deleted.</li>
+                <li><strong>Advertising data</strong> — Any advertising identifiers and ad-related data are held and controlled by Google according to <a href="https://policies.google.com/privacy" class="priv-link" target="_blank" rel="noopener">Google's Privacy Policy</a>, not by us.</li>
             </ul>
         </div>
     </div>
@@ -293,10 +298,10 @@
     <div class="priv-section">
         <h2><span class="ico">🍪</span> Cookies &amp; Local Storage <span class="platform-badge badge-web">Website</span></h2>
         <p>
-            Calln does not use advertising, tracking, or analytics cookies. We use only essential
-            technical mechanisms (such as WebSocket session tokens via Socket.IO) required to keep your
-            real-time connection alive. These expire when you close your browser and cannot be used to
-            identify you across sessions.
+            On the website, our own functionality uses only essential technical mechanisms (such as
+            WebSocket session tokens via Socket.IO) required to keep your real-time connection alive.
+            These expire when you close your browser. Our advertising partner (Google AdSense) may set
+            additional cookies to deliver ads — see the Advertising section for how to control these.
         </p>
     </div>
 
@@ -308,8 +313,9 @@
                 <li><strong>Render.com</strong> <span class="platform-badge badge-both">Web &amp; App</span> — Hosts our signalling server. Subject to <a href="https://render.com/privacy" class="priv-link" target="_blank" rel="noopener">Render's Privacy Policy</a>.</li>
                 <li><strong>Google STUN Servers</strong> <span class="platform-badge badge-both">Web &amp; App</span> — Used by WebRTC to discover network paths. Google may log connection attempts per <a href="https://policies.google.com/privacy" class="priv-link" target="_blank" rel="noopener">Google's Privacy Policy</a>.</li>
                 <li><strong>Google Firebase Analytics</strong> <span class="platform-badge badge-both">Web &amp; App</span> — Used to collect anonymous, aggregated usage data such as session duration, crash reports, and device type. No personally identifiable information is collected. See <a href="https://policies.google.com/privacy" class="priv-link" target="_blank" rel="noopener">Google's Privacy Policy</a>.</li>
+                <li><strong>Google AdMob</strong> <span class="platform-badge badge-mobile">Android App</span> — Displays banner and full-screen (interstitial) ads in the mobile app, and may use your advertising identifier, approximate location, and device information for ad delivery and measurement. Consent is gathered via Google's User Messaging Platform where required. See <a href="https://policies.google.com/privacy" class="priv-link" target="_blank" rel="noopener">Google's Privacy Policy</a>.</li>
+                <li><strong>Google AdSense</strong> <span class="platform-badge badge-web">Website</span> — Used to display advertisements on the website. See the Advertising section below for details.</li>
                 <li><strong>Google Fonts</strong> <span class="platform-badge badge-web">Website</span> — Loads the Outfit typeface from Google's CDN. Google may log font requests independently.</li>
-                <li><strong>Google AdSense</strong> <span class="platform-badge badge-web">Website only</span> — Used to display advertisements on the website. See the Advertising section below for details.</li>
                 <li><strong>flagcdn.com</strong> <span class="platform-badge badge-web">Website</span> — Serves country flag images for the filter UI. No personal data is transmitted in these requests.</li>
             </ul>
         </div>
@@ -320,8 +326,9 @@
         <h2><span class="ico">👦</span> Children's Privacy</h2>
         <p>
             Calln is not intended for users under the age of 18. The Calln mobile app is rated 18+
-            on the Google Play Store. We do not knowingly collect any information from minors.
-            If you believe a minor is using our service inappropriately, please contact us immediately
+            on the Google Play Store. We do not knowingly collect any information from minors, and
+            ads are not directed at children. If you believe a minor is using our service
+            inappropriately, please contact us immediately
             at <a href="mailto:support@getcalln.com" class="priv-link">support@getcalln.com</a>
             and we will take prompt action.
         </p>
@@ -338,7 +345,8 @@
             <ul>
                 <li>The right to know what data we hold (as described in this policy)</li>
                 <li>The right to request deletion of any temporarily stored IP records</li>
-                <li>The right to lodge a complaint with your local data protection authority (e.g., ICO in the UK, FTC in the US)</li>
+                <li>The right to consent to, refuse, or withdraw consent for personalised advertising (via the in-app privacy options on mobile, or the website cookie banner)</li>
+                <li>The right to lodge a complaint with your local data protection authority (e.g., ICO in the UK, your EU member-state authority, or the FTC / your state Attorney General in the US)</li>
             </ul>
         </div>
         <p style="margin-top:14px;">
@@ -371,22 +379,26 @@
 
     <!-- 13. Advertising -->
     <div class="priv-section">
-        <h2><span class="ico">📢</span> Advertising <span class="platform-badge badge-web">Website only</span></h2>
+        <h2><span class="ico">📢</span> Advertising <span class="platform-badge badge-both">Web &amp; App</span></h2>
         <p>
-            The Calln website (getcalln.com) is supported by advertising. <strong>The Calln mobile app
-            does not currently display any advertisements and is completely ad-free.</strong>
+            Calln is supported by advertising on both the website and the mobile app, which is how we
+            keep the service free.
         </p>
         <p>
-            On the website, we use <strong>Google AdSense</strong> to display advertisements. Ads may
-            appear as a banner in the footer and as full-screen interstitials between calls.
+            On the <strong>website</strong> (getcalln.com) we use <strong>Google AdSense</strong>. On the
+            <strong>Android mobile app</strong> we use <strong>Google AdMob</strong> to show an
+            always-visible banner ad and occasional full-screen (interstitial) ads — for example after a
+            number of calls have ended and periodically during longer calls. Ad audio is muted so it
+            never interferes with your voice call.
         </p>
         <div class="priv-card">
             <ul>
-                <li><strong>How ads work</strong> — Google AdSense may use cookies and your browsing behaviour to show you relevant ads. This is handled entirely by Google.</li>
-                <li><strong>Data shared with Google</strong> — Your IP address and browser information may be used by Google for ad targeting. We do not share any call content with advertisers.</li>
-                <li><strong>Opt-out of personalised ads</strong> — Visit <a href="https://adssettings.google.com" class="priv-link" target="_blank" rel="noopener">Google Ad Settings</a> or <a href="https://optout.aboutads.info" class="priv-link" target="_blank" rel="noopener">AboutAds.info</a> to manage your ad preferences.</li>
-                <li><strong>No ad revenue from call content</strong> — We never use anything said or shared during calls for advertising purposes.</li>
-                <li><strong>Mobile app</strong> — The Calln mobile app is currently ad-free. If this changes in the future, this policy will be updated before any ads are shown.</li>
+                <li><strong>How ads work</strong> — Google AdSense and AdMob may use cookies, your advertising identifier, and your activity to select and show ads. Ad selection, delivery, and measurement are handled entirely by Google.</li>
+                <li><strong>Consent (EU, EEA, UK, Switzerland &amp; US states)</strong> — In regions that require it, the mobile app uses Google's User Messaging Platform (UMP) to ask for your consent before showing personalised ads. Where you decline or are not asked, you may see non-personalised ads instead. You can change or withdraw your choice at any time from the app's <strong>Privacy options</strong>.</li>
+                <li><strong>Data shared with Google</strong> — Your IP address, approximate (country-level) location, advertising identifier, and device/browser information may be used by Google for ad delivery, frequency capping, and measurement. We never share any call or chat content with advertisers.</li>
+                <li><strong>Your advertising ID (mobile)</strong> — You can reset your advertising ID or opt out of ad personalisation in <strong>Android Settings → Privacy → Ads</strong>.</li>
+                <li><strong>Opt-out of personalised ads</strong> — Visit <a href="https://adssettings.google.com" class="priv-link" target="_blank" rel="noopener">Google Ad Settings</a> or <a href="https://optout.aboutads.info" class="priv-link" target="_blank" rel="noopener">AboutAds.info</a>, use the website cookie banner, or use the app's Privacy options.</li>
+                <li><strong>No ad revenue from call content</strong> — We never use anything said, typed, or shared during calls for advertising purposes.</li>
             </ul>
         </div>
     </div>

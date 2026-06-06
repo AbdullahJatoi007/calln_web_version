@@ -141,6 +141,7 @@
     <link rel="stylesheet" href="cookie.css">
     <link rel="stylesheet" href="footer.css">
     <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="app-promo.css">
 
     <style>
         /* ── NAV TEXT LINKS ─────────────────────────────── */
@@ -402,6 +403,22 @@
         </div>
     </div>
 </template>
+<!-- ══ APP DOWNLOAD PROMO (Android, first visit) ═══════════════ -->
+<div class="app-promo" id="app-promo" role="dialog" aria-modal="true" aria-labelledby="app-promo-heading">
+    <div class="app-promo-card">
+        <button class="app-promo-close" aria-label="Close">×</button>
+        <div class="app-promo-icon" aria-hidden="true">📞</div>
+        <h3 id="app-promo-heading">Get the Calln app</h3>
+        <p>Faster calls, background mode, and a smoother experience. Download Calln free on Google Play.</p>
+        <a class="app-promo-btn" href="https://play.google.com/store/apps/details?id=io.calln.voice.global" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M3 20.5V3.5c0-.37.21-.69.53-.85L13.4 12 3.53 21.35A.94.94 0 0 1 3 20.5zM14.6 13.2l2.3 2.3-9.5 5.45 7.2-7.75zm0-2.4L7.4 3.05l9.5 5.45-2.3 2.3zM18.1 9.2l2.78 1.6c.62.36.62 1.28 0 1.64l-2.78 1.6L15.4 12l2.7-2.8z"/>
+            </svg>
+            Download on Google Play
+        </a>
+        <button class="app-promo-dismiss">Continue on web</button>
+    </div>
+</div>
 
 
 <!-- ══ NAVBAR ══════════════════════════════════════════════════ -->
@@ -869,6 +886,7 @@
 <script src="js/game.js"></script>
 <script src="js/chat.js"></script>
 <script src="js/script.js"></script>
+<script src="js/app-promo.js"></script>
 
 </body>
 </html>

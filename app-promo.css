@@ -1,0 +1,135 @@
+/* app-promo.css — "Download the app" popup */
+
+.app-promo {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: rgba(7, 8, 15, 0.55);   /* was 0.72; lower = lighter dim. use 0 for none */
+    /* backdrop-filter and -webkit-backdrop-filter removed */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s ease;
+}
+
+.app-promo.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.app-promo-card {
+    position: relative;
+    width: 100%;
+    max-width: 360px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md, 16px);
+    padding: 28px 24px 24px;
+    text-align: center;
+    transform: translateY(14px) scale(0.98);
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.app-promo.show .app-promo-card {
+    transform: translateY(0) scale(1);
+}
+
+.app-promo-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: var(--bg-elevated);
+    color: var(--text-3);
+    border-radius: 50%;
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s;
+}
+
+.app-promo-close:hover {
+    color: var(--text-1);
+    background: var(--bg-hover);
+}
+
+.app-promo-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 16px;
+    border-radius: 16px;
+    background: var(--accent-soft);
+    border: 1px solid rgba(61, 127, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+
+.app-promo-card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text-1);
+    margin-bottom: 8px;
+}
+
+.app-promo-card p {
+    font-size: 0.875rem;
+    color: var(--text-2);
+    line-height: 1.65;
+    margin-bottom: 20px;
+}
+
+.app-promo-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    width: 100%;
+    padding: 13px 18px;
+    background: var(--accent);
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: filter 0.2s, transform 0.1s;
+}
+
+.app-promo-btn:hover { filter: brightness(1.08); }
+.app-promo-btn:active { transform: scale(0.98); }
+
+.app-promo-btn svg { flex-shrink: 0; }
+
+.app-promo-dismiss {
+    margin-top: 12px;
+    width: 100%;
+    padding: 12px 18px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    color: var(--text-1);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.app-promo-dismiss:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-md);
+    color: var(--text-1);
+}

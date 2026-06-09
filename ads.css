@@ -22,47 +22,31 @@
 }
 
 /* ══════════════════════════════════════════
-   ZONE 1 — Footer banner (always on)
-   Sits at the very top of the site footer,
-   above the link columns.
+   ZONE 1 — Footer banner (Adsterra)
+   Sits above the footer link columns.
+   Box hugs the ad — no fixed leaderboard size.
    ══════════════════════════════════════════ */
 .ad-footer-banner {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  padding: 20px 1.5rem;
+  padding: 0px 1.5rem 20px;
   border-bottom: 1px solid var(--border);
   margin-bottom: 2rem;
 }
 
 .ad-footer-unit {
-  width: 100%;
-  max-width: 728px;
-  min-height: 90px;
-  background: var(--bg-elevated);
-  border: 1px dashed var(--border);
-  border-radius: var(--r-sm);
+  /* No forced width/height — wrap tightly around whatever size loads */
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  position: relative;
 }
 
-/* Placeholder text while ad loads */
-.ad-footer-unit::before {
-  content: '728 × 90 — Leaderboard Ad';
-  position: absolute;
-  font-size: 0.7rem;
-  color: var(--text-3);
-  letter-spacing: 0.04em;
-  pointer-events: none;
-}
-
-@media (max-width: 600px) {
-  .ad-footer-unit { min-height: 50px; }
-  .ad-footer-unit::before { content: '320 × 50 — Mobile Banner'; }
+/* #adsterra-slot is sized by adsterra-banner.js (300x250 or 320x50) */
+#adsterra-slot {
+  margin: 0 auto;
 }
 
 /* ══════════════════════════════════════════

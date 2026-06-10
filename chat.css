@@ -7,7 +7,7 @@
   width: 100%;
   max-width: 700px;
   height: 62dvh;
-  min-height: 340px;
+  min-height: 320px;
   background: var(--bg-surface);
   border-radius: var(--r-xl);
   border: 1px solid #fff;

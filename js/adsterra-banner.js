@@ -7,7 +7,7 @@
 
     var SLOTS = [
         {
-            mountId: 'adsterra-slot',
+            mountId: 'adsterra-slot',        // footer banner
             mobileKey: 'aa09b9d4f5c2baa63c013eef40d9102f',
             mobileW: 320,
             mobileH: 50,
@@ -16,13 +16,22 @@
             desktopH: 250
         },
         {
-            mountId: 'adsterra-slot-mid',
+            mountId: 'adsterra-slot-mid',     // below "Everything Calln Offers"
             mobileKey: 'a7c16f559664197b9f4f0051d6ba01ed',
             mobileW: 468,
             mobileH: 60,
             desktopKey: '7b54505bbb7cfe54722207c2c94f83a7',
             desktopW: 728,
             desktopH: 90
+        },
+        {
+            mountId: 'adsterra-slot-bottom',  // above the footer
+            mobileKey: '60d6f315d75f035f78032ddeb43af65c',
+            mobileW: 160,
+            mobileH: 300,
+            desktopKey: '60d6f315d75f035f78032ddeb43af65c', // same key/size for both
+            desktopW: 160,
+            desktopH: 300
         }
     ];
 
@@ -38,12 +47,10 @@
             unit = { key: slot.desktopKey, w: slot.desktopW || 300, h: slot.desktopH || 250 };
         }
 
-        // Available width = viewport minus page padding (adjust 32 to match your layout's side padding)
         var available = Math.min(unit.w, window.innerWidth - 32);
         var scale = available / unit.w;
         var scaledH = unit.h * scale;
 
-        // The wrapper's ACTUAL layout box = the scaled-down size, so nothing overflows
         mount.style.width  = available + 'px';
         mount.style.height = scaledH + 'px';
         mount.style.overflow = 'hidden';
@@ -56,7 +63,6 @@
         iframe.frameBorder = '0';
         iframe.style.border = '0';
         iframe.style.display = 'block';
-        // Scale the iframe itself, anchored top-left, to fit the wrapper exactly
         iframe.style.transform = 'scale(' + scale + ')';
         iframe.style.transformOrigin = 'top left';
         iframe.setAttribute('aria-label', 'Advertisement');

@@ -141,6 +141,13 @@
   border-radius: 10px;
   overflow: hidden;
 }
+.ad-inline-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 2.5rem 0;
+}
 .ad-fs-progress-bar {
   height: 100%;
   background: var(--accent);

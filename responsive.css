@@ -20,11 +20,7 @@
     transform: none;
   }
   
-  /* FIX: Changed from display: none to flex */
-  .nav-right { 
-    display: flex; 
-    gap: 6px; 
-  }
+
 
   /* Hero stacks vertically */
   .hero-section {
@@ -60,7 +56,7 @@
     justify-content: space-between;
   }
 
-  .nav-links {
+.nav-links {
     order: 2;              /* ensures it stays after logo */
     position: static;      /* removes absolute centering */
     transform: none;       /* removes the offset */
@@ -68,6 +64,10 @@
     width: auto;           /* prevents it from taking full width */
     justify-content: flex-end;
     gap: 6px;              /* tightens space between filter & online status */
+  }
+
+  .nav-right {
+    order: 3;               /* pushes hamburger to the very end */
   }
 
   .logo { 
@@ -81,10 +81,19 @@
     font-size: 0.85rem;      /* 👈 Slightly smaller than laptop (1rem) to fit mobile screens */
   }
 
-  .online-status { 
-    font-size: 0.85rem; 
+ .online-status { 
+    font-size: 0.85rem;
     padding: 5px 10px; 
-    height: 32px;          /* explicit height for vertical alignment */
+    height: 32px;
+    gap: 5px;
+  }
+
+  .online-label {
+    display: none;   /* hides just the word "Online:" on mobile */
+  }
+
+  .online-status span:not(.pulse-dot) {
+    display: none;         /* hide "Online: N" text, keep only the dot */
   }
   
   .filter-content { 
@@ -95,14 +104,6 @@
   }
 }
 
-/* ═══════════════════════════════════════
-   NEW BREAKPOINT: SMALL PHONES  ≤ 520px
-   ═══════════════════════════════════════ */
-@media (max-width: 520px) {
-  .nav-right { 
-    display: none; /* Hide links completely on small screens */
-  }
-}
 
 /* ═══════════════════════════════════════
    MOBILE SMALL  ≤ 480px
@@ -165,7 +166,6 @@
 
   .navbar { height: 50px; padding: 0 1rem; }
   .nav-links { position: static; transform: none; }
-  .nav-right { display: none; }
 
   .hero-section {
     flex-direction: row;

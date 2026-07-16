@@ -138,19 +138,59 @@
   transition: filter 0.2s ease, transform 0.15s ease;
   user-select: none;
 }
+/* ---- HAMBURGER (mobile only) ---- */
+.nav-hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  border: 1px solid #ffffff;
+  color: #fff;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ---- MOBILE DROPDOWN ---- */
+.nav-mobile-menu {
+  display: none;
+  position: absolute;
+  top: 60px;
+  right: 1.4rem;
+  background: rgba(7, 8, 15, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 8px;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 200;
+  min-width: 160px;
+}
+.nav-mobile-menu.open { display: flex; }
+.nav-mobile-link {
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.nav-mobile-link:hover { background: var(--bg-hover); }
+
+/* ---- BREAKPOINT: collapse to hamburger at ≤768px ---- */
+@media (max-width: 768px) {
+  .nav-text-link { display: none; }
+  .nav-app-btn   { display: none; }
+  .nav-hamburger { display: flex; }
+}
 .nav-app-btn:hover {
   filter: brightness(1.12);
   transform: translateY(-1px);
 }
 .nav-app-btn svg {
   flex-shrink: 0;
-}
-/* ---- MOBILE: icon-only button, keep filter + online indicator ---- */
-@media (max-width: 480px) {
-  .nav-app-btn span {
-    display: none;          /* hide the "Get App" text on phones */
-  }
-  .nav-app-btn {
-    padding: 6px 9px;       /* tighten to a neat circle-ish icon button */
-  }
 }

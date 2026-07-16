@@ -15,6 +15,25 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // ════════════════════════════════════════════════
+    // MOBILE HAMBURGER MENU
+    // ════════════════════════════════════════════════
+    const navHamburger  = document.getElementById('nav-hamburger');
+    const navMobileMenu = document.getElementById('nav-mobile-menu');
+    if (navHamburger && navMobileMenu) {
+        navHamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = navMobileMenu.classList.toggle('open');
+            navHamburger.setAttribute('aria-expanded', isOpen);
+        });
+        document.addEventListener('click', (e) => {
+            if (!navMobileMenu.contains(e.target) && !navHamburger.contains(e.target)) {
+                navMobileMenu.classList.remove('open');
+                navHamburger.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+
+    // ════════════════════════════════════════════════
     // FIX: Force filter to "Worldwide" on every page load
     // (HTML has Pakistan hardcoded — this overrides it)
     // ════════════════════════════════════════════════
@@ -248,16 +267,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // ════════════════════════════════════════════════
 
     // Partner's socket disconnected
-  socket.on('peer_disconnected', () => {
-    CHAT_MANAGER.hideTypingIndicator();
-    UI.stopCall("Partner disconnected");
-});
+    socket.on('peer_disconnected', () => {
+        CHAT_MANAGER.hideTypingIndicator();
+        UI.stopCall("Partner disconnected");
+    });
 
     // Partner ended the call cleanly
-   socket.on('call_ended', () => {
-    CHAT_MANAGER.hideTypingIndicator();
-    UI.stopCall("Call ended");
-});
+    socket.on('call_ended', () => {
+        CHAT_MANAGER.hideTypingIndicator();
+        UI.stopCall("Call ended");
+    });
 
     // Partner dropped briefly — show reconnecting message
     socket.on('peer_reconnecting', () => {

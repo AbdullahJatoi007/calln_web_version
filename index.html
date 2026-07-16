@@ -445,14 +445,15 @@
                 <option value="ca">🇨🇦 Canada</option>
             </select>
         </li>
-        <li>
+      <li>
             <div class="online-status">
                 <span class="pulse-dot"></span>
-                <span>Online: <strong id="user-count">—</strong></span>
+                <span class="online-label">Online:</span>
+                <strong id="user-count">—</strong>
             </div>
         </li>
     </ul>
-   <div class="nav-right">
+<div class="nav-right">
     <a href="about.html" class="nav-text-link">About</a>
     <a href="blog.html" class="nav-text-link">Blog</a>
     <a href="https://play.google.com/store/apps/details?id=io.calln.voice.global"
@@ -462,6 +463,20 @@
         </svg>
         <span>Get App</span>
     </a>
+
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+    </button>
+</div>
+
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+    <a href="https://play.google.com/store/apps/details?id=io.calln.voice.global" target="_blank" rel="noopener" class="nav-mobile-link">📞 Get App</a>
+    <a href="about.html" class="nav-mobile-link">About</a>
+    <a href="blog.html" class="nav-mobile-link">Blog</a>
 </div>
 </nav>
 

@@ -53,7 +53,9 @@ function startFallbackTimer(targetCountryName) {
         socket.emit('find_match', {
             userId:        'User_' + Math.floor(Math.random() * 9999),
             myCountry:     detectedCountry,
-            targetCountry: 'Worldwide'   // ← open the search to everyone
+            targetCountry: 'Worldwide',   // ← open the search to everyone
+            firebaseUid:   window.CALLN_UID || null,
+            displayName:   window.CALLN_DISPLAY_NAME || null,
         });
 
     }, FALLBACK_DELAY_MS);
@@ -92,6 +94,14 @@ socket.on('matched', async (data) => {
 
     currentRoomId = data.roomId;
     isCalling     = true;
+
+    // NEW — capture who the partner is, so "Add Friend" knows who to send to
+    currentPartnerUid         = data.partnerUid || null;
+    currentPartnerDisplayName = data.partnerDisplayName || null;
+    if (elements.friendBtn) {
+        elements.friendBtn.disabled = !currentPartnerUid;
+        elements.friendBtn.classList.remove('friend-btn-sent');
+    }
 
     UI.setButton(true);
     UI.startTimer();

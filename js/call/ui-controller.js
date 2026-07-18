@@ -84,43 +84,63 @@ const UI = {
         return { value, name };
     },
 
+    // ── Grab the mic + flip UI to "in a call" state, WITHOUT emitting
+    // find_match. Shared by startCall() (random matchmaking) and
+    // friend-call.js (direct call to a specific friend) — both need
+    // this exact setup, but only one of them searches the queue.
+    // Returns true on success, false if mic access was denied.
+    async prepareLocalStream() {
+        if (isCalling) return false;
+
+        try {
+            localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            isCalling = true;
+            this.setButton(true);
+            this.updateState('searching');
+            return true;
+        } catch (err) {
+            console.error(err);
+            elements.status.innerText = "Mic access denied.";
+            alert("Microphone permission is required to start a call.");
+            isCalling = false;
+            this.setButton(false);
+            this.updateState('idle');
+            return false;
+        }
+    },
+
     // ── Request mic, join the queue, update UI ──
     async startCall() {
 
         // Prevent double-calling
         if (isCalling) return;
 
-        try {
-            localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const ok = await this.prepareLocalStream();
+        if (!ok) return;
 
-            isCalling = true;
-            elements.status.innerText = "Looking for someone…";
+        elements.status.innerText = "Looking for someone…";
 
-            if (typeof trackEvent === 'function') {
-                trackEvent('call_started', { country: detectedCountry });
-            }
-
-            this.setButton(true);
-            this.updateState('searching');
-
-            const { value, name } = this.getSelectedCountry();
-
-            socket.emit('find_match', {
-                userId:        'User_' + Math.floor(Math.random() * 9999),
-                myCountry:     detectedCountry,   // real IP-detected country
-                targetCountry: value === 'all' ? 'Worldwide' : name
-            });
-
-        } catch (err) {
-            console.error(err);
-            elements.status.innerText = "Mic access denied.";
-            alert("Microphone permission is required to start a call.");
-
-            // Reset state — don't leave the button in the 'active' position
-            isCalling = false;
-            this.setButton(false);
-            this.updateState('idle');
+        if (typeof trackEvent === 'function') {
+            trackEvent('call_started', { country: detectedCountry });
         }
+
+        const { value, name } = this.getSelectedCountry();
+
+        // firebaseReady usually already resolved by the time someone
+        // taps Start (auth happens on page load) — awaiting it here
+        // is just a safety net for the rare case it hasn't yet.
+        let firebaseUid = window.CALLN_UID || null;
+        if (!firebaseUid && window.firebaseReady) {
+            try { firebaseUid = await window.firebaseReady; } catch (e) { /* proceed without it */ }
+        }
+
+        socket.emit('find_match', {
+            userId:        'User_' + Math.floor(Math.random() * 9999),
+            myCountry:     detectedCountry,   // real IP-detected country
+            targetCountry: value === 'all' ? 'Worldwide' : name,
+            firebaseUid:   firebaseUid,
+            displayName:   window.CALLN_DISPLAY_NAME || null,
+        });
     },
 
     // ── Tear down everything and optionally auto-reconnect ──
@@ -151,6 +171,14 @@ const UI = {
         isCalling     = false;
         currentRoomId = null;
         isMuted       = false;
+
+        // NEW — clear partner identity when the call ends
+        currentPartnerUid         = null;
+        currentPartnerDisplayName = null;
+        if (elements.friendBtn) {
+            elements.friendBtn.disabled = true;
+            elements.friendBtn.classList.remove('friend-btn-sent');
+        }
 
         if (typeof trackEvent === 'function') trackEvent('call_ended');
 

@@ -11,6 +11,7 @@ const elements = {
     status:             document.getElementById('status-display'),
     startBtn:           document.getElementById('start-btn'),
     muteBtn:            document.getElementById('mute-btn'),
+    friendBtn:          document.getElementById('friend-btn'),
     autoCall:           document.getElementById('auto-call'),
     userCount:          document.getElementById('user-count'),
     countryFilter:      document.getElementById('country-filter'),

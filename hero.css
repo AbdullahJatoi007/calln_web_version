@@ -3,7 +3,7 @@
    ============================================= */
 .hero-section {
   display: flex;
-  align-items: fkex-start;
+  align-items: flex-start;
   justify-content: center;
   gap: 52px;
   min-height: auto;

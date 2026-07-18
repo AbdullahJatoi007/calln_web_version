@@ -75,10 +75,14 @@
     flex-shrink: 0;        /* ensures logo doesn't get squashed */
   }
 
-  /* Keep flag icon only, hide text to save space */
-  .filter-text { 
-    display: block;          /* 👈 Overrides the desktop display or any hidden state */
-    font-size: 0.85rem;      /* 👈 Slightly smaller than laptop (1rem) to fit mobile screens */
+  /* Flag icon only — hides the country name text to save space,
+     matching how online-status already collapses to just the dot.
+     The invisible <select id="country-filter"> overlay still covers
+     the whole pill (see hidden-select in base.css/navbar.css), so
+     tapping the flag still opens the full native country picker —
+     no functionality lost, just the text label hidden. */
+  .filter-text {
+    display: none;
   }
 
  .online-status { 

@@ -105,6 +105,12 @@ function initFriendsPanel() {
                 border-radius: 10px; margin-left: 6px; flex-shrink: 0;
             }
 
+            .friends-section-label {
+                font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+                letter-spacing: 0.06em; color: var(--text-2);
+                padding: 12px 10px 6px;
+            }
+
             /* ── Responsive: nav button collapses to icon+badge only ──
                Your existing navbar already hides About/Blog/Get App at
                768px and shows the hamburger — this button wasn't part
@@ -176,6 +182,8 @@ function initFriendsPanel() {
     let latestFriends = [];
     let onlineUids     = new Set();
     let unreadCounts   = {}; // friendUid -> count, fed in by messaging-notifications.js
+    let incomingRequests = []; // requests sent TO me, still pending
+    let outgoingRequests = []; // requests I sent, still pending
 
     function updateNavBadge() {
         const total = Object.values(unreadCounts).reduce((sum, n) => sum + n, 0);
@@ -222,41 +230,135 @@ function initFriendsPanel() {
         return `hsl(${hue}, 55%, 45%)`;
     }
 
+    // type: 'incoming' (they sent it to me) | 'outgoing' (I sent it to them)
+    function renderRequestRow(req, type) {
+        const otherUid  = type === 'incoming' ? req.fromUid : req.toUid;
+        const otherName = type === 'incoming' ? req.fromDisplayName : req.toDisplayName;
+        const safeName  = escapeHtml(otherName) || 'Unknown';
+
+        const actionsHtml = type === 'incoming'
+            ? `<button class="friend-action-btn request-accept-btn" title="Accept" aria-label="Accept">✅</button>
+               <button class="friend-action-btn danger request-decline-btn" title="Decline" aria-label="Decline">✖️</button>`
+            : `<button class="friend-action-btn danger request-cancel-btn" title="Cancel request" aria-label="Cancel request">✖️</button>`;
+
+        return `
+            <div class="friend-row" data-request-id="${req.id}" data-request-type="${type}">
+                <div class="friend-avatar" style="background:${colorFor(otherUid || req.id)}">
+                    ${escapeHtml(initials(otherName))}
+                </div>
+                <div class="friend-info">
+                    <div class="friend-name">${safeName}</div>
+                    <div class="friend-status">${type === 'incoming' ? 'Wants to be friends' : 'Pending…'}</div>
+                </div>
+                <div class="friend-actions">${actionsHtml}</div>
+            </div>
+        `;
+    }
+
     function render() {
         console.log('[Presence] render() — latestFriends:', latestFriends.map(f => f.uid), '| onlineUids:', [...onlineUids]);
 
-        if (!latestFriends.length) {
+        const hasAnything = latestFriends.length || incomingRequests.length || outgoingRequests.length;
+        if (!hasAnything) {
             listEl.innerHTML = `<div class="friends-empty">No friends yet — meet someone on a call and send a request!</div>`;
             return;
         }
 
-        listEl.innerHTML = latestFriends.map(f => {
-            const online = onlineUids.has(f.uid);
-            const safeName = escapeHtml(f.displayName);
-            const unread = unreadCounts[f.uid] || 0;
-            const badgeHtml = unread > 0
-                ? `<span class="friend-row-badge">${unread > 99 ? '99+' : unread}</span>`
-                : '';
-            return `
-                <div class="friend-row" data-uid="${f.uid}">
-                    <div class="friend-avatar" style="background:${colorFor(f.uid)}">
-                        ${escapeHtml(initials(f.displayName))}
-                        <span class="friend-dot ${online ? 'online' : ''}"></span>
-                    </div>
-                    <div class="friend-info">
-                        <div class="friend-name">${safeName || 'Unknown'}</div>
-                        <div class="friend-status">${online ? 'Online' : 'Offline'}</div>
-                    </div>
-                    ${badgeHtml}
-                    <div class="friend-actions">
-                        <button class="friend-action-btn friend-message-btn" title="Message" aria-label="Message">💬</button>
-                        <button class="friend-action-btn friend-call-btn" title="Call" aria-label="Call">📞</button>
-                        <button class="friend-action-btn danger friend-remove-btn" title="Remove friend" aria-label="Remove friend">🗑️</button>
-                    </div>
-                </div>
-            `;
-        }).join('');
+        const sections = [];
 
+        if (incomingRequests.length) {
+            sections.push(`<div class="friends-section-label">Friend Requests</div>`);
+            sections.push(incomingRequests.map(r => renderRequestRow(r, 'incoming')).join(''));
+        }
+
+        if (outgoingRequests.length) {
+            sections.push(`<div class="friends-section-label">Sent Requests</div>`);
+            sections.push(outgoingRequests.map(r => renderRequestRow(r, 'outgoing')).join(''));
+        }
+
+        const hasRequestSections = incomingRequests.length || outgoingRequests.length;
+
+        if (latestFriends.length) {
+            if (hasRequestSections) sections.push(`<div class="friends-section-label">Friends</div>`);
+
+            sections.push(latestFriends.map(f => {
+                const online = onlineUids.has(f.uid);
+                const safeName = escapeHtml(f.displayName);
+                const unread = unreadCounts[f.uid] || 0;
+                const badgeHtml = unread > 0
+                    ? `<span class="friend-row-badge">${unread > 99 ? '99+' : unread}</span>`
+                    : '';
+                return `
+                    <div class="friend-row" data-uid="${f.uid}">
+                        <div class="friend-avatar" style="background:${colorFor(f.uid)}">
+                            ${escapeHtml(initials(f.displayName))}
+                            <span class="friend-dot ${online ? 'online' : ''}"></span>
+                        </div>
+                        <div class="friend-info">
+                            <div class="friend-name">${safeName || 'Unknown'}</div>
+                            <div class="friend-status">${online ? 'Online' : 'Offline'}</div>
+                        </div>
+                        ${badgeHtml}
+                        <div class="friend-actions">
+                            <button class="friend-action-btn friend-message-btn" title="Message" aria-label="Message">💬</button>
+                            <button class="friend-action-btn friend-call-btn" title="Call" aria-label="Call">📞</button>
+                            <button class="friend-action-btn danger friend-remove-btn" title="Remove friend" aria-label="Remove friend">🗑️</button>
+                        </div>
+                    </div>
+                `;
+            }).join(''));
+        } else if (hasRequestSections) {
+            sections.push(`<div class="friends-empty" style="padding:16px;">No friends yet</div>`);
+        }
+
+        listEl.innerHTML = sections.join('');
+
+        // ── Request row actions ──────────────────────────────────
+        listEl.querySelectorAll('.request-accept-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const row = btn.closest('.friend-row');
+                const id = row?.dataset.requestId;
+                const req = incomingRequests.find(r => r.id === id);
+                if (!id || !req) return;
+
+                window.CALLN_FRIENDS.acceptRequest(id, req)
+                    .then(() => {
+                        if (typeof TOAST !== 'undefined') {
+                            TOAST.show('Friend added!', { type: 'success', icon: '🎉', duration: 2500 });
+                        }
+                    })
+                    .catch(err => {
+                        console.error('[Friends] acceptRequest failed:', err);
+                        if (typeof TOAST !== 'undefined') {
+                            TOAST.show('Could not accept request', { type: 'error', icon: '⚠️', duration: 3000 });
+                        }
+                    });
+            });
+        });
+
+        listEl.querySelectorAll('.request-decline-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const row = btn.closest('.friend-row');
+                const id = row?.dataset.requestId;
+                if (!id) return;
+
+                window.CALLN_FRIENDS.declineRequest(id)
+                    .catch(err => console.error('[Friends] declineRequest failed:', err));
+            });
+        });
+
+        listEl.querySelectorAll('.request-cancel-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const row = btn.closest('.friend-row');
+                const id = row?.dataset.requestId;
+                if (!id) return;
+
+                window.CALLN_FRIENDS.cancelRequest(id)
+                    .catch(err => console.error('[Friends] cancelRequest failed:', err));
+            });
+        });
+
+        // ── Friend row actions ────────────────────────────────────
         listEl.querySelectorAll('.friend-message-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const row = btn.closest('.friend-row');
@@ -356,6 +458,20 @@ function initFriendsPanel() {
         subscribeToFriendsPresence(); // friend list changed — resubscribe with the new set
         window.dispatchEvent(new CustomEvent('calln-friends-list-updated', { detail: { friends } }));
     }).catch(err => console.error('[Friends] listenFriendsList failed to start:', err));
+
+    // ── Live pending-request subscriptions ──────────────────────
+    // Gives both people a persistent place to see a request that
+    // isn't just the one-shot toast — covers "I dismissed the toast",
+    // "I wasn't online when it arrived", and "who am I still waiting on."
+    window.CALLN_FRIENDS.listenIncomingRequests((requests) => {
+        incomingRequests = requests;
+        render();
+    }).catch(err => console.error('[Friends] listenIncomingRequests failed to start:', err));
+
+    window.CALLN_FRIENDS.listenOutgoingRequests((requests) => {
+        outgoingRequests = requests;
+        render();
+    }).catch(err => console.error('[Friends] listenOutgoingRequests failed to start:', err));
 
     // Lets other files (messaging-notifications.js) safely know the
     // nav button/badge element and CALLN_SET_UNREAD_COUNT exist now,

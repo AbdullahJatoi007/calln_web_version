@@ -3,32 +3,35 @@
 // ═══════════════════════════════════════════════════════════
 const CONFIG = {
     SERVER_URL: 'https://calln-webrtc-server.onrender.com',
-
-    // ── ICE / STUN / TURN servers ────────────────────────────
-    ICE_SERVERS: {
-        iceServers: [
-            // STUN (basic NAT discovery)
-            { urls: 'stun:stun.l.google.com:19302' },
-            { urls: 'stun:stun1.l.google.com:19302' },
-            // TURN — relay for strict NAT / mobile carrier networks
-            {
-                urls:       'turn:global.relay.metered.ca:80',
-                username:   '88c46e49c67c56f77368916a',
-                credential: 'KjGURGsQWp8AdaDw'
-            },
-            {
-                urls:       'turn:global.relay.metered.ca:443',
-                username:   '88c46e49c67c56f77368916a',
-                credential: 'KjGURGsQWp8AdaDw'
-            },
-            {
-                urls:       'turns:global.relay.metered.ca:443',
-                username:   '88c46e49c67c56f77368916a',
-                credential: 'KjGURGsQWp8AdaDw'
-            }
-        ]
-    }
 };
+
+// ── Dynamic ICE / STUN / TURN cache & fetcher ─────────────
+let iceServersCache = null;
+
+async function getIceServers() {
+    if (iceServersCache) return iceServersCache; // reuse within the same page load
+    try {
+        const res = await fetch(`${CONFIG.SERVER_URL}/turn-credentials`);
+        if (!res.ok) throw new Error('Bad response from turn-credentials');
+        const cfIceServers = await res.json();
+        iceServersCache = {
+            iceServers: [
+                { urls: 'stun:stun.l.google.com:19302' },
+                { urls: 'stun:stun1.l.google.com:19302' },
+                ...cfIceServers
+            ]
+        };
+    } catch (err) {
+        console.warn('Falling back to STUN-only (no TURN):', err);
+        iceServersCache = {
+            iceServers: [
+                { urls: 'stun:stun.l.google.com:19302' },
+                { urls: 'stun:stun1.l.google.com:19302' }
+            ]
+        };
+    }
+    return iceServersCache;
+}
 
 // ── Global WebRTC / call state ───────────────────────────────
 let localStream    = null;
@@ -87,7 +90,8 @@ const socket = io(CONFIG.SERVER_URL, {
 // ═══════════════════════════════════════════════════════════
 async function initiatePeerConnection(role) {
 
-    peerConnection = new RTCPeerConnection(CONFIG.ICE_SERVERS);
+    const iceConfig = await getIceServers();
+    peerConnection = new RTCPeerConnection(iceConfig);
 
     // ── Add local audio tracks ───────────────────────────────
     if (localStream) {
